@@ -1,0 +1,42 @@
+﻿@model Maonot_Net.Models.Warning
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Warning</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.WarningNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WarningNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StudentId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BlaBla)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BlaBla)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.WarningId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,88 @@
+﻿@model Maonot_Net.Models.ApprovalKit
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>ApprovalKit</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="StundetId" class="control-label"></label>
+                <input asp-for="StundetId" class="form-control" />
+                <span asp-validation-for="StundetId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomType" class="control-label"></label>
+                <input asp-for="RoomType" class="form-control" />
+                <span asp-validation-for="RoomType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LivingWithReligious" class="control-label"></label>
+                <input asp-for="LivingWithReligious" class="form-control" />
+                <span asp-validation-for="LivingWithReligious" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LivingWithSmoker" class="control-label"></label>
+                <input asp-for="LivingWithSmoker" class="form-control" />
+                <span asp-validation-for="LivingWithSmoker" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReligiousType" class="control-label"></label>
+                <input asp-for="ReligiousType" class="form-control" />
+                <span asp-validation-for="ReligiousType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HealthCondition" class="control-label"></label>
+                <input asp-for="HealthCondition" class="form-control" />
+                <span asp-validation-for="HealthCondition" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PartnerId1" class="control-label"></label>
+                <input asp-for="PartnerId1" class="form-control" />
+                <span asp-validation-for="PartnerId1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PartnerId2" class="control-label"></label>
+                <input asp-for="PartnerId2" class="form-control" />
+                <span asp-validation-for="PartnerId2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PartnerId3" class="control-label"></label>
+                <input asp-for="PartnerId3" class="form-control" />
+                <span asp-validation-for="PartnerId3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PartnerId4" class="control-label"></label>
+                <input asp-for="PartnerId4" class="form-control" />
+                <span asp-validation-for="PartnerId4" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

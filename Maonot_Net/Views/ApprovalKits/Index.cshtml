@@ -1,0 +1,101 @@
+﻿@model IEnumerable<Maonot_Net.Models.ApprovalKit>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.StundetId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RoomType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LivingWithReligious)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LivingWithSmoker)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReligiousType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HealthCondition)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PartnerId1)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PartnerId2)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PartnerId3)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PartnerId4)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StundetId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LivingWithReligious)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LivingWithSmoker)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReligiousType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HealthCondition)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PartnerId1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PartnerId2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PartnerId3)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PartnerId4)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
