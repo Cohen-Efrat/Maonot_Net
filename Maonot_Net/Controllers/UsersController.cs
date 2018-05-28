@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Maonot_Net.Data;
 using Maonot_Net.Models;
+using System.Security.Cryptography;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace Maonot_Net.Controllers
 {
@@ -56,6 +58,7 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,StundetId,FirstName,LastName,Password,Email,ApartmentNum,Room")] User user)
         {
+            user.Password = HashPassword(user.Password);
             if (ModelState.IsValid)
             {
                 _context.Add(user);
@@ -148,6 +151,25 @@ namespace Maonot_Net.Controllers
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.ID == id);
+        }
+
+        private string HashPassword(string password)
+        {
+            byte[] salt = new byte[128 / 8];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(salt);
+            }
+            Console.WriteLine($"Salt: {Convert.ToBase64String(salt)}");
+                    string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            password: password,
+            salt: salt,
+            prf: KeyDerivationPrf.HMACSHA1,
+            iterationCount: 10000,
+            numBytesRequested: 256 / 8));
+
+            return password;
+
         }
     }
 }
