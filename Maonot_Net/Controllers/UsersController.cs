@@ -58,9 +58,10 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,StundetId,FirstName,LastName,Password,Email,ApartmentNum,Room")] User user)
         {
-            user.Password = HashPassword(user.Password);
+            
             if (ModelState.IsValid)
             {
+                user.Password = HashPassword(user.Password);
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -160,15 +161,15 @@ namespace Maonot_Net.Controllers
             {
                 rng.GetBytes(salt);
             }
-            Console.WriteLine($"Salt: {Convert.ToBase64String(salt)}");
-                    string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            //Console.WriteLine($"Salt: {Convert.ToBase64String(salt)}");
+            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
             password: password,
             salt: salt,
             prf: KeyDerivationPrf.HMACSHA1,
             iterationCount: 10000,
             numBytesRequested: 256 / 8));
 
-            return password;
+            return hashed;
 
         }
     }
