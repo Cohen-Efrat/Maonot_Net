@@ -22,6 +22,9 @@ namespace Maonot_Net.Models
         [Display(Name = "שם משפחה")]
         public string LastName { get; set; }
         [Required]
+        [RegularExpression(@"(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$",
+        ErrorMessage = "הסיסמה צריכה להיות 8 תווים לפחות, הסיסמה חייבת להכיל אותיות גדולות וקטנות, הסיסמה חייבת להכיל מספר, הסיסמה חייבת להכיל תו יחודי.")]
+        [DataType(DataType.Password)]
         [Display(Name = "סיסמא")]
         public string Password { get; set; }
         [Required]
