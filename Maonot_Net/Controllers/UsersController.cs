@@ -9,6 +9,7 @@ using Maonot_Net.Data;
 using Maonot_Net.Models;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using BCrypt.Net;
 
 namespace Maonot_Net.Controllers
 {
@@ -61,7 +62,10 @@ namespace Maonot_Net.Controllers
             
             if (ModelState.IsValid)
             {
-                user.Password = HashPassword(user.Password);
+               user.Password =
+                    BCrypt.Net.BCrypt.HashPassword(user.Password);
+                
+                //user.Password = HashPassword(user.Password);
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -153,24 +157,15 @@ namespace Maonot_Net.Controllers
         {
             return _context.Users.Any(e => e.ID == id);
         }
-
-        private string HashPassword(string password)
+        // bool validPassword = BCrypt.Net.BCrypt.Verify(submittedPassword, hashedPassword);
+        // http://davismj.me/blog/bcrypt
+        //https://github.com/BcryptNet/bcrypt.net
+        private bool CheckPassword(string pass,string uPass)
         {
-            byte[] salt = new byte[128 / 8];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(salt);
-            }
-            //Console.WriteLine($"Salt: {Convert.ToBase64String(salt)}");
-            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-            password: password,
-            salt: salt,
-            prf: KeyDerivationPrf.HMACSHA1,
-            iterationCount: 10000,
-            numBytesRequested: 256 / 8));
 
-            return hashed;
-
+            bool validPassword = BCrypt.Net.BCrypt.Verify(pass, uPass);
+            return validPassword;
         }
+
     }
 }
