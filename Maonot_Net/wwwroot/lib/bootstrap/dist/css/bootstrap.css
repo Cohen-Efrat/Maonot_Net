@@ -2276,9 +2276,11 @@ th {
   vertical-align: top;
   border-top: 1px solid #ddd;
 }
+/*Miki- I changed the postion of the header in the table to be align as auto with the text*/
 .table > thead > tr > th {
-  vertical-align: bottom;
-  border-bottom: 2px solid #ddd;
+    vertical-align: bottom;
+    border-bottom: 2px solid #ddd;
+    text-align: -webkit-auto;
 }
 .table > caption + thead > tr:first-child > th,
 .table > colgroup + thead > tr:first-child > th,
@@ -4174,9 +4176,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     border-radius: 4px;
   }
 }
-@media (min-width: 768px) {
+/*MIKI- I changed the navbar_header (Maonot_Net) to be on the right side instead on the left*/
+@media (min-width: 1px) {
   .navbar-header {
-    float: left;
+    float: right;
   }
 }
 .navbar-collapse {
@@ -4191,18 +4194,20 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-collapse.in {
   overflow-y: auto;
 }
-@media (min-width: 768px) {
+@media (min-width: 500px) {
   .navbar-collapse {
     width: auto;
     border-top: 0;
     -webkit-box-shadow: none;
             box-shadow: none;
   }
+    /*MIKI- I changed the navbar-collapse.collapse (Home/Contect/User...) to be on the right side instead on the left*/
   .navbar-collapse.collapse {
     display: block !important;
     height: auto !important;
     padding-bottom: 0;
     overflow: visible !important;
+    float: right;
   }
   .navbar-collapse.in {
     overflow-y: visible;
@@ -4293,7 +4298,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-toggle {
   position: relative;
-  float: right;
+  float:right;
   padding: 9px 10px;
   margin-top: 8px;
   margin-right: 15px;
