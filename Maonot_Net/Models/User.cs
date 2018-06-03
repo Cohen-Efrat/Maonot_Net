@@ -21,25 +21,30 @@ namespace Maonot_Net.Models
         [Required]
         [Display(Name = "שם משפחה")]
         public string LastName { get; set; }
+
         [Required]
         [RegularExpression(@"(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$",
         ErrorMessage = "הסיסמה צריכה להיות 8 תווים לפחות, הסיסמה חייבת להכיל אותיות גדולות וקטנות, הסיסמה חייבת להכיל מספר, הסיסמה חייבת להכיל תו יחודי.")]
         [DataType(DataType.Password)]
         [Display(Name = "סיסמא")]
         public string Password { get; set; }
-        [Required]
+
+        
         [Display(Name = "דואר אלקטרוני")]
         [RegularExpression(@"^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$",
         ErrorMessage = "Please Enter Correct Email Address")]
+      //  [Required]
         public string Email { get; set; }
 
+        
         [Display(Name = "מספר דירה")]
-        public int ApartmentNum { get; set; }
-
+        public int? ApartmentNum { get; set; }
+        //
         [Display(Name = "מספר חדר")]
         public RoomNum? Room { get; set; }
+        
 
         [Display(Name = "רמת הרשאה")]
-        public int Authorization { get; set; }
+        public int? Authorization { get; set; }
     }
 }
