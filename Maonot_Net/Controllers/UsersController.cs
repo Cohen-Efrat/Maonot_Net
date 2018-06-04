@@ -57,18 +57,25 @@ namespace Maonot_Net.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,StundetId,FirstName,LastName,Password,Email,ApartmentNum,Room")] User user)
+        public async Task<IActionResult> Create([Bind("StundetId,FirstName,LastName,Password,Email,ApartmentNum,Room")] User user)
         {
-            
-            if (ModelState.IsValid)
+            try
             {
-               user.Password =
-                    BCrypt.Net.BCrypt.HashPassword(user.Password);
-                
-                //user.Password = HashPassword(user.Password);
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    user.Password =
+                         BCrypt.Net.BCrypt.HashPassword(user.Password);
+
+                    //user.Password = HashPassword(user.Password);
+                    _context.Add(user);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch(DbUpdateException)
+            {
+                ModelState.AddModelError("", "לא היה ניתן לשמור את השינויים, נא נסה שנית במועד מאוחר יותר");
+
             }
             return View(user);
         }

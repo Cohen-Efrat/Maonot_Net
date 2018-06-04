@@ -54,13 +54,21 @@ namespace Maonot_Net.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Apartment,RoomNum,FullName,PhoneNumber,Description")] FaultForm faultForm)
+        public async Task<IActionResult> Create([Bind("Apartment,RoomNum,FullName,PhoneNumber,Description")] FaultForm faultForm)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(faultForm);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(faultForm);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (DbUpdateException)
+            {
+                ModelState.AddModelError("", "לא היה ניתן לשמור את השינויים, נא נסה שנית במועד מאוחר יותר");
+
             }
             return View(faultForm);
         }
