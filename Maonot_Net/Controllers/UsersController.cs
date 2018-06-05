@@ -23,14 +23,33 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Users
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? page)
         {
+            ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-         //   ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            //   ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
 
             //  ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
             var users = from s in _context.Users
                            select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                users = users.Where(s => s.LastName.Contains(searchString)
+                                       || s.FirstName.Contains(searchString));
+            }
             switch (sortOrder)
             {
                 case "name_desc":
@@ -48,7 +67,9 @@ namespace Maonot_Net.Controllers
                     users = users.OrderBy(U => U.LastName);
                     break;
             }
-            return View(await users.AsNoTracking().ToListAsync());
+            int pageSize = 3;
+
+            return View(await PaginatedList<User>.CreateAsync(users.AsNoTracking(), page ?? 1, pageSize));
         }
 
         // GET: Users/Details/5
