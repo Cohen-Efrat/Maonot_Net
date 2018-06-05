@@ -23,9 +23,27 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Users
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder,
+        string currentFilter,
+        string searchString,
+        int? page)
         {
-            return View(await _context.Users.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            var users = from s in _context.Users
+                           select s;
+
+
+            int pageSize = 3;
+
+            return View(await PaginatedList<User>.CreateAsync(users.AsNoTracking(), page ?? 1, pageSize));
         }
 
         // GET: Users/Details/5
