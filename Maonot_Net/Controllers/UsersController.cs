@@ -23,27 +23,32 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Users
-        public async Task<IActionResult> Index(string sortOrder,
-        string currentFilter,
-        string searchString,
-        int? page)
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            ViewData["CurrentSort"] = sortOrder;
-            if (searchString != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+         //   ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+            //  ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
             var users = from s in _context.Users
                            select s;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    users = users.OrderByDescending(u => u.LastName);
+                    break;
+                case "fname_desc":
+                    users = users.OrderByDescending(u => u.FirstName);
+                    break;
+                case "fname":
+                    users = users.OrderBy(u => u.FirstName);
+                    break;
 
 
-            int pageSize = 3;
-
-            return View(await PaginatedList<User>.CreateAsync(users.AsNoTracking(), page ?? 1, pageSize));
+                default:
+                    users = users.OrderBy(U => U.LastName);
+                    break;
+            }
+            return View(await users.AsNoTracking().ToListAsync());
         }
 
         // GET: Users/Details/5
