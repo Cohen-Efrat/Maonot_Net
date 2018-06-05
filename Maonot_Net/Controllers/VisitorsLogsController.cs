@@ -125,18 +125,22 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: VisitorsLogs/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var visitorsLog = await _context.VisitorsLogs
+            var visitorsLog = await _context.VisitorsLogs.AsNoTracking()
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (visitorsLog == null)
             {
                 return NotFound();
+            }
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewData["EErrorMessage"] = "המחיקה נכשלה, נא נסה שנית במועד מאוחד יותר";
             }
 
             return View(visitorsLog);
@@ -147,10 +151,21 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var visitorsLog = await _context.VisitorsLogs.SingleOrDefaultAsync(m => m.Id == id);
-            _context.VisitorsLogs.Remove(visitorsLog);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var visitorsLog = await _context.VisitorsLogs.AsNoTracking().SingleOrDefaultAsync(m => m.Id == id);
+            if (visitorsLog == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            try
+            {
+                _context.VisitorsLogs.Remove(visitorsLog);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException)
+            {
+                return RedirectToAction(nameof(Index), new { id = id, saveCahngeError = true });
+            }
         }
 
         private bool VisitorsLogExists(int id)

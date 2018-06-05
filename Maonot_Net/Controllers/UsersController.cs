@@ -132,18 +132,22 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Users/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id,bool? saveChangesError = false)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users
+            var user = await _context.Users.AsNoTracking()
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (user == null)
             {
                 return NotFound();
+            }
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewData["EErrorMessage"] = "המחיקה נכשלה, נא נסה שנית במועד מאוחד יותר";
             }
 
             return View(user);
@@ -154,10 +158,23 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var user = await _context.Users.AsNoTracking().SingleOrDefaultAsync(m => m.ID == id);
+            if (user == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            try
+            {
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+
+            }
+            catch (DbUpdateException)
+            {
+                return RedirectToAction(nameof(Index), new { id = id, saveCahngeError = true });
+            }
+
         }
 
         private bool UserExists(int id)

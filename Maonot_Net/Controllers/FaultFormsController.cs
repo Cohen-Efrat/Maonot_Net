@@ -125,18 +125,22 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: FaultForms/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var faultForm = await _context.FaultForms
+            var faultForm = await _context.FaultForms.AsNoTracking()
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (faultForm == null)
             {
                 return NotFound();
+            }
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewData["EErrorMessage"] = "המחיקה נכשלה, נא נסה שנית במועד מאוחד יותר";
             }
 
             return View(faultForm);
@@ -147,10 +151,22 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var faultForm = await _context.FaultForms.SingleOrDefaultAsync(m => m.ID == id);
-            _context.FaultForms.Remove(faultForm);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var faultForm = await _context.FaultForms.AsNoTracking().SingleOrDefaultAsync(m => m.ID == id);
+            if (faultForm == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            try
+            {
+                _context.FaultForms.Remove(faultForm);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException)
+            {
+                return RedirectToAction(nameof(Index), new { id = id, saveCahngeError = true });
+            }
+
         }
 
         private bool FaultFormExists(int id)

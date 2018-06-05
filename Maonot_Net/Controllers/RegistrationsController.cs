@@ -125,18 +125,22 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Registrations/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var registration = await _context.Registrations
+            var registration = await _context.Registrations.AsNoTracking()
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (registration == null)
             {
                 return NotFound();
+            }
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewData["EErrorMessage"] = "המחיקה נכשלה, נא נסה שנית במועד מאוחד יותר";
             }
 
             return View(registration);
@@ -147,10 +151,21 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var registration = await _context.Registrations.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Registrations.Remove(registration);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var registration = await _context.Registrations.AsNoTracking().SingleOrDefaultAsync(m => m.ID == id);
+            if (registration == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            try
+            {
+                _context.Registrations.Remove(registration);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException)
+            {
+                return RedirectToAction(nameof(Index), new { id = id, saveCahngeError = true });
+            }
         }
 
         private bool RegistrationExists(int id)

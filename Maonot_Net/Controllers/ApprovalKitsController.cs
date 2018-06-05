@@ -125,18 +125,22 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: ApprovalKits/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var approvalKit = await _context.ApprovalKits
+            var approvalKit = await _context.ApprovalKits.AsNoTracking()
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (approvalKit == null)
             {
                 return NotFound();
+            }
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewData["EErrorMessage"] = "המחיקה נכשלה, נא נסה שנית במועד מאוחד יותר";
             }
 
             return View(approvalKit);
@@ -147,10 +151,22 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var approvalKit = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.ID == id);
-            _context.ApprovalKits.Remove(approvalKit);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var approvalKit = await _context.ApprovalKits.AsNoTracking().SingleOrDefaultAsync(m => m.ID == id);
+            if (approvalKit == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            try
+            {
+                _context.ApprovalKits.Remove(approvalKit);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException)
+            {
+                return RedirectToAction(nameof(Index), new { id = id, saveCahngeError = true });
+            }
+
         }
 
         private bool ApprovalKitExists(int id)

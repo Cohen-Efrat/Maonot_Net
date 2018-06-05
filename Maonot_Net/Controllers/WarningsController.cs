@@ -125,18 +125,22 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Warnings/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var warning = await _context.Warnings
+            var warning = await _context.Warnings.AsNoTracking()
                 .SingleOrDefaultAsync(m => m.WarningId == id);
             if (warning == null)
             {
                 return NotFound();
+            }
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewData["EErrorMessage"] = "המחיקה נכשלה, נא נסה שנית במועד מאוחד יותר";
             }
 
             return View(warning);
@@ -147,10 +151,21 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var warning = await _context.Warnings.SingleOrDefaultAsync(m => m.WarningId == id);
-            _context.Warnings.Remove(warning);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var warning = await _context.Warnings.AsNoTracking().SingleOrDefaultAsync(m => m.WarningId == id);
+            if (warning == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            try
+            {
+                _context.Warnings.Remove(warning);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException)
+            {
+                return RedirectToAction(nameof(Index), new { id = id, saveCahngeError = true });
+            }
         }
 
         private bool WarningExists(int id)
