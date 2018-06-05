@@ -31,9 +31,6 @@ namespace Maonot_Net.Controllers
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            //   ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-
-            //  ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
 
             if (searchString != null)
             {
@@ -61,8 +58,6 @@ namespace Maonot_Net.Controllers
                 case "fname":
                     users = users.OrderBy(u => u.FirstName);
                     break;
-
-
                 default:
                     users = users.OrderBy(U => U.LastName);
                     break;

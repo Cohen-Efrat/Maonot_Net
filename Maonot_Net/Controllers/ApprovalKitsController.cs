@@ -20,9 +20,53 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: ApprovalKits
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? page)
         {
-            return View(await _context.ApprovalKits.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            var app = from s in _context.ApprovalKits
+                        select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                app = app.Where(s => s.LastName.Contains(searchString)
+                                       || s.FirstName.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    app = app.OrderByDescending(u => u.LastName);
+                    break;
+                case "fname_desc":
+                    app = app.OrderByDescending(u => u.FirstName);
+                    break;
+                case "fname":
+                    app = app.OrderBy(u => u.FirstName);
+                    break;
+                case "room_type_desc":
+                    app = app.OrderByDescending(u => u.FirstName);
+                    break;
+                case "room_type":
+                    app = app.OrderBy(u => u.RoomType);
+                    break;
+                default:
+                    app = app.OrderBy(U => U.RoomType);
+                    break;
+            }
+            int pageSize = 3;
+            return View(await PaginatedList<ApprovalKit>.CreateAsync(app.AsNoTracking(), page ?? 1, pageSize));
         }
 
         // GET: ApprovalKits/Details/5
