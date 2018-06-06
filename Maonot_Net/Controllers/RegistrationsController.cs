@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Maonot_Net.Data;
 using Maonot_Net.Models;
+using System.IO;
+
 
 namespace Maonot_Net.Controllers
 {
@@ -172,5 +174,7 @@ namespace Maonot_Net.Controllers
         {
             return _context.Registrations.Any(e => e.ID == id);
         }
+
+
     }
 }

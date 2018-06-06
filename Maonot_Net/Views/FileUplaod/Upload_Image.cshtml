@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "Upload_Image";
+}
+
+<!DOCTYPE html>
+
+
+
+<html>
+
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Upload_Image</title>
+
+</head>
+
+<body>
+
+    <form asp-controller="FileUplaod" asp-action="Upload_Image" method="post"
+          enctype="multipart/form-data">
+
+
+
+        <input type="file" name="file" />
+
+        <button type="submit">Upload Image</button>
+
+    </form>
+
+
+
+    <br />
+
+    <label>Uploaded File= @ViewData["FilePath"]</label>
+    @{
+        var data = ViewData["FilePath"];
+    }
+    <p> @data</p>
+
+</body>
+
+</html>
+
