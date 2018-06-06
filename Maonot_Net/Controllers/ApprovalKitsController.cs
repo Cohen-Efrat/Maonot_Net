@@ -28,6 +28,7 @@ namespace Maonot_Net.Controllers
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
 
             if (searchString != null)
             {
@@ -37,8 +38,11 @@ namespace Maonot_Net.Controllers
             {
                 searchString = currentFilter;
             }
+
+            ViewData["CurrentFilter"] = searchString;
+
             var app = from s in _context.ApprovalKits
-                        select s;
+                           select s;
             if (!String.IsNullOrEmpty(searchString))
             {
                 app = app.Where(s => s.LastName.Contains(searchString)
@@ -47,24 +51,26 @@ namespace Maonot_Net.Controllers
             switch (sortOrder)
             {
                 case "name_desc":
-                    app = app.OrderByDescending(u => u.LastName);
+                    app = app.OrderByDescending(s => s.LastName);
                     break;
-                case "fname_desc":
-                    app = app.OrderByDescending(u => u.FirstName);
+                case "first_name_desc":
+                    app = app.OrderByDescending(s => s.FirstName);
                     break;
-                case "fname":
-                    app = app.OrderBy(u => u.FirstName);
+                case "first_name":
+                    app = app.OrderBy(s => s.FirstName);
                     break;
                 case "room_type_desc":
-                    app = app.OrderByDescending(u => u.FirstName);
+                    app = app.OrderByDescending(s => s.RoomType);
                     break;
                 case "room_type":
-                    app = app.OrderBy(u => u.RoomType);
+                    app = app.OrderBy(s => s.RoomType);
                     break;
+
                 default:
-                    app = app.OrderBy(U => U.RoomType);
+                    app = app.OrderBy(s => s.LastName);
                     break;
             }
+
             int pageSize = 3;
             return View(await PaginatedList<ApprovalKit>.CreateAsync(app.AsNoTracking(), page ?? 1, pageSize));
         }

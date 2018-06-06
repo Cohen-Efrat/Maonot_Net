@@ -40,6 +40,8 @@ namespace Maonot_Net.Controllers
             {
                 searchString = currentFilter;
             }
+            ViewData["CurrentFilter"] = searchString;
+
             var users = from s in _context.Users
                            select s;
             if (!String.IsNullOrEmpty(searchString))
