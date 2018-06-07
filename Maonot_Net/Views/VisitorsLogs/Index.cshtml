@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Maonot_Net.Models.VisitorsLog>
+﻿@model PaginatedList<Maonot_Net.Models.VisitorsLog>
+
 
 @{
     ViewData["Title"] = "Index";
@@ -9,75 +10,108 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.EnteryDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.VistorName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.VisitorID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StudentFirstName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StudentLasttName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ExitDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ApartmentNum)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Room)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Signature)
-                </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">תאריך כניסה</a>
+
+            </th>
+            <th>
+              שם מבקר
+            </th>
+            <th>
+                תז מבקר
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">שם פרטי</a>
+
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">שם משפחה</a>
+
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">תאריך יציאה</a>
+
+            </th>
+            <th>
+                מסםר דירה
+            </th>
+            <th>
+                מספר חדר
+            </th>
+            <th>
+                חתימה
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EnteryDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VistorName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VisitorID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StudentFirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StudentLasttName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExitDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ApartmentNum)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Room)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Signature)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EnteryDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VistorName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VisitorID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentFirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentLasttName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExitDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApartmentNum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Signature)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-page="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-page="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

@@ -20,9 +20,61 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: VisitorsLogs
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? page)
         {
-            return View(await _context.VisitorsLogs.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var vistor = from s in _context.VisitorsLogs
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                vistor = vistor.Where(s => s.StudentFirstName.Contains(searchString)
+                                       || s.StudentLasttName.Contains(searchString)
+                                       ||s.VistorName.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    vistor = vistor.OrderByDescending(s => s.StudentLasttName);
+                    break;
+                case "name":
+                    vistor = vistor.OrderBy(s => s.StudentLasttName);
+                    break;
+                case "date_desc":
+                    vistor = vistor.OrderByDescending(s => s.EnteryDate);
+                    break;
+                case "firts_name_desc":
+                    vistor = vistor.OrderByDescending(s => s.StudentFirstName);
+                    break;
+                case "_first_name":
+                    vistor = vistor.OrderBy(s => s.StudentFirstName);
+                    break;
+                default:
+                    vistor = vistor.OrderBy(s => s.EnteryDate);
+                    
+                    break;
+            }
+
+            int pageSize = 3;
+            return View(await PaginatedList<VisitorsLog>.CreateAsync(vistor.AsNoTracking(), page ?? 1, pageSize));
         }
 
         // GET: VisitorsLogs/Details/5

@@ -231,6 +231,19 @@ namespace Maonot_Net.Controllers
             bool validPassword = BCrypt.Net.BCrypt.Verify(pass, uPass);
             return validPassword;
         }
+        public IActionResult LogIn()
+     
+        {
+            return View();
+        }
+        public IActionResult LogIn(User _user)
+        {
+
+            return View();
+        }
+
+
+
 
     }
 }

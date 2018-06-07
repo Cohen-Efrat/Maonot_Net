@@ -20,9 +20,47 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Messages
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? page)
         {
-            return View(await _context.Messages.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var msg = from s in _context.Messages
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                msg = msg.Where(s => s.Content.Contains(searchString)
+                                       || s.Subject.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    msg = msg.OrderByDescending(s => s.Subject);
+                    break;
+
+                default:
+                    msg = msg.OrderBy(s => s.Subject);
+                    break;
+            }
+
+            int pageSize = 3;
+            return View(await PaginatedList<Message>.CreateAsync(msg.AsNoTracking(), page ?? 1, pageSize));
         }
 
         // GET: Messages/Details/5

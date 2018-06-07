@@ -22,9 +22,53 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Registrations
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? page)
         {
-            return View(await _context.Registrations.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var reg = from s in _context.Registrations
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                reg = reg.Where(s => s.LastName.Contains(searchString)
+                                       || s.FirstName.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    reg = reg.OrderByDescending(s => s.LastName);
+                    break;
+                case "first_name_desc":
+                    reg = reg.OrderByDescending(s => s.FirstName);
+                    break;
+                case "first_name":
+                    reg = reg.OrderBy(s => s.FirstName);
+                    break;
+
+                default:
+                    reg = reg.OrderBy(s => s.LastName);
+                    break;
+            }
+
+            int pageSize = 3;
+            return View(await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
         }
 
         // GET: Registrations/Details/5

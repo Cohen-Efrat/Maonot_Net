@@ -20,9 +20,52 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: FaultForms
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? page)
         {
-            return View(await _context.FaultForms.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var faults = from s in _context.FaultForms
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                faults = faults.Where(s => s.FullName.Contains(searchString));
+                                     
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    faults = faults.OrderByDescending(s => s.FullName);
+                    break;
+                case "Date":
+                    faults = faults.OrderBy(s => s.Apartment);
+                    break;
+                case "date_desc":
+                    faults = faults.OrderByDescending(s => s.Apartment);
+                    break;
+                default:
+                    faults = faults.OrderBy(s => s.FullName);
+                    break;
+            }
+
+            int pageSize = 3;
+            return View(await PaginatedList<FaultForm>.CreateAsync(faults.AsNoTracking(), page ?? 1, pageSize));
         }
 
         // GET: FaultForms/Details/5
