@@ -232,35 +232,41 @@ namespace Maonot_Net.Controllers
             return validPassword;
         }
 
-     //   public IActionResult LogIn()
-        //{
-
-       //     return View();
-      //  }
-
-        public async Task<IActionResult> LogIn(User _user)
+        public IActionResult LogIn()
         {
-            var user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId == _user.StundetId);
-            if (user!=null)
+
+            return View();
+        }
+        // https://gist.github.com/saad749/89293084defd99378df73b06d9e35fac לשקול אם להשתמש בזה
+        [HttpPost, ActionName("LogIn")]
+        public IActionResult LogIn(User _user)
+        {
+            var user = _context.Users.SingleOrDefault(u => u.StundetId == _user.StundetId);
+            if (user != null)
             {
-                if (CheckPassword(_user.Password ,user.Password))
+                if (CheckPassword(_user.Password, user.Password))
                 {
                     return RedirectToAction(nameof(Index));
                 }
-
                 else
                 {
-                    TempData["msg"] = "<script>alert('Password was incorrect');</script>";
-                    return View();
+                  ViewBag.Message = "Thank you!";
+                  TempData["msg"] = "<script>alert('Password was incorrect');</script>";
+                    
+                   // return View();
                 }
             }
             else
             {
                 TempData["msg1"] = "<script>alert('E-mail not Found');</script>";
-                return View();
+               // return View();
             }
+            return View();
 
+           
+          
         }
+
 
            
     }
