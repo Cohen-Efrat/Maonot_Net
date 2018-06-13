@@ -225,25 +225,48 @@ namespace Maonot_Net.Controllers
         // bool validPassword = BCrypt.Net.BCrypt.Verify(submittedPassword, hashedPassword);
         // http://davismj.me/blog/bcrypt
         //https://github.com/BcryptNet/bcrypt.net
-        private bool CheckPassword(string pass,string uPass)
+        private bool CheckPassword(string submittedPassword, string hashedPassword)
         {
 
-            bool validPassword = BCrypt.Net.BCrypt.Verify(pass, uPass);
+            bool validPassword = BCrypt.Net.BCrypt.Verify(submittedPassword, hashedPassword);
             return validPassword;
         }
-        public IActionResult LogIn()
-     
-        {
-            return View();
-        }
-        public IActionResult LogIn(User _user)
-        {
 
-            return View();
+     //   public IActionResult LogIn()
+        //{
+
+       //     return View();
+      //  }
+
+        public async Task<IActionResult> LogIn(User _user)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId == _user.StundetId);
+            if (user!=null)
+            {
+                if (CheckPassword(_user.Password ,user.Password))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+
+                else
+                {
+                    TempData["msg"] = "<script>alert('Password was incorrect');</script>";
+                    return View();
+                }
+            }
+            else
+            {
+                TempData["msg1"] = "<script>alert('E-mail not Found');</script>";
+                return View();
+            }
+
         }
+
+           
+    }
 
 
 
 
     }
-}
+

@@ -1,0 +1,38 @@
+﻿@model Maonot_Net.Models.User
+
+@{
+    ViewData["Title"] = "LogInAsync";
+}
+
+<h2>LogInAsync</h2>
+
+<h4>User</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="LogInAsync">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="StundetId" class="control-label"></label>
+                <input asp-for="StundetId" class="form-control" />
+                <span asp-validation-for="StundetId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="התחבר" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+@Html.Raw(TempData["msg"])
+@Html.Raw(TempData["msg1"])
+
