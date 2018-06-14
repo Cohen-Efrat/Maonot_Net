@@ -22,18 +22,18 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Registrations
-        public async Task<IActionResult> Index(String m){
+        public async Task<IActionResult> Index(){
 
             return View();
         }
-
 
 
         public async Task<IActionResult> Index_Single_Male(
             string sortOrder,
             string currentFilter,
             string searchString,
-            int? page)
+            int? page
+            )
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
