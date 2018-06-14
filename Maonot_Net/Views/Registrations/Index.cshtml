@@ -85,7 +85,8 @@
     </thead>
     <tbody>
         @foreach (var item in Model)
-        {
+         
+            {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.StundetId)
@@ -150,8 +151,9 @@
                     <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
                 </td>
             </tr>
-        }
-    </tbody>
+                    
+                }
+        </tbody>
 </table>
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";

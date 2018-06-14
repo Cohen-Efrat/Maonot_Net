@@ -21,6 +21,15 @@ namespace Maonot_Net.Controllers
             _context = context;
         }
 
+        public System.Linq.IQueryable<Maonot_Net.Models.Registration> display()
+        {
+            var reg = from s in _context.Registrations
+                      where s.gender.Equals(Gender.זכר) && s.ApertmantType.Equals(ApertmantType.יחיד)
+                      select s;
+            return reg;
+        }
+
+
         // GET: Registrations
         public async Task<IActionResult> Index(
             string sortOrder,
@@ -43,7 +52,7 @@ namespace Maonot_Net.Controllers
 
             ViewData["CurrentFilter"] = searchString;
 
-            var reg = from s in _context.Registrations
+            var reg = from s in _context.Registrations where s.gender.Equals(Gender.זכר) &&  s.ApertmantType.Equals(ApertmantType.יחיד)
                            select s;
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -66,7 +75,7 @@ namespace Maonot_Net.Controllers
                     reg = reg.OrderBy(s => s.LastName);
                     break;
             }
-
+          
             int pageSize = 3;
             return View(await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
         }
@@ -79,8 +88,9 @@ namespace Maonot_Net.Controllers
                 return NotFound();
             }
 
-            var registration = await _context.Registrations
-                .SingleOrDefaultAsync(m => m.ID == id);
+            //var registration = await _context.Registrations
+            // .SingleOrDefaultAsync(m => m.ID == id);
+            var registration = display();
             if (registration == null)
             {
                 return NotFound();
