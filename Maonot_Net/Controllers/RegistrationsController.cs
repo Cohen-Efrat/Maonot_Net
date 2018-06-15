@@ -27,6 +27,107 @@ namespace Maonot_Net.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Index_Couples(
+    string sortOrder,
+    string currentFilter,
+    string searchString,
+    int? page
+    )
+        {
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var reg = from s in _context.Registrations
+                      where s.ApertmantType.Equals(ApertmantType.זוגי)
+                      select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                reg = reg.Where(s => s.LastName.Contains(searchString)
+                                       || s.FirstName.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    reg = reg.OrderByDescending(s => s.LastName);
+                    break;
+                case "first_name_desc":
+                    reg = reg.OrderByDescending(s => s.FirstName);
+                    break;
+                case "first_name":
+                    reg = reg.OrderBy(s => s.FirstName);
+                    break;
+
+                default:
+                    reg = reg.OrderBy(s => s.LastName);
+                    break;
+            }
+
+            int pageSize = 3;
+            return View(await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
+        }
+
+        public async Task<IActionResult> Index_Single_Female(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? page
+            )
+        {
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var reg = from s in _context.Registrations
+                      where s.gender.Equals(Gender.נקבה) && s.ApertmantType.Equals(ApertmantType.יחיד)
+                      select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                reg = reg.Where(s => s.LastName.Contains(searchString)
+                                       || s.FirstName.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    reg = reg.OrderByDescending(s => s.LastName);
+                    break;
+                case "first_name_desc":
+                    reg = reg.OrderByDescending(s => s.FirstName);
+                    break;
+                case "first_name":
+                    reg = reg.OrderBy(s => s.FirstName);
+                    break;
+
+                default:
+                    reg = reg.OrderBy(s => s.LastName);
+                    break;
+            }
+
+            int pageSize = 3;
+            return View(await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
+        }
 
         public async Task<IActionResult> Index_Single_Male(
             string sortOrder,
