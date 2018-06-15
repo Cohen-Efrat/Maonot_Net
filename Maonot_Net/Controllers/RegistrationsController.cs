@@ -210,7 +210,7 @@ namespace Maonot_Net.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,StundetId,LastName,FirstName,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID,ParentLastName,PartnerFirstName,ParentAge")] Registration registration)
+        public async Task<IActionResult> Create([Bind("ID,StundetId,LastName,FirstName,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID,ParentLastName,PartnerFirstName,ParentAge,Total")] Registration registration)
         {
             try
             {

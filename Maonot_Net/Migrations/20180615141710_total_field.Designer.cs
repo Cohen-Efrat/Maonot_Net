@@ -12,9 +12,10 @@ using System;
 namespace Maonot_Net.Migrations
 {
     [DbContext(typeof(MaonotNetContext))]
-    partial class MaonotNetContextModelSnapshot : ModelSnapshot
+    [Migration("20180615141710_total_field")]
+    partial class total_field
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

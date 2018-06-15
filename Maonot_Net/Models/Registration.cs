@@ -124,7 +124,7 @@ namespace Maonot_Net.Models
         // צרוף מסמכים על על הכנסת הורים
         //צירוף מכתב אישי
 
-
+        public int? Total { get; set; }
 
 
 
