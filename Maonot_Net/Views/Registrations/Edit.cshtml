@@ -43,6 +43,10 @@
                 <input asp-for="City" class="form-control" />
                 <span asp-validation-for="City" class="text-danger"></span>
             </div>
+            <p>
+                ניקוד: <input onblur="findTotal()" class="control-label" type="text" name="qty" id="qty1" /><br>
+            </p>
+            <br />
             <div class="form-group">
                 <label asp-for="Adress" class="control-label"></label>
                 <input asp-for="Adress" class="form-control" />
@@ -73,15 +77,21 @@
                 <input asp-for="TypeOfService" class="form-control" />
                 <span asp-validation-for="TypeOfService" class="text-danger"></span>
             </div>
+            <input onblur="findTotal()" type="text" name="qty" id="qty1" /><br>
+
             <div class="form-group">
                 <label asp-for="HealthCondition" class="control-label"></label>
                 <input asp-for="HealthCondition" class="form-control" />
                 <span asp-validation-for="HealthCondition" class="text-danger"></span>
+                <input onblur="findTotal()" type="text" name="qty" id="qty2" /><br>
+
             </div>
             <div class="form-group">
                 <label asp-for="Seniority" class="control-label"></label>
                 <input asp-for="Seniority" class="form-control" />
                 <span asp-validation-for="Seniority" class="text-danger"></span>
+                <input onblur="findTotal()" type="text" name="qty" id="qty3" /><br>
+
             </div>
             <div class="form-group">
                 <label asp-for="ApertmantType" class="control-label"></label>
@@ -108,6 +118,17 @@
                 <input asp-for="ParentAge" class="form-control" />
                 <span asp-validation-for="ParentAge" class="text-danger"></span>
             </div>
+            <input onblur="findTotal()" type="text" name="qty" id="qty4" /><br>
+
+            <div class="form-group">
+                <label asp-for="Total" class="control-label"></label>
+                <input asp-for="Total" class="form-control" name="total" id="total" />
+                <span asp-validation-for="Total" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
@@ -122,3 +143,15 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+<script type="text/javascript">
+    function findTotal() {
+        var arr = document.getElementsByName('qty');
+        var tot = 0;
+        for (var i = 0; i < arr.length; i++) {
+            if (parseInt(arr[i].value))
+                tot += parseInt(arr[i].value);
+        }
+        document.getElementById('total').value = tot;
+    }
+
+</script>
