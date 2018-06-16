@@ -75,7 +75,7 @@ namespace Maonot_Net.Controllers
             }
 
             int pageSize = 3;
-            return View(await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
+            return View("viewReg",await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
         }
 
         public async Task<IActionResult> Index_Single_Female(
@@ -126,7 +126,7 @@ namespace Maonot_Net.Controllers
             }
 
             int pageSize = 3;
-            return View(await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
+            return View("viewReg", await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
         }
 
         public async Task<IActionResult> Index_Single_Male(
@@ -177,7 +177,7 @@ namespace Maonot_Net.Controllers
             }
           
             int pageSize = 3;
-            return View(await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
+            return View("viewReg",await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
         }
 
         // GET: Registrations/Details/5
