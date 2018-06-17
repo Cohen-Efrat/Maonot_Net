@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Maonot_Net.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Maonot_Net.Data
 {
@@ -92,6 +93,9 @@ namespace Maonot_Net.Data
                 context.Warnings.Add(u);
             }
             context.SaveChanges();
+
+
+
 
         }
 

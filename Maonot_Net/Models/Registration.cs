@@ -87,7 +87,7 @@ namespace Maonot_Net.Models
         [Display(Name = "כתובת")]
         public string Adress { get; set; }
         [Display(Name = "מיקוד")]
-        public int PostalCode { get; set; }
+        public int? PostalCode { get; set; }
         [Required]
         [Display(Name = "מספר פלאפון")]
         [RegularExpression(@"^0\d([\d]{0,1})([-]{0,1})\d{7}$", ErrorMessage = "Please Enter Correct Phone Number(9/10 digits")]
@@ -113,13 +113,13 @@ namespace Maonot_Net.Models
         // להוסיף אפשרות לצרף מסמכים לשדות חייל בודד, שרות צבאי, ומגבלות רפואיות
         // יש אפשרות לצרף מסמכי תעודת זהות של ההורים
         // יצירת טבלה דינמית שמאפשרת להוסיף הורים\אחים ולתת עליהם את הנתונים הרלוונטים
-        public int ParentID { get; set; }
+        public int? ParentID { get; set; }
         public string ParentLastName { get; set; }
         public string PartnerFirstName { get; set; }
         // [DataType(DataType.Date)]
         //  [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         //public DateTime PartnerBday { get; set; }
-        public int ParentAge { get; set; }
+        public int? ParentAge { get; set; }
         // אפשרות לצירוף מסמכים על בן\בת הזוג
         // צרוף מסמכים על על הכנסת הורים
         //צירוף מכתב אישי

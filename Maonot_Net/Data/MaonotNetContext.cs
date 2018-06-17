@@ -21,6 +21,7 @@ namespace Maonot_Net.Data
         public DbSet<Message> Messages { get; set; }
         public DbSet<VisitorsLog> VisitorsLogs { get; set; }
         public DbSet<Warning> Warnings { get; set; }
+        public DbSet<Authorization> Authorizations { get; set; }
 
 
     }

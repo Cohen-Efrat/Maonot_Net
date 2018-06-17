@@ -42,8 +42,8 @@ namespace Maonot_Net.Models
         //
         [Display(Name = "מספר חדר")]
         public RoomNum? Room { get; set; }
-        
 
+        public Authorization Aut { get; set; }
         [Display(Name = "רמת הרשאה")]
         public int? Authorization { get; set; }
     }

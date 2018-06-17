@@ -42,11 +42,11 @@ namespace Maonot_Net.Controllers
             ViewData["CurrentFilter"] = searchString;
 
             var faults = from s in _context.FaultForms
-                           select s;
+                         select s;
             if (!String.IsNullOrEmpty(searchString))
             {
                 faults = faults.Where(s => s.FullName.Contains(searchString));
-                                     
+
             }
             switch (sortOrder)
             {
@@ -216,5 +216,8 @@ namespace Maonot_Net.Controllers
         {
             return _context.FaultForms.Any(e => e.ID == id);
         }
+
+
+
     }
 }
