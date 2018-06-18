@@ -100,6 +100,7 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("StundetId,FirstName,LastName,Password,Email,ApartmentNum,Room")] User user)
         {
+            ViewData["Authorization"] = new SelectList(_context.Authorizations, "Id", "AutName");
             try
             {
                 if (ModelState.IsValid)
@@ -107,7 +108,7 @@ namespace Maonot_Net.Controllers
                     user.Password =
                          BCrypt.Net.BCrypt.HashPassword(user.Password);
 
-                    //user.Password = HashPassword(user.Password);
+                    
                     _context.Add(user);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -124,6 +125,7 @@ namespace Maonot_Net.Controllers
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewData["Authorization"] = new SelectList(_context.Authorizations, "Id", "AutName");
             if (id == null)
             {
                 return NotFound();
