@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Maonot_Net.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Session;
 
 namespace Maonot_Net
 {
@@ -26,6 +27,8 @@ namespace Maonot_Net
             services.AddDbContext<MaonotNetContext>(options =>
     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +45,8 @@ namespace Maonot_Net
             }
 
             app.UseStaticFiles();
-
+            app.UseIdentity();
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

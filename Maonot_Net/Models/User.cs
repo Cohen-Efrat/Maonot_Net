@@ -10,6 +10,7 @@ namespace Maonot_Net.Models
 {
     public class User
     {
+
         public int ID { get; set; }
         [Required]
         [Display(Name = "תעודת זהות")]

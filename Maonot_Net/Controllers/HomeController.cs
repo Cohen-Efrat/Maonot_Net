@@ -10,9 +10,9 @@ namespace Maonot_Net.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index(Gender g)
+        public IActionResult Index()
         {
-            return View(g);
+            return View();
         }
 
         public IActionResult About()

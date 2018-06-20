@@ -10,6 +10,7 @@ using Maonot_Net.Models;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using BCrypt.Net;
+using Microsoft.AspNetCore.Http;
 
 namespace Maonot_Net.Controllers
 {
@@ -31,7 +32,7 @@ namespace Maonot_Net.Controllers
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-
+            ViewBag.session = HttpContext.Session.GetString("User");
             if (searchString != null)
             {
                 page = 1;
@@ -86,10 +87,19 @@ namespace Maonot_Net.Controllers
 
             return View(user);
         }
+        public async Task<int?> GetAut()
+        {
+            string id = HttpContext.Session.GetString("User");
+
+            var user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(id));
+            return user.Authorization;
+        }
 
         // GET: Users/Create
         public IActionResult Create()
         {
+            ViewBag.session = HttpContext.Session.GetString("User");
+            ViewBag.LinkeableId = GetAut();
             return View();
         }
 
@@ -98,7 +108,7 @@ namespace Maonot_Net.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StundetId,FirstName,LastName,Password,Email,ApartmentNum,Room")] User user)
+        public async Task<IActionResult> Create([Bind("StundetId,FirstName,LastName,Password,Email,ApartmentNum,Room, Authorization")] User user)
         {
             ViewData["Authorization"] = new SelectList(_context.Authorizations, "Id", "AutName");
             try
@@ -107,7 +117,7 @@ namespace Maonot_Net.Controllers
                 {
                     user.Password =
                          BCrypt.Net.BCrypt.HashPassword(user.Password);
-
+                    user.Authorization = 8;
                     
                     _context.Add(user);
                     await _context.SaveChangesAsync();
@@ -248,6 +258,8 @@ namespace Maonot_Net.Controllers
             {
                 if (CheckPassword(_user.Password, user.Password))
                 {
+                    string s = _user.StundetId.ToString();
+                    HttpContext.Session.SetString("User", s);
                     return RedirectToAction(nameof(Index));
                 }
                 else
