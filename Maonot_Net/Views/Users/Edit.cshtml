@@ -1,16 +1,17 @@
 ﻿@model Maonot_Net.Models.User
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "EDIT";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<h2>EDIT</h2>
 
 <h4>User</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="EDIT">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ID" />
             <div class="form-group">
@@ -29,9 +30,12 @@
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
+
+                @* <input type="hidden" asp-for="Password" />)*@
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
+                @*   <input asp-for="Password" class="form-control" />*@
+                @Html.TextBoxFor(Model => Model.Password, new { @class = "form-control make-pass" })
+
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
@@ -50,7 +54,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Authorization" class="control-label"></label>
-                <select asp-for="Authorization" class="form-control" asp-items="ViewBag.Authorization"></select>
+                <input asp-for="Authorization" class="form-control" />
                 <span asp-validation-for="Authorization" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -64,6 +68,3 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
