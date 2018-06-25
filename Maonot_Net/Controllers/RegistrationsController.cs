@@ -8,8 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Maonot_Net.Data;
 using Maonot_Net.Models;
 using System.IO;
-
-
+using Microsoft.AspNetCore.Http;
 
 namespace Maonot_Net.Controllers
 {
@@ -19,12 +18,25 @@ namespace Maonot_Net.Controllers
 
         public RegistrationsController(MaonotNetContext context)
         {
+
             _context = context;
+        }
+
+        public async Task<int> GetAut()
+        {
+            string id = HttpContext.Session.GetString("User");
+            var user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(id));
+            if (user == null) { return 0; }
+            else
+            {
+                return user.Authorization;
+            }
+
         }
 
         // GET: Registrations
         public async Task<IActionResult> Index(){
-
+           
             return View();
         }
 

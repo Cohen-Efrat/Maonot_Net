@@ -30,62 +30,103 @@ namespace Maonot_Net.Controllers
             string searchString,
             int? page)
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.session = HttpContext.Session.GetString("User");
-            if (searchString != null)
+            int Aut = GetAut().Result;
+            ViewBag.Aut = Aut;
+            if (Aut == 1)
             {
-                page = 1;
+                ViewData["CurrentSort"] = sortOrder;
+                ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+                ViewBag.session = HttpContext.Session.GetString("User");
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
+                ViewData["CurrentFilter"] = searchString;
+
+                var users = from s in _context.Users
+                            select s;
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    users = users.Where(s => s.LastName.Contains(searchString)
+                                           || s.FirstName.Contains(searchString));
+                }
+                switch (sortOrder)
+                {
+                    case "name_desc":
+                        users = users.OrderByDescending(u => u.LastName);
+                        break;
+                    case "fname_desc":
+                        users = users.OrderByDescending(u => u.FirstName);
+                        break;
+                    case "fname":
+                        users = users.OrderBy(u => u.FirstName);
+                        break;
+                    default:
+                        users = users.OrderBy(U => U.LastName);
+                        break;
+                }
+                int pageSize = 3;
+
+                return View(await PaginatedList<User>.CreateAsync(users.AsNoTracking(), page ?? 1, pageSize));
+            }
+            else if (Aut == 0)
+            {
+                return RedirectToAction("NotAut", "Home");
             }
             else
             {
-                searchString = currentFilter;
+                TempData["msg"] = "<script>alert('אין לך הרשאה לדף זה');</script>";
+                return RedirectToAction("Wellcome", "Home");
             }
-            ViewData["CurrentFilter"] = searchString;
 
-            var users = from s in _context.Users
-                           select s;
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                users = users.Where(s => s.LastName.Contains(searchString)
-                                       || s.FirstName.Contains(searchString));
-            }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    users = users.OrderByDescending(u => u.LastName);
-                    break;
-                case "fname_desc":
-                    users = users.OrderByDescending(u => u.FirstName);
-                    break;
-                case "fname":
-                    users = users.OrderBy(u => u.FirstName);
-                    break;
-                default:
-                    users = users.OrderBy(U => U.LastName);
-                    break;
-            }
-            int pageSize = 3;
-
-            return View(await PaginatedList<User>.CreateAsync(users.AsNoTracking(), page ?? 1, pageSize));
         }
 
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            string s = HttpContext.Session.GetString("User");
+            if (s != null)
             {
-                return NotFound();
+                var _user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(s));
+                int Aut = GetAut().Result;
+                ViewBag.Aut = Aut;
+
+                if (Aut == 1 || _user.ID == id)
+                {
+
+                    if (id == null)
+                    {
+                        return NotFound();
+                    }
+
+                    var user = await _context.Users
+                        .SingleOrDefaultAsync(m => m.ID == id);
+                    if (user == null)
+                    {
+                        return NotFound();
+                    }
+
+                    return View(user);
+                }
+                else if (Aut == 0)
+                {
+                    return RedirectToAction("NotAut", "Home");
+                }
+                else
+                {
+                    TempData["msg"] = "<script>alert('אין לך הרשאה לדף זה');</script>";
+                    return RedirectToAction("Wellcome", "Home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("NotAut", "Home");
             }
 
-            var user = await _context.Users
-                .SingleOrDefaultAsync(m => m.ID == id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return View(user);
         }
         public async Task<int> GetAut()
         {
@@ -102,25 +143,26 @@ namespace Maonot_Net.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
+            ViewData["Authorization"] = new SelectList(_context.Authorizations, "Id", "AutName");
             ViewBag.session = HttpContext.Session.GetString("User");
             int Aut = GetAut().Result;
             ViewBag.Aut = Aut;
 
-            if (Aut == 1 || Aut == 9)
-            {
-                return View();
-            }
-            else if (Aut == 0)
-            {
-                return RedirectToAction("NotAut", "Home");
-            }
-            else
-            {
-                TempData["msg"] = "<script>alert('אין לך הרשאה לדף זה');</script>";
-                return RedirectToAction("Wellcome", "Home");
-            }
+             if (Aut == 1 || Aut == 9)
+              {
+                  return View();
+              }
+              else if (Aut == 0)
+              {
+                  return RedirectToAction("NotAut", "Home");
+              }
+              else
+              {
+                  TempData["msg"] = "<script>alert('אין לך הרשאה לדף זה');</script>";
+                  return RedirectToAction("Wellcome", "Home");
+              }
 
-
+           
         }
 
         // POST: Users/Create
@@ -130,7 +172,7 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("StundetId,FirstName,LastName,Password,Email,ApartmentNum,Room, Authorization")] User user)
         {
-            ViewData["Authorization"] = new SelectList(_context.Authorizations, "Id", "AutName");
+            
             try
             {
                 user.Authorization = 8;
@@ -156,18 +198,29 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             ViewData["Authorization"] = new SelectList(_context.Authorizations, "Id", "AutName");
-           // var Aut = Convert.ToInt32(GetAut());
-            if (id == null)
-            {
-                return NotFound();
-            }
+            int Aut = GetAut().Result;
+            ViewBag.Aut = Aut;
+            if(Aut==1){
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var user = await _context.Users.SingleOrDefaultAsync(m => m.ID == id);
-            if (user == null)
+                var user = await _context.Users.SingleOrDefaultAsync(m => m.ID == id);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                return View(user); }
+            else if (Aut == 0)
             {
-                return NotFound();
+                return RedirectToAction("NotAut", "Home");
             }
-            return View(user);
+            else
+            {
+                TempData["msg"] = "<script>alert('אין לך הרשאה לדף זה');</script>";
+                return RedirectToAction("Wellcome", "Home");
+            }
         }
 
         // POST: Users/Edit/5
@@ -302,9 +355,18 @@ namespace Maonot_Net.Controllers
            
           
         }
+        
+        public ActionResult LogOut()
+        {
+            HttpContext.Session.Remove("User");
+
+           // await .SignOutAsync();
+            return RedirectToAction("Index", "Home");
+
+        }
 
 
-           
+
     }
 
 
