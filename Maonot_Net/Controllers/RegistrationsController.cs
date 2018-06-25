@@ -10,6 +10,7 @@ using Maonot_Net.Models;
 using System.IO;
 
 
+
 namespace Maonot_Net.Controllers
 {
     public class RegistrationsController : Controller

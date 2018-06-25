@@ -99,8 +99,26 @@ namespace Maonot_Net.Controllers
         public IActionResult Create()
         {
             ViewBag.session = HttpContext.Session.GetString("User");
-            ViewBag.LinkeableId = GetAut();
-            return View();
+            var Aut = GetAut();
+            var a = Convert.ToInt32(Aut);
+
+
+            ViewBag.Aut = a;
+            if (a==1 || a==9)
+            {
+                return View();
+            }
+            else if(a==0)
+            {
+                return RedirectToAction("NotAut", "Home");
+            }
+            else
+            {
+                TempData["msg"] = "<script>alert('אין לך הרשאה לדף זה');</script>";
+                return RedirectToAction("Wellcome", "Home");
+            }
+           
+          
         }
 
         // POST: Users/Create
@@ -113,11 +131,11 @@ namespace Maonot_Net.Controllers
             ViewData["Authorization"] = new SelectList(_context.Authorizations, "Id", "AutName");
             try
             {
+                user.Authorization = 8;
                 if (ModelState.IsValid)
                 {
                     user.Password =
                          BCrypt.Net.BCrypt.HashPassword(user.Password);
-                    user.Authorization = 8;
                     
                     _context.Add(user);
                     await _context.SaveChangesAsync();
@@ -136,6 +154,7 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             ViewData["Authorization"] = new SelectList(_context.Authorizations, "Id", "AutName");
+            var Aut = Convert.ToInt32(GetAut());
             if (id == null)
             {
                 return NotFound();

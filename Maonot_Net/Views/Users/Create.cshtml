@@ -2,13 +2,20 @@
 
 @{
     ViewData["Title"] = "Create";
-    var a = @ViewBag.LinkableId;
+    var a = @ViewBag.Aut;
 
 
 }
 
-<h2>Create</h2>
+@if (a == 1)
+{
+    <h2>רישום משתמש חדש</h2>
 
+}
+else
+{
+    <h2>הרשמה</h2>
+}
 <h4>User</h4>
 <hr />
 <div class="row">
@@ -40,18 +47,6 @@
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            @if (a == 2)
-            {
-            <div class="form-group">
-                <label asp-for="ApartmentNum" class="control-label"></label>
-                <input asp-for="ApartmentNum" class="form-control" />
-                <span asp-validation-for="ApartmentNum" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Room" class="control-label"></label>
-                <input asp-for="Room" class="form-control" />
-                <span asp-validation-for="Room" class="text-danger"></span>
-            </div>}
             @if (a == 1)
             {
                 <div class="form-group">
@@ -62,15 +57,15 @@
                 </div>
             }
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="שמירה" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
-@if (a == 1|| a==2)
+@if (a == 1)
 {
     <div>
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index">חזרה לרשימה</a>
     </div>
 }
 

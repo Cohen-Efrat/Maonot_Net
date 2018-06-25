@@ -33,5 +33,14 @@ namespace Maonot_Net.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public IActionResult NotAut()
+        {
+            return View();
+        }
+        public IActionResult Wellcome()
+        {
+            return View();
+        }
+
     }
 }

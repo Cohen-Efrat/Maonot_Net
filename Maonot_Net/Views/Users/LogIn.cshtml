@@ -23,6 +23,8 @@
                 <input asp-for="Password" class="form-control" />
 
             </div>
+            @Html.Raw(TempData["msg"])
+            @Html.Raw(TempData["msg1"])
 
             <div class="form-group">
                 <input type="submit" value="התחבר" class="btn btn-default" />
@@ -34,7 +36,6 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
- @Html.Raw(TempData["msg"])
-@Html.Raw(TempData["msg1"])
+
 
 

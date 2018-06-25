@@ -5,9 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>EDIT</h2>
+<h2> ערוך</h2>
 
-<h4>User</h4>
+<h4>משתמש</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -31,10 +31,10 @@
             </div>
             <div class="form-group">
 
-                @* <input type="hidden" asp-for="Password" />)*@
-                <label asp-for="Password" class="control-label"></label>
-                @*   <input asp-for="Password" class="form-control" />*@
-                @Html.TextBoxFor(Model => Model.Password, new { @class = "form-control make-pass" })
+                <input type="hidden" asp-for="Password" />
+                @*<label asp-for="Password" class="control-label"></label>
+                   <input asp-for="Password" class="form-control" />
+                Html.TextBoxFor(Model => Model.Password, new { @class = "form-control make-pass" })*@
 
             </div>
             <div class="form-group">
