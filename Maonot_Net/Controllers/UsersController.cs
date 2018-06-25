@@ -87,28 +87,30 @@ namespace Maonot_Net.Controllers
 
             return View(user);
         }
-        public async Task<int?> GetAut()
+        public async Task<int> GetAut()
         {
             string id = HttpContext.Session.GetString("User");
-
             var user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(id));
-            return user.Authorization;
+            if (user == null) { return 0; }
+            else
+            {
+                return user.Authorization;
+            }
+            
         }
 
         // GET: Users/Create
         public IActionResult Create()
         {
             ViewBag.session = HttpContext.Session.GetString("User");
-            var Aut = GetAut();
-            var a = Convert.ToInt32(Aut);
+            int Aut = GetAut().Result;
+            ViewBag.Aut = Aut;
 
-
-            ViewBag.Aut = a;
-            if (a==1 || a==9)
+            if (Aut == 1 || Aut == 9)
             {
                 return View();
             }
-            else if(a==0)
+            else if (Aut == 0)
             {
                 return RedirectToAction("NotAut", "Home");
             }
@@ -117,8 +119,8 @@ namespace Maonot_Net.Controllers
                 TempData["msg"] = "<script>alert('אין לך הרשאה לדף זה');</script>";
                 return RedirectToAction("Wellcome", "Home");
             }
-           
-          
+
+
         }
 
         // POST: Users/Create
@@ -154,7 +156,7 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             ViewData["Authorization"] = new SelectList(_context.Authorizations, "Id", "AutName");
-            var Aut = Convert.ToInt32(GetAut());
+           // var Aut = Convert.ToInt32(GetAut());
             if (id == null)
             {
                 return NotFound();
@@ -173,7 +175,7 @@ namespace Maonot_Net.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,StundetId,FirstName,LastName,Password,Email,ApartmentNum,Room")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,StundetId,FirstName,LastName,Password,Email,ApartmentNum,Room,Authorization")] User user)
         {
             if (id != user.ID)
             {

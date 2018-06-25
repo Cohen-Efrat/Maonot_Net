@@ -54,7 +54,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Authorization" class="control-label"></label>
-                <input asp-for="Authorization" class="form-control" />
+                <select asp-for="Authorization" class="form-control" asp-items="ViewBag.Authorization"></select>
                 <span asp-validation-for="Authorization" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -46,6 +46,6 @@ namespace Maonot_Net.Models
 
         public Authorization Aut { get; set; }
         [Display(Name = "רמת הרשאה")]
-        public int? Authorization { get; set; }
+        public int Authorization { get; set; }
     }
 }
