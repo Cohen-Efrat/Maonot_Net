@@ -244,18 +244,22 @@ namespace Maonot_Net.Controllers
             }
             return View(visitorsLog);
         }
-
+        // צריך להוסיף שדייר יוכל לחתום רק על האורח שלו
         public async Task<ActionResult> ConifiremSigniture(int id, int StudentId , string password)
         {
+            
+            ViewBag.StudentId = StudentId;
             var functions = new functions();
-            var user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(StudentId));
+            var user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId == StudentId);
             if (user != null)
             {
                 if (functions.CheckPassword(password, user.Password))
                 {
-                    string s = StudentId.ToString();
+         
                     var visitorsLog = await _context.VisitorsLogs.SingleOrDefaultAsync(m => m.Id == id);
                     visitorsLog.Signature = true;
+                    _context.Update(visitorsLog);
+                    await _context.SaveChangesAsync();
 
                     return View();
                 }
@@ -264,13 +268,15 @@ namespace Maonot_Net.Controllers
                     ViewBag.Message = "Thank you!";
                     TempData["msg"] = "<script>alert('Password was incorrect');</script>";
 
-                    // return View();
+                   return RedirectToAction(nameof(Index));
                 }
             }
+           return  RedirectToAction("Index", "Home");
 
-            return View();
 
-           
+
+
+
         }
 
 
