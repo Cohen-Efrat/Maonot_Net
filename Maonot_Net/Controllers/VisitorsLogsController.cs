@@ -228,5 +228,12 @@ namespace Maonot_Net.Controllers
         {
             return _context.VisitorsLogs.Any(e => e.Id == id);
         }
+
+        public ActionResult Signature()
+        {
+            return View();
+        }
+
+
     }
 }
