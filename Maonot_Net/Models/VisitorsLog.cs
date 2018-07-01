@@ -25,8 +25,10 @@ namespace Maonot_Net.Models
 
         [Required]
         [Display(Name = "תאריך ושעת כניסה")]
+        [DisplayFormat(ApplyFormatInEditMode = false)]
         [DataType(DataType.Date)]
         public DateTime EnteryDate { get; set; }
+
         [Required]
         [Display(Name = "שם אורח")]
         public string VistorName { get; set; }
@@ -39,9 +41,14 @@ namespace Maonot_Net.Models
         [Required]
         [Display(Name = "שם משפחה של הדייר")]
         public string StudentLasttName { get; set; }
+
         [Display(Name = "תאריך ושעת יציאה")]
+        [DisplayFormat(ApplyFormatInEditMode = false)]
         [DataType(DataType.Date)]
-        public DateTime ExitDate { get; set; }
+        //public DateTime? ExitDate { get; set; }
+        public DateTime? ExitDate { get; set; }
+
+
         [Required]
         [Display(Name = "מספר דירה")]
         public int ApartmentNum { get; set; }

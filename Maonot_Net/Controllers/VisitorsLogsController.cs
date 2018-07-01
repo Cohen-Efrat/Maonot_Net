@@ -110,6 +110,9 @@ namespace Maonot_Net.Controllers
         {
             try
             {
+                visitorsLog.EnteryDate = DateTime.Now;
+               // DateTime date1 = new DateTime(2008, 6, 1, 7, 47, 0);
+               // visitorsLog.ExitDate = date1;
                 if (ModelState.IsValid)
                 {
                     _context.Add(visitorsLog);
@@ -157,6 +160,7 @@ namespace Maonot_Net.Controllers
             {
                 try
                 {
+                    visitorsLog.ExitDate = DateTime.Now;
                     _context.Update(visitorsLog);
                     await _context.SaveChangesAsync();
                 }

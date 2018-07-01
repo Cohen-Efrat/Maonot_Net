@@ -12,11 +12,12 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="EnteryDate" class="control-label"></label>
-                <input asp-for="EnteryDate" class="form-control" />
-                <span asp-validation-for="EnteryDate" class="text-danger"></span>
-            </div>
+            @*
+        <div class="form-group">
+            <label asp-for="EnteryDate" class="control-label"></label>
+            <input asp-for="EnteryDate" class="form-control" />
+            <span asp-validation-for="EnteryDate" class="text-danger"></span>
+        </div> *@
             <div class="form-group">
                 <label asp-for="VistorName" class="control-label"></label>
                 <input asp-for="VistorName" class="form-control" />
@@ -37,11 +38,11 @@
                 <input asp-for="StudentLasttName" class="form-control" />
                 <span asp-validation-for="StudentLasttName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ExitDate" class="control-label"></label>
-                <input asp-for="ExitDate" class="form-control" />
-                <span asp-validation-for="ExitDate" class="text-danger"></span>
-            </div>
+            @*  <div class="form-group">
+            <label asp-for="ExitDate" class="control-label"></label>
+            <input asp-for="ExitDate" class="form-control" />
+            <span asp-validation-for="ExitDate" class="text-danger"></span>
+        </div>*@
             <div class="form-group">
                 <label asp-for="ApartmentNum" class="control-label"></label>
                 <input asp-for="ApartmentNum" class="form-control" />
