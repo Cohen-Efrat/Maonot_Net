@@ -229,9 +229,48 @@ namespace Maonot_Net.Controllers
             return _context.VisitorsLogs.Any(e => e.Id == id);
         }
 
-        public ActionResult Signature()
+        public async Task<IActionResult> Signature(int? id)
+     
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var visitorsLog = await _context.VisitorsLogs.SingleOrDefaultAsync(m => m.Id == id);
+            if (visitorsLog == null)
+            {
+                return NotFound();
+            }
+            return View(visitorsLog);
+        }
+
+        public async Task<ActionResult> ConifiremSigniture(int id, int StudentId , string password)
+        {
+            var functions = new functions();
+            var user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(StudentId));
+            if (user != null)
+            {
+                if (functions.CheckPassword(password, user.Password))
+                {
+                    string s = StudentId.ToString();
+                    var visitorsLog = await _context.VisitorsLogs.SingleOrDefaultAsync(m => m.Id == id);
+                    visitorsLog.Signature = true;
+
+                    return View();
+                }
+                else
+                {
+                    ViewBag.Message = "Thank you!";
+                    TempData["msg"] = "<script>alert('Password was incorrect');</script>";
+
+                    // return View();
+                }
+            }
+
             return View();
+
+           
         }
 
 

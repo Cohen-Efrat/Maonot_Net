@@ -1,32 +1,42 @@
-﻿@model Maonot_Net.Models.User
+﻿@model Maonot_Net.Models.VisitorsLog
 
 @{
     ViewData["Title"] = "Signature";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var item = Model;
 }
 
 <h2>Signature</h2>
 <div class="row">
     <div class="col-md-4">
-        <form asp-controller="VisitorsLogs" asp-action="Signature">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="StundetId" class="control-label"></label>
-                <input asp-for="StundetId" class="form-control" />
+        בתאריך @Html.DisplayNameFor(model => model.EnteryDate)
+        @Html.DisplayNameFor(model => model.VistorName)  התארח אצלך אורח בשם
+        ונשאר/ה מעבר ל00:00, לכן נדרשת חתימה.
 
+        <div class="row">
+            <div class="col-md-4">
+                <form  asp-controller="VisitorsLogs" asp-action="ConifiremSigniture" >
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+
+                    </div>
+
+                    <div class="form-group">
+
+
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="חתימה" class="btn btn-default" />
+                    </div>
+                </form>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-
-            </div>
 
 
-            <div class="form-group">
-                <input type="submit" value="חתימה" class="btn btn-default" />
-            </div>
-        </form>
+
+            <a asp-controller="VisitorsLogs" asp-action="Signature" asp-route-id="@item.Id">חתום</a>
+
+        </div>
     </div>
-</div>
 
