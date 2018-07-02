@@ -22,6 +22,7 @@ namespace Maonot_Net.Data
         public DbSet<VisitorsLog> VisitorsLogs { get; set; }
         public DbSet<Warning> Warnings { get; set; }
         public DbSet<Authorization> Authorizations { get; set; }
+        public DbSet<Maonot_Net.Models.FamilyM> FamilyM { get; set; }
 
 
     }

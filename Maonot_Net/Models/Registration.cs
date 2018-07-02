@@ -124,6 +124,8 @@ namespace Maonot_Net.Models
         // צרוף מסמכים על על הכנסת הורים
         //צירוף מכתב אישי
 
+        public List<FamilyM> Family { get; set; }
+
         public int? Total { get; set; }
 
 

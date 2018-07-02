@@ -342,6 +342,10 @@ namespace Maonot_Net.Controllers
             return _context.Registrations.Any(e => e.ID == id);
         }
 
+        public ActionResult AddObject(int index)
+        {
+            return PartialView("_EmptyRow", new FamilyM { Index = index });
+        }
 
     }
 }
