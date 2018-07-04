@@ -1,0 +1,24 @@
+﻿@model Maonot_Net.Models.FamilyM
+
+
+        <form asp-controller="FamilyMs" asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="StudentID" class="control-label"></label>
+                <select asp-for="StudentID" class="form-control" asp-items="ViewBag.StudentID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="FullName" class="control-label"></label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Age" class="control-label"></label>
+                <input asp-for="Age" class="form-control" />
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="הוסף" class="btn btn-default" />
+            </div>
+        </form>
+

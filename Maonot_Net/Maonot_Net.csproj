@@ -21,8 +21,4 @@
     <None Include="wwwroot\Files\contract.pdf" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\FamilyM\" />
-  </ItemGroup>
-
 </Project>

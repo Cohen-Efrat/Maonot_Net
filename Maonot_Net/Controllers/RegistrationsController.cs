@@ -215,6 +215,8 @@ namespace Maonot_Net.Controllers
         // GET: Registrations/Create
         public IActionResult Create()
         {
+            ViewData["StudentID"] = new SelectList(_context.Registrations, "ID", "StundetId");
+
             return View();
         }
 
@@ -342,10 +344,7 @@ namespace Maonot_Net.Controllers
             return _context.Registrations.Any(e => e.ID == id);
         }
 
-        public ActionResult AddObject(int index)
-        {
-            return PartialView("_EmptyRow", new FamilyM { Index = index });
-        }
+
 
     }
 }
