@@ -233,6 +233,7 @@ namespace Maonot_Net.Controllers
                 {
                     _context.Add(registration);
                     await _context.SaveChangesAsync();
+                
                     return RedirectToAction(nameof(Index));
                 }
             }
