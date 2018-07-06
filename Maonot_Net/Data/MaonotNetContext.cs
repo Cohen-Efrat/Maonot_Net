@@ -24,6 +24,9 @@ namespace Maonot_Net.Data
         public DbSet<Authorization> Authorizations { get; set; }
         public DbSet<Maonot_Net.Models.FamilyM> FamilyM { get; set; }
 
-
+        internal int IntFromSQL(string v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

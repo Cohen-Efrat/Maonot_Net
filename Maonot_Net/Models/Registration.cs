@@ -113,20 +113,25 @@ namespace Maonot_Net.Models
         // להוסיף אפשרות לצרף מסמכים לשדות חייל בודד, שרות צבאי, ומגבלות רפואיות
         // יש אפשרות לצרף מסמכי תעודת זהות של ההורים
         // יצירת טבלה דינמית שמאפשרת להוסיף הורים\אחים ולתת עליהם את הנתונים הרלוונטים
-        public int? ParentID { get; set; }
-        public string ParentLastName { get; set; }
-        public string PartnerFirstName { get; set; }
-        // [DataType(DataType.Date)]
-        //  [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        //public DateTime PartnerBday { get; set; }
-        public int? ParentAge { get; set; }
+        public int? ParentID1 { get; set; }
+        public string ParentFullName1 { get; set; }
+        public int? ParentAge1 { get; set; }
+
+
+        public int? ParentID2 { get; set; }
+        public string ParentFullName2 { get; set; }
+        public int? ParentAge2 { get; set; }
+
         // אפשרות לצירוף מסמכים על בן\בת הזוג
         // צרוף מסמכים על על הכנסת הורים
         //צירוף מכתב אישי
 
-        public ICollection<FamilyM> Enrollments { get; set; }
+        public ICollection<FamilyM> Family { get; set; }
+        
 
         public int? Total { get; set; }
+
+        public Boolean Approved;
 
 
 

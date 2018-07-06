@@ -334,7 +334,9 @@ namespace Maonot_Net.Controllers
                 if (CheckPassword(_user.Password, user.Password))
                 {
                     string s = _user.StundetId.ToString();
+                    string a = user.Authorization.ToString();
                     HttpContext.Session.SetString("User", s);
+                    HttpContext.Session.SetString("Aut", a);
                     return RedirectToAction(nameof(Index));
                 }
                 else

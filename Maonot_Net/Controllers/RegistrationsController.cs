@@ -36,20 +36,23 @@ namespace Maonot_Net.Controllers
 
         // GET: Registrations
         public async Task<IActionResult> Index(){
-           
+
+            ViewBag.cF = queryFemale().Count(); 
+
+            ViewBag.cM = queryMale().Count();
+
+            ViewBag.cC = queryCouples().Count();
+
+
             return View();
         }
 
         public async Task<IActionResult> Index_Couples(
-    string sortOrder,
     string currentFilter,
     string searchString,
     int? page
     )
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-
 
             if (searchString != null)
             {
@@ -59,48 +62,29 @@ namespace Maonot_Net.Controllers
             {
                 searchString = currentFilter;
             }
-
+        
             ViewData["CurrentFilter"] = searchString;
 
-            var reg = from s in _context.Registrations
-                      where s.ApertmantType.Equals(ApertmantType.זוגי)
-                      select s;
+            var reg = queryCouples();
+            ViewBag.c = reg.Count();
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 reg = reg.Where(s => s.LastName.Contains(searchString)
                                        || s.FirstName.Contains(searchString));
             }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    reg = reg.OrderByDescending(s => s.LastName);
-                    break;
-                case "first_name_desc":
-                    reg = reg.OrderByDescending(s => s.FirstName);
-                    break;
-                case "first_name":
-                    reg = reg.OrderBy(s => s.FirstName);
-                    break;
 
-                default:
-                    reg = reg.OrderBy(s => s.LastName);
-                    break;
-            }
-
-            int pageSize = 3;
+            int pageSize = 10;
             return View("viewReg",await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
         }
 
         public async Task<IActionResult> Index_Single_Female(
-            string sortOrder,
+
             string currentFilter,
             string searchString,
             int? page
             )
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-
 
             if (searchString != null)
             {
@@ -113,45 +97,25 @@ namespace Maonot_Net.Controllers
 
             ViewData["CurrentFilter"] = searchString;
 
-            var reg = from s in _context.Registrations
-                      where s.gender.Equals(Gender.נקבה) && s.ApertmantType.Equals(ApertmantType.יחיד)
-                      select s;
+            var reg = queryFemale();
+            ViewBag.c = reg.Count();
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 reg = reg.Where(s => s.LastName.Contains(searchString)
                                        || s.FirstName.Contains(searchString));
             }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    reg = reg.OrderByDescending(s => s.LastName);
-                    break;
-                case "first_name_desc":
-                    reg = reg.OrderByDescending(s => s.FirstName);
-                    break;
-                case "first_name":
-                    reg = reg.OrderBy(s => s.FirstName);
-                    break;
 
-                default:
-                    reg = reg.OrderBy(s => s.LastName);
-                    break;
-            }
-
-            int pageSize = 3;
+            int pageSize = 10;
             return View("viewReg", await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
         }
 
         public async Task<IActionResult> Index_Single_Male(
-            string sortOrder,
             string currentFilter,
             string searchString,
             int? page
             )
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-
 
             if (searchString != null)
             {
@@ -164,32 +128,16 @@ namespace Maonot_Net.Controllers
 
             ViewData["CurrentFilter"] = searchString;
 
-            var  reg = from s in _context.Registrations
-                                where s.gender.Equals(Gender.זכר) && s.ApertmantType.Equals(ApertmantType.יחיד)
-                                select s;
+            var reg = queryMale();
+            ViewBag.c = reg.Count();
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 reg = reg.Where(s => s.LastName.Contains(searchString)
                                        || s.FirstName.Contains(searchString));
             }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    reg = reg.OrderByDescending(s => s.LastName);
-                    break;
-                case "first_name_desc":
-                    reg = reg.OrderByDescending(s => s.FirstName);
-                    break;
-                case "first_name":
-                    reg = reg.OrderBy(s => s.FirstName);
-                    break;
-
-                default:
-                    reg = reg.OrderBy(s => s.LastName);
-                    break;
-            }
           
-            int pageSize = 3;
+            int pageSize = 10;
             return View("viewReg",await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
         }
 
@@ -225,7 +173,7 @@ namespace Maonot_Net.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,StundetId,LastName,FirstName,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID,ParentLastName,PartnerFirstName,ParentAge,Total")] Registration registration)
+        public async Task<IActionResult> Create([Bind("ID,StundetId,LastName,FirstName,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID,ParentLastName,PartnerFirstName,ParentAge")] Registration registration)
         {
             try
             {
@@ -266,7 +214,7 @@ namespace Maonot_Net.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,StundetId,LastName,FirstName,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID,ParentLastName,PartnerFirstName,ParentAge")] Registration registration)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,StundetId,LastName,FirstName,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID,ParentLastName,PartnerFirstName,ParentAge,Total")] Registration registration)
         {
             if (id != registration.ID)
             {
@@ -344,7 +292,30 @@ namespace Maonot_Net.Controllers
         {
             return _context.Registrations.Any(e => e.ID == id);
         }
-
+        public System.Linq.IQueryable<Maonot_Net.Models.Registration> queryFemale()
+        {
+            var reg = from s in _context.Registrations
+                      orderby s.Total descending
+                      where s.gender.Equals(Gender.נקבה) && s.ApertmantType.Equals(ApertmantType.יחיד)
+                      select s;
+            return reg;
+        }
+        public System.Linq.IQueryable<Maonot_Net.Models.Registration> queryMale()
+        {
+            var reg = from s in _context.Registrations
+                      orderby s.Total descending
+                      where s.gender.Equals(Gender.זכר) && s.ApertmantType.Equals(ApertmantType.יחיד)
+                      select s;
+            return reg;
+        }
+        public System.Linq.IQueryable<Maonot_Net.Models.Registration> queryCouples()
+        {
+            var reg = from s in _context.Registrations
+                      orderby s.Total descending
+                      where s.ApertmantType.Equals(ApertmantType.זוגי)
+                      select s;
+            return reg;
+        }
 
 
     }
