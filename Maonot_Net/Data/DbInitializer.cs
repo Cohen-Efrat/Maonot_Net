@@ -75,8 +75,8 @@ namespace Maonot_Net.Data
 
             var Vlog = new VisitorsLog[]
             {
-                new VisitorsLog{VistorName= "דני שובבני", StudentFirstName= users.Single(u=> u.StundetId== 302875125).FirstName,
-                    StudentLasttName = users.Single(u=> u.StundetId== 302875125).LastName, ApartmentNum=927,Room=RoomNum.OneA, EnteryDate= DateTime.Parse("2018-05-22"),VisitorID= 123456789}
+                new VisitorsLog{VistorName= "דני שובבני", StudentFullName= users.Single(u=> u.StundetId== 302875125).FullName,
+                     ApartmentNum=927,Room=RoomNum.OneA, EnteryDate= DateTime.Parse("2018-05-22"),VisitorID= 123456789}
             };
             foreach (VisitorsLog u in Vlog)
             {

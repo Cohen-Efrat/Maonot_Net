@@ -37,10 +37,7 @@ namespace Maonot_Net.Models
         public int VisitorID { get; set; }
         [Required]
         [Display(Name = "שם פרטי של הדייר")]
-        public string StudentFirstName { get; set; }
-        [Required]
-        [Display(Name = "שם משפחה של הדייר")]
-        public string StudentLasttName { get; set; }
+        public string StudentFullName { get; set; }
 
         [Display(Name = "תאריך ושעת יציאה")]
         [DisplayFormat(ApplyFormatInEditMode = false)]
@@ -58,6 +55,7 @@ namespace Maonot_Net.Models
         [Display(Name = "חתימה")]
         public Boolean Signature { get; set; }
 
+        public ICollection<ApprovalKit> App { get; set; }
 
     }
 

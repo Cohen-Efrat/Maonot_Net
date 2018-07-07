@@ -35,7 +35,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="gender" class="control-label"></label>
-                <input asp-for="gender" class="form-control" />
+                <select asp-for="gender" asp-items="Html.GetEnumSelectList<Gender>()" class="form-control">
+                    <option selected="selected" value=""></option>
+                </select>
                 <span asp-validation-for="gender" class="text-danger"></span>
             </div>
             <div>
@@ -62,35 +64,47 @@
             </div>
             <div class="form-group">
                 <label asp-for="FieldOfStudy" class="control-label"></label>
-                <input asp-for="FieldOfStudy" class="form-control" />
+                <select asp-for="FieldOfStudy" asp-items="Html.GetEnumSelectList<FieldStudy>()" class="form-control">
+                    <option selected="selected" value=""></option>
+                </select>
                 <span asp-validation-for="FieldOfStudy" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="SteadyYear" class="control-label"></label>
-                <input asp-for="SteadyYear" class="form-control" />
+                <select asp-for="SteadyYear" asp-items="Html.GetEnumSelectList<Year>()" class="form-control">
+                    <option selected="selected" value=""></option>
+                </select>
                 <span asp-validation-for="SteadyYear" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="TypeOfService" class="control-label"></label>
-                <input asp-for="TypeOfService" class="form-control" />
+                <select asp-for="TypeOfService" asp-items="Html.GetEnumSelectList<Service>()" class="form-control">
+                    <option selected="selected" value=""></option>
+                </select>
                 <span asp-validation-for="TypeOfService" class="text-danger"></span>
 
             </div>
             <div class="form-group">
                 <label asp-for="HealthCondition" class="control-label"></label>
-                <input asp-for="HealthCondition" class="form-control" />
+                <select asp-for="HealthCondition" asp-items="Html.GetEnumSelectList<HealthCondition>()" class="form-control">
+                    <option selected="selected" value=""></option>
+                </select>
                 <span asp-validation-for="HealthCondition" class="text-danger"></span>
 
             </div>
             <div class="form-group">
                 <label asp-for="Seniority" class="control-label"></label>
-                <input asp-for="Seniority" class="form-control" />
+                <select asp-for="Seniority" asp-items="Html.GetEnumSelectList<Year>()" class="form-control">
+                    <option selected="selected" value=""></option>
+                </select>
                 <span asp-validation-for="Seniority" class="text-danger"></span>
 
             </div>
             <div class="form-group">
                 <label asp-for="ApertmantType" class="control-label"></label>
-                <input asp-for="ApertmantType" class="form-control" />
+                <select asp-for="ApertmantType" asp-items="Html.GetEnumSelectList<ApertmantType>()" class="form-control">
+                    <option selected="selected" value=""></option>
+                </select>
                 <span asp-validation-for="ApertmantType" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -128,7 +142,6 @@
 
             </div>
 
-            @await Html.PartialAsync("Family")
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>

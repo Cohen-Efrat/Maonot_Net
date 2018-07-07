@@ -32,27 +32,42 @@
             </div>
             <div class="form-group">
                 <label asp-for="RoomType" class="control-label"></label>
-                <input asp-for="RoomType" class="form-control" />
+                <select asp-for="RoomType" asp-items="Html.GetEnumSelectList<RoomType>()" class="form-control" >
+                    <option selected="selected" value=""></option>
+                </select>
+                @*    <input asp-for="RoomType" class="form-control" />*@
                 <span asp-validation-for="RoomType" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="LivingWithReligious" class="control-label"></label>
-                <input asp-for="LivingWithReligious" class="form-control" />
+                <select asp-for="LivingWithReligious" asp-items="Html.GetEnumSelectList<Choose>()" class="form-control">
+                    <option selected="selected" value=""></option>
+                </select>
+                @*<input asp-for="LivingWithReligious" class="form-control" />*@
                 <span asp-validation-for="LivingWithReligious" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="LivingWithSmoker" class="control-label"></label>
-                <input asp-for="LivingWithSmoker" class="form-control" />
+                <select asp-for="LivingWithSmoker" asp-items="Html.GetEnumSelectList<Choose>()" class="form-control">
+                    <option selected="selected" value=""></option>
+                </select>
+                @*<input asp-for="LivingWithSmoker" class="form-control" />*@
                 <span asp-validation-for="LivingWithSmoker" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ReligiousType" class="control-label"></label>
-                <input asp-for="ReligiousType" class="form-control" />
+                <select asp-for="ReligiousType" asp-items="Html.GetEnumSelectList<Religious>()" class="form-control">
+                    <option selected="selected" value=""></option>
+                </select>
+               @* <input asp-for="ReligiousType" class="form-control" />*@
                 <span asp-validation-for="ReligiousType" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="HealthCondition" class="control-label"></label>
-                <input asp-for="HealthCondition" class="form-control" />
+                <select asp-for="HealthCondition" asp-items="Html.GetEnumSelectList<HealthCondition>()" class="form-control">
+                    <option selected="selected" value=""></option>
+                </select>
+                @*<input asp-for="HealthCondition" class="form-control" />*@
                 <span asp-validation-for="HealthCondition" class="text-danger"></span>
             </div>
             <div class="form-group">

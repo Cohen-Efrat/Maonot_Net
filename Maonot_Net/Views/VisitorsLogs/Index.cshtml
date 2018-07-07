@@ -33,11 +33,7 @@
                 תז מבקר
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">שם פרטי</a>
-
-            </th>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">שם משפחה</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">שם מלא</a>
 
             </th>
             <th>
@@ -70,11 +66,9 @@
                     @Html.DisplayFor(modelItem => item.VisitorID)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.StudentFirstName)
+                    @Html.DisplayFor(modelItem => item.StudentFullName)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StudentLasttName)
-                </td>
+
                 <td>
                     @Html.DisplayFor(modelItem => item.ExitDate)
                 </td>

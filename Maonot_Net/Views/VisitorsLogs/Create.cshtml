@@ -11,6 +11,7 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
+            @ViewBag.users
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @*
         <div class="form-group">
@@ -29,15 +30,11 @@
                 <span asp-validation-for="VisitorID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StudentFirstName" class="control-label"></label>
-                <input asp-for="StudentFirstName" class="form-control" />
-                <span asp-validation-for="StudentFirstName" class="text-danger"></span>
+                <label asp-for="StudentFullName" class="control-label"></label>
+                <select asp-for="StudentFullName" class="form-control" asp-items="ViewBag.FullName"></select>
+                <span asp-validation-for="StudentFullName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="StudentLasttName" class="control-label"></label>
-                <input asp-for="StudentLasttName" class="form-control" />
-                <span asp-validation-for="StudentLasttName" class="text-danger"></span>
-            </div>
+
             @*  <div class="form-group">
             <label asp-for="ExitDate" class="control-label"></label>
             <input asp-for="ExitDate" class="form-control" />
@@ -50,9 +47,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="Room" class="control-label"></label>
-                <input asp-for="Room" class="form-control" />
-                <span asp-validation-for="Room" class="text-danger"></span>
-            </div>
+                
+                <select asp-for="Room" asp-items="Html.GetEnumSelectList<RoomNum>()" class="form-control">
+                    <option selected="selected" value=""></option></select>
+                    <span asp-validation-for="Room" class="text-danger"></span>
+</div>
             <div class="form-group">
                 <div class="checkbox">
                     <label>

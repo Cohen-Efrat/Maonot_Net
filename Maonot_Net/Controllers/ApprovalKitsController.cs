@@ -96,6 +96,7 @@ namespace Maonot_Net.Controllers
         // GET: ApprovalKits/Create
         public IActionResult Create()
         {
+
             return View();
         }
 

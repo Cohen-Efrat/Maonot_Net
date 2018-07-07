@@ -84,6 +84,8 @@ namespace Maonot_Net.Controllers
         // GET: Messages/Create
         public IActionResult Create()
         {
+            ViewData["users"] = new SelectList(_context.Users, "ID", "FullName");
+
             return View();
         }
 

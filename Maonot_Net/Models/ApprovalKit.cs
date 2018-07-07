@@ -42,7 +42,13 @@ namespace Maonot_Net.Models
         [Required]
         [Display(Name = "שם פרטי")]
         public string FirstName { get; set; }
-
+        public string FullName
+        {
+            get
+            {
+                return LastName + ", " + FirstName;
+            }
+        }
         public Registration Reg { get; set; }
         //public User User { get; set; }
         [Required]
@@ -60,13 +66,13 @@ namespace Maonot_Net.Models
         [Display(Name = "מגבלות רפואיות")]
         public HealthCondition? HealthCondition { get; set; }
         [Display(Name = "העדפה לשותף 1")]
-        public int PartnerId1 { get; set; }
+        public int? PartnerId1 { get; set; }
         [Display(Name = "העדפה לשותף 2")]
-        public int PartnerId2 { get; set; }
+        public int? PartnerId2 { get; set; }
         [Display(Name = "העדפה לשותף 3")]
-        public int PartnerId3 { get; set; }
+        public int? PartnerId3 { get; set; }
         [Display(Name = "העדפה לשותף 4")]
-        public int PartnerId4 { get; set; }
+        public int? PartnerId4 { get; set; }
 
         //הוספת אופציית העלאת נתונים
 

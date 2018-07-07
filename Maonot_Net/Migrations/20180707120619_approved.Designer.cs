@@ -12,9 +12,10 @@ using System;
 namespace Maonot_Net.Migrations
 {
     [DbContext(typeof(MaonotNetContext))]
-    partial class MaonotNetContextModelSnapshot : ModelSnapshot
+    [Migration("20180707120619_approved")]
+    partial class approved
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,13 +41,13 @@ namespace Maonot_Net.Migrations
                     b.Property<int?>("LivingWithSmoker")
                         .IsRequired();
 
-                    b.Property<int?>("PartnerId1");
+                    b.Property<int>("PartnerId1");
 
-                    b.Property<int?>("PartnerId2");
+                    b.Property<int>("PartnerId2");
 
-                    b.Property<int?>("PartnerId3");
+                    b.Property<int>("PartnerId3");
 
-                    b.Property<int?>("PartnerId4");
+                    b.Property<int>("PartnerId4");
 
                     b.Property<int?>("RegID");
 
@@ -58,13 +59,9 @@ namespace Maonot_Net.Migrations
 
                     b.Property<int>("StundetId");
 
-                    b.Property<int?>("VisitorsLogId");
-
                     b.HasKey("ID");
 
                     b.HasIndex("RegID");
-
-                    b.HasIndex("VisitorsLogId");
 
                     b.ToTable("ApprovalKits");
                 });
@@ -263,7 +260,10 @@ namespace Maonot_Net.Migrations
 
                     b.Property<bool>("Signature");
 
-                    b.Property<string>("StudentFullName")
+                    b.Property<string>("StudentFirstName")
+                        .IsRequired();
+
+                    b.Property<string>("StudentLasttName")
                         .IsRequired();
 
                     b.Property<int>("VisitorID");
@@ -304,10 +304,6 @@ namespace Maonot_Net.Migrations
                     b.HasOne("Maonot_Net.Models.Registration", "Reg")
                         .WithMany()
                         .HasForeignKey("RegID");
-
-                    b.HasOne("Maonot_Net.Models.VisitorsLog")
-                        .WithMany("App")
-                        .HasForeignKey("VisitorsLogId");
                 });
 
             modelBuilder.Entity("Maonot_Net.Models.FamilyM", b =>

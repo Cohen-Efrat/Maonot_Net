@@ -173,7 +173,7 @@ namespace Maonot_Net.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,StundetId,LastName,FirstName,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID,ParentLastName,PartnerFirstName,ParentAge")] Registration registration)
+        public async Task<IActionResult> Create([Bind("ID,StundetId,LastName,FirstName,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID1,ParentfullName1,ParentAge1,ParentID2,ParentfullName2,ParentAge2,Total,Approved")] Registration registration)
         {
             try
             {
@@ -214,7 +214,7 @@ namespace Maonot_Net.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,StundetId,LastName,FirstName,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID,ParentLastName,PartnerFirstName,ParentAge,Total")] Registration registration)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,StundetId,LastName,FirstName,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID1,ParentfullName1,ParentAge1,ParentID2,ParentfullName2,ParentAge2,Total,Approved")] Registration registration)
         {
             if (id != registration.ID)
             {
@@ -288,7 +288,43 @@ namespace Maonot_Net.Controllers
             }
         }
 
-        private bool RegistrationExists(int id)
+        public async Task<IActionResult> App(int? id)
+
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var reg = await _context.Registrations.SingleOrDefaultAsync(m => m.ID == id);
+            if (reg == null)
+            {
+                return NotFound();
+            }
+            return View(reg);
+        }
+        // צריך להוסיף שדייר יוכל לחתום רק על האורח שלו
+        public async Task<ActionResult> Yes(int id)
+        {
+
+            var reg = await _context.Registrations.SingleOrDefaultAsync(m => m.ID == id);
+            if (reg != null)
+            {
+
+                reg.Approved = true;
+                _context.Update(reg);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Registrations");
+
+
+
+            }
+            return RedirectToAction("Index", "Home");
+
+
+
+        }
+            private bool RegistrationExists(int id)
         {
             return _context.Registrations.Any(e => e.ID == id);
         }

@@ -46,26 +46,19 @@ namespace Maonot_Net.Controllers
                            select s;
             if (!String.IsNullOrEmpty(searchString))
             {
-                vistor = vistor.Where(s => s.StudentFirstName.Contains(searchString)
-                                       || s.StudentLasttName.Contains(searchString)
+                vistor = vistor.Where(s => s.StudentFullName.Contains(searchString)
                                        ||s.VistorName.Contains(searchString));
             }
             switch (sortOrder)
             {
                 case "name_desc":
-                    vistor = vistor.OrderByDescending(s => s.StudentLasttName);
+                    vistor = vistor.OrderByDescending(s => s.StudentFullName);
                     break;
                 case "name":
-                    vistor = vistor.OrderBy(s => s.StudentLasttName);
+                    vistor = vistor.OrderBy(s => s.StudentFullName);
                     break;
                 case "date_desc":
                     vistor = vistor.OrderByDescending(s => s.EnteryDate);
-                    break;
-                case "firts_name_desc":
-                    vistor = vistor.OrderByDescending(s => s.StudentFirstName);
-                    break;
-                case "_first_name":
-                    vistor = vistor.OrderBy(s => s.StudentFirstName);
                     break;
                 default:
                     vistor = vistor.OrderBy(s => s.EnteryDate);
@@ -98,6 +91,7 @@ namespace Maonot_Net.Controllers
         // GET: VisitorsLogs/Create
         public IActionResult Create()
         {
+            ViewData["FullName"] = new SelectList(_context.ApprovalKits, "ID", "FullName");
             return View();
         }
 
@@ -106,8 +100,10 @@ namespace Maonot_Net.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EnteryDate,VistorName,VisitorID,StudentFirstName,StudentLasttName,ExitDate,ApartmentNum,Room,Signature")] VisitorsLog visitorsLog)
+        public async Task<IActionResult> Create([Bind("EnteryDate,VistorName,VisitorID,StudentFullName,ExitDate,ApartmentNum,Room,Signature")] VisitorsLog visitorsLog)
         {
+            
+            
             try
             {
                 visitorsLog.EnteryDate = DateTime.Now;
@@ -131,6 +127,7 @@ namespace Maonot_Net.Controllers
         // GET: VisitorsLogs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewData["FullName"] = new SelectList(_context.ApprovalKits, "ID", "FullName");
             if (id == null)
             {
                 return NotFound();
@@ -149,7 +146,7 @@ namespace Maonot_Net.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,EnteryDate,VistorName,VisitorID,StudentFirstName,StudentLasttName,ExitDate,ApartmentNum,Room,Signature")] VisitorsLog visitorsLog)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,EnteryDate,VistorName,VisitorID,StudentFullName,ExitDate,ApartmentNum,Room,Signature")] VisitorsLog visitorsLog)
         {
             if (id != visitorsLog.Id)
             {

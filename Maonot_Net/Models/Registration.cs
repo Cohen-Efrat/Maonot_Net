@@ -72,6 +72,14 @@ namespace Maonot_Net.Models
         [Required]
         [Display(Name = "שם פרטי")]
         public string FirstName { get; set; }
+        [Display(Name = "Full Name")]
+        public string FullName
+        {
+            get
+            {
+                return LastName + ", " + FirstName;
+            }
+        }
         public User User { get; set; }
         [Required]
         [Display(Name = "תאריך לידה")]
@@ -131,7 +139,7 @@ namespace Maonot_Net.Models
 
         public int? Total { get; set; }
 
-        public Boolean Approved;
+        public Boolean Approved { get; set; }
 
 
 

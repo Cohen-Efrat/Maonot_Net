@@ -12,9 +12,10 @@ using System;
 namespace Maonot_Net.Migrations
 {
     [DbContext(typeof(MaonotNetContext))]
-    partial class MaonotNetContextModelSnapshot : ModelSnapshot
+    [Migration("20180707153948_FullName2")]
+    partial class FullName2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,13 +59,9 @@ namespace Maonot_Net.Migrations
 
                     b.Property<int>("StundetId");
 
-                    b.Property<int?>("VisitorsLogId");
-
                     b.HasKey("ID");
 
                     b.HasIndex("RegID");
-
-                    b.HasIndex("VisitorsLogId");
 
                     b.ToTable("ApprovalKits");
                 });
@@ -304,10 +301,6 @@ namespace Maonot_Net.Migrations
                     b.HasOne("Maonot_Net.Models.Registration", "Reg")
                         .WithMany()
                         .HasForeignKey("RegID");
-
-                    b.HasOne("Maonot_Net.Models.VisitorsLog")
-                        .WithMany("App")
-                        .HasForeignKey("VisitorsLogId");
                 });
 
             modelBuilder.Entity("Maonot_Net.Models.FamilyM", b =>

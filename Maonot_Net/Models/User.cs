@@ -22,7 +22,13 @@ namespace Maonot_Net.Models
         [Required]
         [Display(Name = "שם משפחה")]
         public string LastName { get; set; }
-
+        public string FullName
+        {
+            get
+            {
+                return LastName + ", " + FirstName;
+            }
+        }
         [Required]
        [RegularExpression(@"(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$",
         ErrorMessage = "הסיסמה צריכה להיות 8 תווים לפחות, הסיסמה חייבת להכיל אותיות גדולות וקטנות, הסיסמה חייבת להכיל מספר, הסיסמה חייבת להכיל תו יחודי.")]
@@ -45,6 +51,7 @@ namespace Maonot_Net.Models
         public RoomNum? Room { get; set; }
 
         public Authorization Aut { get; set; }
+
         [Display(Name = "רמת הרשאה")]
         public int Authorization { get; set; }
     }
