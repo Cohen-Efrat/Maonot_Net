@@ -53,7 +53,7 @@ namespace Maonot_Net.Controllers
     int? page
     )
         {
-
+            ViewBag.type = "Index_Couples";
             if (searchString != null)
             {
                 page = 1;
@@ -74,7 +74,7 @@ namespace Maonot_Net.Controllers
                                        || s.FirstName.Contains(searchString));
             }
 
-            int pageSize = 10;
+            int pageSize = 3;
             return View("viewReg",await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
         }
 
@@ -85,7 +85,7 @@ namespace Maonot_Net.Controllers
             int? page
             )
         {
-
+            ViewBag.type = "Index_Single_Female";
             if (searchString != null)
             {
                 page = 1;
@@ -106,7 +106,7 @@ namespace Maonot_Net.Controllers
                                        || s.FirstName.Contains(searchString));
             }
 
-            int pageSize = 10;
+            int pageSize = 3;
             return View("viewReg", await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
         }
 
@@ -116,7 +116,7 @@ namespace Maonot_Net.Controllers
             int? page
             )
         {
-
+            ViewBag.type = "Index_Single_Male";
             if (searchString != null)
             {
                 page = 1;
@@ -137,7 +137,7 @@ namespace Maonot_Net.Controllers
                                        || s.FirstName.Contains(searchString));
             }
           
-            int pageSize = 10;
+            int pageSize = 3;
             return View("viewReg",await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
         }
 
