@@ -148,11 +148,11 @@ namespace Maonot_Net.Controllers
             int Aut = GetAut().Result;
             ViewBag.Aut = Aut;
 
-             if (Aut == 1 || Aut == 9)
+             if (Aut == 1 || Aut == 0)
               {
                   return View();
               }
-              else if (Aut == 0)
+              else if (Aut == 9)
               {
                   return RedirectToAction("NotAut", "Home");
               }
@@ -178,12 +178,19 @@ namespace Maonot_Net.Controllers
                 user.Authorization = 8;
                 if (ModelState.IsValid)
                 {
+                    Boolean u = _context.Users.Any(e => e.StundetId == user.StundetId);
+                    if (u==false) { 
                     user.Password =
                          BCrypt.Net.BCrypt.HashPassword(user.Password);
                     
                     _context.Add(user);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        TempData["msg"] = "<script>alert('משתמש קיים במערכת');</script>";
+                    }
                 }
             }
             catch(DbUpdateException)

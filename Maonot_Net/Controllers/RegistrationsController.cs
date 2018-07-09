@@ -179,10 +179,11 @@ namespace Maonot_Net.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _context.Add(registration);
-                    await _context.SaveChangesAsync();
-                
-                    return RedirectToAction(nameof(Index));
+
+                        _context.Add(registration);
+                        await _context.SaveChangesAsync();
+
+                        return RedirectToAction(nameof(Index));
                 }
             }
             catch (DbUpdateException)
@@ -328,6 +329,7 @@ namespace Maonot_Net.Controllers
         {
             return _context.Registrations.Any(e => e.ID == id);
         }
+
         public System.Linq.IQueryable<Maonot_Net.Models.Registration> queryFemale()
         {
             var reg = from s in _context.Registrations
