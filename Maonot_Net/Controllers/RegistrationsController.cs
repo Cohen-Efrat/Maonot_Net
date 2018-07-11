@@ -149,8 +149,7 @@ namespace Maonot_Net.Controllers
                 return NotFound();
             }
 
-            var registration = await _context.Registrations
-             .SingleOrDefaultAsync(m => m.ID == id);
+            var registration = await _context.Registrations.Include(s=>s.Family).AsNoTracking().FirstOrDefaultAsync(m => m.ID == id);
            
             if (registration == null)
             {
@@ -353,6 +352,32 @@ namespace Maonot_Net.Controllers
                       where s.ApertmantType.Equals(ApertmantType.זוגי)
                       select s;
             return reg;
+        }
+        public IActionResult AddFamily()
+        {
+            ViewData["StudentID"] = new SelectList(_context.Registrations, "ID", "StundetId");
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddFamily(FamilyM familyM)
+        {
+            if (ModelState.IsValid)
+            {
+
+                FamilyM f = new FamilyM();
+                f.StudentID = familyM.StudentID;
+                f.FullName = familyM.FullName;
+                f.Age = familyM.Age;
+                _context.Add(f);
+                await _context.SaveChangesAsync();
+
+                return new EmptyResult();
+                //return View();
+                // return RedirectToAction("Test", "Registrations");
+
+            }
+            return View();
         }
 
 

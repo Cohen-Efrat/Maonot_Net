@@ -55,15 +55,21 @@ namespace Maonot_Net.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,StudentID,FullName,Age")] FamilyM familyM)
+        public async Task<IActionResult> Create(FamilyM familyM)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(familyM);
+
+                FamilyM f = new FamilyM();
+                f.StudentID=familyM.StudentID;
+                f.FullName = familyM.FullName;
+                f.Age = familyM.Age;
+                _context.Add(f);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Test", "Registations");
+
             }
-            return View(familyM);
+            return RedirectToAction("Test", "Registations");
         }
 
         // GET: FamilyMs/Edit/5
@@ -150,5 +156,6 @@ namespace Maonot_Net.Controllers
         {
             return _context.FamilyM.Any(e => e.ID == id);
         }
+
     }
 }

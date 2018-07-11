@@ -1,0 +1,87 @@
+﻿@model Maonot_Net.Models.FamilyM
+@{
+    ViewData["Title"] = "Test";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Test</h2>
+<div class="container" style="width=40%;margin-top:2%">
+    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">הוסף אח/ות</a>
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Technotips MVC</h3>
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                </div>
+                <div class="modal-body">
+                    <form asp-controller="Registrations" id="myForm">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="StudentID" class="control-label"></label>
+                            <select asp-for="StudentID" class="form-control" asp-items="ViewBag.StudentID"></select>
+                            <span asp-validation-for="StudentID" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="FullName" class="control-label"></label>
+                            <input asp-for="FullName" class="form-control" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Age" class="control-label"></label>
+                            <input asp-for="Age" class="form-control" />
+                            <span asp-validation-for="Age" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-success" id="btnSubmit" formaction="AddFamily" formmethod="post" />
+                        </div>
+                    </form>
+                </div>
+                <div style="text-align:center;display:none;" id="loaderDiv">
+
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+                    @*  <input type="reset" value="Create" class="btn btn-success" id="btnSubmit" />*@
+                    @*  <a href="#" onclick="saveFrom()">Save 1</a> *@
+                </div>
+            </div>
+        </div>
+    </div>
+    <button onclick="goBack()">Go Back</button>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+</div>
+<script>
+    $(document).reday(function () {
+        $("#btnSubmit").click(function (){
+            $("#loaderDiv").show();
+            var myformdata = $("#myForm").serialize();
+            
+            $.ajax({
+                type: "POST",
+                url: "/Registrations/AddFamily",
+                data: myformdata,
+                success: function () {
+                    $("#loaderDiv").hide();
+                    $("#myModal").modal("hide");
+
+                }
+
+            })
+
+        })
+        
+
+    })
+    var saveFrom = function () {
+        //
+
+    }
+</script>
+
