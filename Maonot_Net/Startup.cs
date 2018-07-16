@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Maonot_Net.Data;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Session;
+using Microsoft.Extensions.DependencyInjection;
+using Maonot_Net.Models;
+using Microsoft.Extensions.Configuration;
+using Maonot_Net.Data;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Maonot_Net
 {
@@ -27,6 +24,7 @@ namespace Maonot_Net
             services.AddDbContext<MaonotNetContext>(options =>
     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
+
             services.AddDistributedMemoryCache();
             services.AddSession();
         }

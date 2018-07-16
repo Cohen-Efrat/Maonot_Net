@@ -164,7 +164,7 @@ namespace Maonot_Net.Controllers
         {
             ViewData["StudentID"] = new SelectList(_context.Registrations, "ID", "StundetId");
 
-            return View();
+            return this.View("Create");
         }
 
         // POST: Registrations/Create
@@ -371,14 +371,12 @@ namespace Maonot_Net.Controllers
                 f.Age = familyM.Age;
                 _context.Add(f);
                 await _context.SaveChangesAsync();
-
-                return new EmptyResult();
-                //return View();
-                // return RedirectToAction("Test", "Registrations");
-
+                
+                return View();
             }
             return View();
         }
+
 
 
     }
