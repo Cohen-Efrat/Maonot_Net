@@ -371,10 +371,10 @@ namespace Maonot_Net.Controllers
                 f.Age = familyM.Age;
                 _context.Add(f);
                 await _context.SaveChangesAsync();
-                
-                return View();
+
+                return new JsonResult(f);
             }
-            return View();
+            return NotFound();
         }
 
 
