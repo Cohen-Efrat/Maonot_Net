@@ -7,14 +7,14 @@
 <h2>Test</h2>
 <div class="container" style="width=40%;margin-top:2%">
     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">הוסף אח/ות</a>
-    <div  id="myModal">
-        <div >
+    <div id="myModal">
+        <div>
             <div>
                 <div>
                     @* <h3 class="modal-title">Technotips MVC</h3>
-                    <a href="#" class="close" data-dismiss="modal">&times;</a>*@
+                        <a href="#" class="close" data-dismiss="modal">&times;</a>*@
                 </div>
-                <div >
+                <div>
                     <form asp-controller="Registrations" id="myForm">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
@@ -35,6 +35,9 @@
                         <div class="form-group">
                             <input type="submit" value="Create" class="btn btn-success" id="btnSubmit" formaction="AddFamily" formmethod="post" />
                         </div>
+                        <input onblur="findTotal()" type="text" name="qty" id="qty3" /><br>
+                        <input onblur="findTotal()" type="text" name="qty" id="qty4" /><br>
+
                     </form>
                 </div>
                 <div style="text-align:center;display:none;" id="loaderDiv">
@@ -48,7 +51,9 @@
             </div>
         </div>
     </div>
-    <button onclick="goBack()">Go Back</button>
+    @ViewData.0
+    @ViewData.1
+    @ViewData
 
     <script>
         function goBack() {
@@ -59,14 +64,19 @@
 </div>
 <script>
     $(document).reday(function () {
+        function findTotal() {
+            var arr = document.getElementsByName('qty');
+
+        }
         $("#btnSubmit").click(function (){
             $("#loaderDiv").show();
             var myformdata = $("#myForm").serialize();
-            
+
+
             $.ajax({
                 type: "POST",
                 url: "/Registrations/AddFamily",
-                data: myformdata,
+                data: { "form": myformdata, "bros": arr},
                 success: function () {
                     $("#loaderDiv").hide();
               
@@ -86,4 +96,11 @@
 
     }
 </script>
+<script type="text/javascript">
+    function findTotal() {
+        var arr = document.getElementsByName('qty');
 
+        document.getElementById('total').value = tot;
+    }
+
+</script>

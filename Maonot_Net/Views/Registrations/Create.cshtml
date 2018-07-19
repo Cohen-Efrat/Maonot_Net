@@ -141,6 +141,8 @@
 
             </div>
 
+            First name: <input type="text" name="fname"><br>
+
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" formaction="Create" formmethod="post" />
@@ -160,6 +162,7 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+@ViewData["Name"]
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

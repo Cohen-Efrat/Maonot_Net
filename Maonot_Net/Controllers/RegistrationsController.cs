@@ -35,9 +35,10 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Registrations
-        public async Task<IActionResult> Index(){
+        public async Task<IActionResult> Index()
+        {
 
-            ViewBag.cF = queryFemale().Count(); 
+            ViewBag.cF = queryFemale().Count();
 
             ViewBag.cM = queryMale().Count();
 
@@ -62,7 +63,7 @@ namespace Maonot_Net.Controllers
             {
                 searchString = currentFilter;
             }
-        
+
             ViewData["CurrentFilter"] = searchString;
 
             var reg = queryCouples();
@@ -75,7 +76,7 @@ namespace Maonot_Net.Controllers
             }
 
             int pageSize = 3;
-            return View("viewReg",await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
+            return View("viewReg", await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
         }
 
         public async Task<IActionResult> Index_Single_Female(
@@ -136,9 +137,9 @@ namespace Maonot_Net.Controllers
                 reg = reg.Where(s => s.LastName.Contains(searchString)
                                        || s.FirstName.Contains(searchString));
             }
-          
+
             int pageSize = 3;
-            return View("viewReg",await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
+            return View("viewReg", await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
         }
 
         // GET: Registrations/Details/5
@@ -149,8 +150,8 @@ namespace Maonot_Net.Controllers
                 return NotFound();
             }
 
-            var registration = await _context.Registrations.Include(s=>s.Family).AsNoTracking().FirstOrDefaultAsync(m => m.ID == id);
-           
+            var registration = await _context.Registrations.Include(s => s.Family).AsNoTracking().FirstOrDefaultAsync(m => m.ID == id);
+
             if (registration == null)
             {
                 return NotFound();
@@ -172,17 +173,21 @@ namespace Maonot_Net.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,StundetId,LastName,FirstName,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID1,ParentfullName1,ParentAge1,ParentID2,ParentfullName2,ParentAge2,Total,Approved")] Registration registration)
+        // public async Task<IActionResult> Create([Bind("ID,StundetId,LastName,FirstName,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID1,ParentfullName1,ParentAge1,ParentID2,ParentfullName2,ParentAge2,Total,Approved")] Registration registration)
+        public ActionResult Create(IFormCollection collection)
         {
+            FamilyM f = new FamilyM();
+            f.FullName = collection["fname"];
+
             try
             {
-                if (ModelState.IsValid)
+                //  if (ModelState.IsValid)
                 {
 
-                        _context.Add(registration);
-                        await _context.SaveChangesAsync();
+                    //         _context.Add(registration);
+                    //         await _context.SaveChangesAsync();
 
-                        return RedirectToAction(nameof(Index));
+                    //          return RedirectToAction(nameof(Index));
                 }
             }
             catch (DbUpdateException)
@@ -190,7 +195,7 @@ namespace Maonot_Net.Controllers
                 ModelState.AddModelError("", "לא היה ניתן לשמור את השינויים, נא נסה שנית במועד מאוחר יותר");
 
             }
-            return View(registration);
+            return View();
         }
 
         // GET: Registrations/Edit/5
@@ -324,7 +329,7 @@ namespace Maonot_Net.Controllers
 
 
         }
-            private bool RegistrationExists(int id)
+        private bool RegistrationExists(int id)
         {
             return _context.Registrations.Any(e => e.ID == id);
         }
@@ -360,8 +365,16 @@ namespace Maonot_Net.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddFamily(FamilyM familyM)
+        public async Task<ActionResult> AddFamily(FamilyM familyM, Array bros)
         {
+            for (int i = 0; i < bros.Length; i++)
+            {
+                string s = i.ToString();
+                ViewData[s] = bros.GetValue(i);
+            }
+
+
+            /*
             if (ModelState.IsValid)
             {
 
@@ -375,9 +388,11 @@ namespace Maonot_Net.Controllers
                 return new JsonResult(f);
             }
             return NotFound();
+        }*/
+            return View();
+
+
+
         }
-
-
-
     }
 }
