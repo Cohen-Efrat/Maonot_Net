@@ -76,7 +76,9 @@
             $.ajax({
                 type: "POST",
                 url: "/Registrations/AddFamily",
-                data: { "form": myformdata, "bros": arr},
+                data: { "form": myformdata, "bros": arr },
+              
+
                 success: function () {
                     $("#loaderDiv").hide();
               

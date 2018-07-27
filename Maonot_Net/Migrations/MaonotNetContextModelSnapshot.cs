@@ -137,6 +137,8 @@ namespace Maonot_Net.Migrations
                     b.Property<string>("Subject")
                         .IsRequired();
 
+                    b.Property<string>("test");
+
                     b.HasKey("MessageID");
 
                     b.ToTable("Messages");

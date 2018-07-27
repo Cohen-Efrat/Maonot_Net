@@ -21,6 +21,7 @@ namespace Maonot_Net.Models
         [Required]
         [Display(Name = "תוכן הודעה")]
         public string Content { set; get; }
+   
 
 
 

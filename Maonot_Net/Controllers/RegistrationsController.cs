@@ -367,6 +367,7 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddFamily(FamilyM familyM, Array bros)
         {
+            Console.Write(familyM);
             for (int i = 0; i < bros.Length; i++)
             {
                 string s = i.ToString();
