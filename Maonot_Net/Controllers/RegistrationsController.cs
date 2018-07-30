@@ -9,6 +9,7 @@ using Maonot_Net.Data;
 using Maonot_Net.Models;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Maonot_Net.Controllers
 {
@@ -150,7 +151,7 @@ namespace Maonot_Net.Controllers
                 return NotFound();
             }
 
-            var registration = await _context.Registrations.Include(s => s.Family).AsNoTracking().FirstOrDefaultAsync(m => m.ID == id);
+            var registration = await _context.Registrations.SingleOrDefaultAsync(m => m.ID == id);
 
             if (registration == null)
             {
@@ -174,20 +175,17 @@ namespace Maonot_Net.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         // public async Task<IActionResult> Create([Bind("ID,StundetId,LastName,FirstName,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID1,ParentfullName1,ParentAge1,ParentID2,ParentfullName2,ParentAge2,Total,Approved")] Registration registration)
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create([Bind("ID,StundetId,LastName,FirstName,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID1,ParentfullName1,ParentAge1,ParentID2,ParentfullName2,ParentAge2," +
+            "Familym1_name,Familym1_Age,Familym2_name,Familym2_Age,Familym3_name,Familym3_Age,Familym4_name,Familym4_Age,Familym5_name,Familym5_Age,Familym6_name,Familym6_Age,Familym7_name,Familym7_Age,Familym8_name,Familym8_Age" +
+            "Total,Approved")] Registration registration)
         {
-            FamilyM f = new FamilyM();
-            f.FullName = collection["fname"];
-
             try
             {
-                //  if (ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
-
-                    //         _context.Add(registration);
-                    //         await _context.SaveChangesAsync();
-
-                    //          return RedirectToAction(nameof(Index));
+                    _context.Add(registration);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
             }
             catch (DbUpdateException)
@@ -219,7 +217,9 @@ namespace Maonot_Net.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,StundetId,LastName,FirstName,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID1,ParentfullName1,ParentAge1,ParentID2,ParentfullName2,ParentAge2,Total,Approved")] Registration registration)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,StundetId,LastName,FirstName,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID1,ParentfullName1,ParentAge1,ParentID2,ParentfullName2,ParentAge2," +
+            "Familym1_name,Familym1_Age,Familym2_name,Familym2_Age,Familym3_name,Familym3_Age,Familym4_name,Familym4_Age,Familym5_name,Familym5_Age,Familym6_name,Familym6_Age,Familym7_name,Familym7_Age,Familym8_name,Familym8_Age" +
+            "Total,Approved")] Registration registration)
         {
             if (id != registration.ID)
             {
@@ -363,37 +363,10 @@ namespace Maonot_Net.Controllers
             ViewData["StudentID"] = new SelectList(_context.Registrations, "ID", "StundetId");
             return View();
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddFamily(FamilyM familyM, Array bros)
-        {
-            Console.Write(familyM);
-            for (int i = 0; i < bros.Length; i++)
-            {
-                string s = i.ToString();
-                ViewData[s] = bros.GetValue(i);
-            }
 
-
-            /*
-            if (ModelState.IsValid)
-            {
-
-                FamilyM f = new FamilyM();
-                f.StudentID = familyM.StudentID;
-                f.FullName = familyM.FullName;
-                f.Age = familyM.Age;
-                _context.Add(f);
-                await _context.SaveChangesAsync();
-
-                return new JsonResult(f);
-            }
-            return NotFound();
-        }*/
-            return View();
-
-
-
-        }
     }
+
+
+
+
 }

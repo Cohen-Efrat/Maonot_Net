@@ -6,6 +6,8 @@ using Maonot_Net.Models;
 using Microsoft.Extensions.Configuration;
 using Maonot_Net.Data;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace Maonot_Net
 {
@@ -23,6 +25,7 @@ namespace Maonot_Net
         {
             services.AddDbContext<MaonotNetContext>(options =>
     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+           
             services.AddMvc();
 
             services.AddDistributedMemoryCache();

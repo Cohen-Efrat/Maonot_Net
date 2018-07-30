@@ -134,8 +134,29 @@ namespace Maonot_Net.Models
         // צרוף מסמכים על על הכנסת הורים
         //צירוף מכתב אישי
 
-        public ICollection<FamilyM> Family { get; set; }
-        
+        public string Familym1_name { get; set; }
+        public int? Familym1_Age { get; set; }
+
+        public string Familym2_name { get; set; }
+        public int? Familym2_Age { get; set; }
+
+        public string Familym3_name { get; set; }
+        public int? Familym3_Age { get; set; }
+
+        public string Familym4_name { get; set; }
+        public int? Familym4_Age { get; set; }
+
+        public string Familym5_name { get; set; }
+        public int? Familym5_Age { get; set; }
+
+        public string Familym6_name { get; set; }
+        public int? Familym6_Age { get; set; }
+
+        public string Familym7_name { get; set; }
+        public int? Familym7_Age { get; set; }
+
+        public string Familym8_name { get; set; }
+        public int? Familym8_Age { get; set; }
 
         public int? Total { get; set; }
 
