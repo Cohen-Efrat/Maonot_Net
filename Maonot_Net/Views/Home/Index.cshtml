@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Home Page";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/NotUser.cshtml";
 }
 <p class="btn btn-default"> @Html.ActionLink("f", "SeeFiles", "Uploadmultiple") </p>
 
@@ -23,7 +23,7 @@
             register first, if you are a member allready please
             move to the <b>log in</b>.
         </p>
-        <p class="btn btn-default"> @Html.ActionLink("Sing Up", "SingUp", "User")</p>
+        <p class="btn btn-default"> @Html.ActionLink("הירשמ/י", "Create", "Users")</p>
     </div>
     <div class="col-md-4">
         <h2>Log In</h2>

@@ -12,22 +12,10 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
-                <label asp-for="StundetId" class="control-label"></label>
-                <input asp-for="StundetId" class="form-control" />
-                <span asp-validation-for="StundetId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+
+
                 <label asp-for="Bday" class="control-label"></label>
                 <input asp-for="Bday" class="form-control" />
                 <span asp-validation-for="Bday" class="text-danger"></span>
@@ -37,7 +25,7 @@
                 <select asp-for="gender" asp-items="Html.GetEnumSelectList<Gender>()" class="form-control">
                     <option selected="selected" value=""></option>
                 </select>
-                 <span asp-validation-for="gender" class="text-danger"></span>
+                <span asp-validation-for="gender" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="City" class="control-label"></label>
@@ -100,135 +88,112 @@
                     <option selected="selected" value=""></option>
                 </select>
                 <span asp-validation-for="ApertmantType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ParentID1" class="control-label"></label>
-                <input asp-for="ParentID1" class="form-control" />
-                <span asp-validation-for="ParentID1" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ParentFullName1" class="control-label"></label>
-                <input asp-for="ParentFullName1" class="form-control" />
-                <span asp-validation-for="ParentFullName1" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ParentAge1" class="control-label"></label>
-                <input asp-for="ParentAge1" class="form-control" />
-                <span asp-validation-for="ParentAge1" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ParentID2" class="control-label"></label>
-                <input asp-for="ParentID2" class="form-control" />
-                <span asp-validation-for="ParentID2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ParentFullName2" class="control-label"></label>
-                <input asp-for="ParentFullName2" class="form-control" />
-                <span asp-validation-for="ParentFullName2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ParentAge2" class="control-label"></label>
-                <input asp-for="ParentAge2" class="form-control" />
-                <span asp-validation-for="ParentAge2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Total" class="control-label"></label>
-                <input asp-for="Total" class="form-control" />
-                <span asp-validation-for="Total" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <table>
-                    <thead>
-                    <th> שם מלא</th>
-                    <th>גיל </th>
-                    </thead>
-                    <tbody>
-                    <td>
-                        <input asp-for="Familym1_name " class="form-control" />
-                    </td>
-                    <td>
-                        <input asp-for="Familym1_Age " class="form-control" />
-                    </td>
-                    <tr>
-                        <td>
-                            <input asp-for="Familym2_name " class="form-control" />
-                        </td>
-                        <td>
-                            <input asp-for="Familym2_Age " class="form-control" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input asp-for="Familym3_name " class="form-control" />
-                        </td>
-                        <td>
-                            <input asp-for="Familym3_Age " class="form-control" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input asp-for="Familym4_name " class="form-control" />
-                        </td>
-                        <td>
-                            <input asp-for="Familym4_Age " class="form-control" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input asp-for="Familym5_name " class="form-control" />
-                        </td>
-                        <td>
-                            <input asp-for="Familym5_Age " class="form-control" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input asp-for="Familym6_name " class="form-control" />
-                        </td>
-                        <td>
-                            <input asp-for="Familym6_Age " class="form-control" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input asp-for="Familym7_name " class="form-control" />
-                        </td>
-                        <td>
-                            <input asp-for="Familym7_Age " class="form-control" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input asp-for="Familym8_name " class="form-control" />
-                        </td>
-                        <td>
-                            <input asp-for="Familym8_Age " class="form-control" />
-                        </td>
-                    </tr>
-                    <tr>
-                    </tbody>
-
-                    
-                </table>
-
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="Approved" /> @Html.DisplayNameFor(model => model.Approved)
-                    </label>
+                </di
+                <div class="form-group">
+                    <label asp-for="ParentFullName2" class="control-label"></label>
+                    <input asp-for="ParentFullName2" class="form-control" />
+                    <span asp-validation-for="ParentFullName2" class="text-danger"></span>
                 </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+                <div class="form-group">
+                    <label asp-for="ParentAge2" class="control-label"></label>
+                    <input asp-for="ParentAge2" class="form-control" />
+                    <span asp-validation-for="ParentAge2" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Total" class="control-label"></label>
+                    <input asp-for="Total" class="form-control" />
+                    <span asp-validation-for="Total" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <table>
+                        <thead>
+                        <th> שם מלא</th>
+                        <th>גיל </th>
+                        </thead>
+                        <tbody>
+                        <td>
+                            <input asp-for="Familym1_name " class="form-control" />
+                        </td>
+                        <td>
+                            <input asp-for="Familym1_Age " class="form-control" />
+                        </td>
+                        <tr>
+                            <td>
+                                <input asp-for="Familym2_name " class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="Familym2_Age " class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input asp-for="Familym3_name " class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="Familym3_Age " class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input asp-for="Familym4_name " class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="Familym4_Age " class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input asp-for="Familym5_name " class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="Familym5_Age " class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input asp-for="Familym6_name " class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="Familym6_Age " class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input asp-for="Familym7_name " class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="Familym7_Age " class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input asp-for="Familym8_name " class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="Familym8_Age " class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            </tbody>
+
+
+                    </table>
+
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Approved" /> @Html.DisplayNameFor(model => model.Approved)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@Html.Raw(TempData["msg"])
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

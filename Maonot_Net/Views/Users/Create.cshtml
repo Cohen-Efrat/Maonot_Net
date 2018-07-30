@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
-    var a = @ViewBag.Aut;
+    int a = @ViewBag.Aut;
 
 
 }
@@ -16,7 +16,7 @@ else
 {
     <h2>הרשמה</h2>
 }
-<h4>User</h4>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -48,6 +48,9 @@ else
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
+           @if (a == 0)
+            {
+
             <div class="form-group">
                 @*<label asp-for="Authorization" class="control-label"></label>
             <select asp-for="Authorization" class="form-control" asp-items="ViewBag.Authorization"></select>
@@ -56,9 +59,9 @@ else
                 <select asp-for="Authorization" class="form-control" asp-items="ViewBag.Authorization"></select>
 
 
-            </div>
+            </div>}
             @Html.Raw(TempData["msg"])
-       
+
             <div class="form-group">
                 <input type="submit" value="שמירה" class="btn btn-default" />
             </div>

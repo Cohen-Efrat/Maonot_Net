@@ -136,26 +136,7 @@
         <dd>
             @Html.DisplayFor(model => model.ParentAge2)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Family)
-        </dt>
-        <dd>
-            <table class="table">
-                <tr>
-                    <th>full name</th>
-                    <th>age</th>
-                </tr>
-                @foreach (var item in Model.Family)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FullName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Age)
-                        </td>
-                    </tr>
-                }
+
             </table>
         </dd>
     </dl>

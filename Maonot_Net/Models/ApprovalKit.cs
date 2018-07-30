@@ -33,15 +33,17 @@ namespace Maonot_Net.Models
     {
 
         public int ID { get; set; }
-        [Required]
+        
         [Display(Name = "תעודת זהות")]
-        public int StundetId { get; set; }
-        [Required]
+        public int? StundetId { get; set; }
+        
         [Display(Name = "שם משפחה")]
         public string LastName { get; set; }
-        [Required]
+        
         [Display(Name = "שם פרטי")]
         public string FirstName { get; set; }
+
+        [Display(Name = "שם מלא")]
         public string FullName
         {
             get
@@ -71,8 +73,7 @@ namespace Maonot_Net.Models
         public int? PartnerId2 { get; set; }
         [Display(Name = "העדפה לשותף 3")]
         public int? PartnerId3 { get; set; }
-        [Display(Name = "העדפה לשותף 4")]
-        public int? PartnerId4 { get; set; }
+
 
         //הוספת אופציית העלאת נתונים
 

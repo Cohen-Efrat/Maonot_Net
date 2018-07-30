@@ -93,7 +93,23 @@ namespace Maonot_Net.Data
                 context.Warnings.Add(u);
             }
             context.SaveChanges();
-
+            var Aut = new Authorization[]
+           {
+                new Authorization{ AutName = "מנהל מערכת"},
+                new Authorization{ AutName = "מנהל"},
+                new Authorization{ AutName = "אבות בית"},
+                new Authorization{ AutName = "ועדת משמעת"},
+                new Authorization{ AutName = "ועדת תרבות"},
+                new Authorization{ AutName = "עובד אבטחה"},
+                new Authorization{ AutName = "אורח"},
+                new Authorization{ AutName = "מועמד"},
+                new Authorization{ AutName = "דייר"}
+           };
+            foreach (Authorization u in Aut)
+            {
+                context.Authorizations.Add(u);
+            }
+            context.SaveChanges();
 
 
 

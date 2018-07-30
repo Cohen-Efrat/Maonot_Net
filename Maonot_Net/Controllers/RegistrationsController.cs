@@ -23,30 +23,24 @@ namespace Maonot_Net.Controllers
             _context = context;
         }
 
-        public async Task<int> GetAut()
+        // GET: Registrations
+        public IActionResult Index()
         {
-            string id = HttpContext.Session.GetString("User");
-            var user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(id));
-            if (user == null) { return 0; }
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals("2"))
+            {
+                ViewBag.cF = queryFemale().Count();
+
+                ViewBag.cM = queryMale().Count();
+
+                ViewBag.cC = queryCouples().Count();
+
+                return View();
+            }
             else
             {
-                return user.Authorization;
+                return RedirectToAction("NotAut", "Home");
             }
-
-        }
-
-        // GET: Registrations
-        public async Task<IActionResult> Index()
-        {
-
-            ViewBag.cF = queryFemale().Count();
-
-            ViewBag.cM = queryMale().Count();
-
-            ViewBag.cC = queryCouples().Count();
-
-
-            return View();
         }
 
         public async Task<IActionResult> Index_Couples(
@@ -55,29 +49,37 @@ namespace Maonot_Net.Controllers
     int? page
     )
         {
-            ViewBag.type = "Index_Couples";
-            if (searchString != null)
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals("2"))
             {
-                page = 1;
+                ViewBag.type = "Index_Couples";
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
+
+                ViewData["CurrentFilter"] = searchString;
+
+                var reg = queryCouples();
+                ViewBag.c = reg.Count();
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    reg = reg.Where(s => s.LastName.Contains(searchString)
+                                           || s.FirstName.Contains(searchString));
+                }
+
+                int pageSize = 3;
+                return View("viewReg", await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
             }
             else
             {
-                searchString = currentFilter;
+                return RedirectToAction("NotAut", "Home");
             }
-
-            ViewData["CurrentFilter"] = searchString;
-
-            var reg = queryCouples();
-            ViewBag.c = reg.Count();
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                reg = reg.Where(s => s.LastName.Contains(searchString)
-                                       || s.FirstName.Contains(searchString));
-            }
-
-            int pageSize = 3;
-            return View("viewReg", await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
         }
 
         public async Task<IActionResult> Index_Single_Female(
@@ -87,29 +89,38 @@ namespace Maonot_Net.Controllers
             int? page
             )
         {
-            ViewBag.type = "Index_Single_Female";
-            if (searchString != null)
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals("2"))
             {
-                page = 1;
+                ViewBag.type = "Index_Single_Female";
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
+
+                ViewData["CurrentFilter"] = searchString;
+
+                var reg = queryFemale();
+                ViewBag.c = reg.Count();
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    reg = reg.Where(s => s.LastName.Contains(searchString)
+                                           || s.FirstName.Contains(searchString));
+                }
+
+                int pageSize = 3;
+                return View("viewReg", await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
             }
             else
             {
-                searchString = currentFilter;
+                return RedirectToAction("NotAut", "Home");
             }
 
-            ViewData["CurrentFilter"] = searchString;
-
-            var reg = queryFemale();
-            ViewBag.c = reg.Count();
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                reg = reg.Where(s => s.LastName.Contains(searchString)
-                                       || s.FirstName.Contains(searchString));
-            }
-
-            int pageSize = 3;
-            return View("viewReg", await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
         }
 
         public async Task<IActionResult> Index_Single_Male(
@@ -117,75 +128,115 @@ namespace Maonot_Net.Controllers
             string searchString,
             int? page
             )
+
         {
-            ViewBag.type = "Index_Single_Male";
-            if (searchString != null)
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals("2"))
             {
-                page = 1;
+                ViewBag.type = "Index_Single_Male";
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
+
+                ViewData["CurrentFilter"] = searchString;
+
+                var reg = queryMale();
+                ViewBag.c = reg.Count();
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    reg = reg.Where(s => s.LastName.Contains(searchString)
+                                           || s.FirstName.Contains(searchString));
+                }
+
+                int pageSize = 3;
+                return View("viewReg", await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
             }
             else
             {
-                searchString = currentFilter;
+                return RedirectToAction("NotAut", "Home");
             }
 
-            ViewData["CurrentFilter"] = searchString;
-
-            var reg = queryMale();
-            ViewBag.c = reg.Count();
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                reg = reg.Where(s => s.LastName.Contains(searchString)
-                                       || s.FirstName.Contains(searchString));
-            }
-
-            int pageSize = 3;
-            return View("viewReg", await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
         }
 
         // GET: Registrations/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            string Aut = HttpContext.Session.GetString("Aut");
+            string Id = HttpContext.Session.GetString("User");
             var registration = await _context.Registrations.SingleOrDefaultAsync(m => m.ID == id);
 
-            if (registration == null)
+            if (Aut.Equals("2") || id.Equals(registration.StundetId.ToString()))
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            return View(registration);
+
+
+                if (registration == null)
+                {
+                    return NotFound();
+                }
+
+                return View(registration);
+            }
+            return RedirectToAction("NotAut", "Home");
+
+
+
         }
 
         // GET: Registrations/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["StudentID"] = new SelectList(_context.Registrations, "ID", "StundetId");
+            string Id = HttpContext.Session.GetString("User");
+            string Aut = HttpContext.Session.GetString("Aut");
 
-            return this.View("Create");
-        }
+            if (!Aut.Equals("7"))
+            {
+                return RedirectToAction("NotAut", "Home");
+            }
+            var u = await _context.Registrations.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
+            if (u != null)
+            {
+                return RedirectToAction("ExistsForm", "Home");
+            }
+
+                return this.View("Create");
+
+        } 
 
         // POST: Registrations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        // public async Task<IActionResult> Create([Bind("ID,StundetId,LastName,FirstName,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID1,ParentfullName1,ParentAge1,ParentID2,ParentfullName2,ParentAge2,Total,Approved")] Registration registration)
-        public async Task<IActionResult> Create([Bind("ID,StundetId,LastName,FirstName,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID1,ParentfullName1,ParentAge1,ParentID2,ParentfullName2,ParentAge2," +
+        public async Task<IActionResult> Create([Bind("ID,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID1,ParentfullName1,ParentAge1,ParentID2,ParentfullName2,ParentAge2," +
             "Familym1_name,Familym1_Age,Familym2_name,Familym2_Age,Familym3_name,Familym3_Age,Familym4_name,Familym4_Age,Familym5_name,Familym5_Age,Familym6_name,Familym6_Age,Familym7_name,Familym7_Age,Familym8_name,Familym8_Age" +
             "Total,Approved")] Registration registration)
         {
+            string Aut = HttpContext.Session.GetString("Aut");
+            string Id = HttpContext.Session.GetString("User");
+            var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
+
+            registration.StundetId = u.StundetId;
+            registration.LastName = u.LastName;
+            registration.FirstName = u.FirstName;
+            
             try
             {
                 if (ModelState.IsValid)
                 {
                     _context.Add(registration);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Wellcome", "Home");
                 }
             }
             catch (DbUpdateException)
@@ -199,17 +250,35 @@ namespace Maonot_Net.Controllers
         // GET: Registrations/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            DateTime End = DateTime.Parse("30 July 2017");
+            if (!DateTime.Now.Equals(End))
             {
-                return NotFound();
-            }
 
-            var registration = await _context.Registrations.SingleOrDefaultAsync(m => m.ID == id);
-            if (registration == null)
-            {
-                return NotFound();
+
+                string Aut = HttpContext.Session.GetString("Aut");
+                string Id = HttpContext.Session.GetString("User");
+                if (id == null)
+                {
+                    return NotFound();
+                }
+                var user = await _context.Users.SingleOrDefaultAsync(m => m.ID == id);
+
+                if (Aut.Equals("2") || Id.Equals(user.StundetId.ToString()))
+                {
+                    var registration = await _context.Registrations.SingleOrDefaultAsync(m => m.ID == id);
+                    if (registration == null)
+                    {
+                        return NotFound();
+                    }
+                    return View(registration);
+                }
+                else
+                {
+                    return RedirectToAction("NotAut", "Home");
+                }
             }
-            return View(registration);
+            return RedirectToAction("NoMore", "Home");
+
         }
 
         // POST: Registrations/Edit/5
@@ -221,6 +290,7 @@ namespace Maonot_Net.Controllers
             "Familym1_name,Familym1_Age,Familym2_name,Familym2_Age,Familym3_name,Familym3_Age,Familym4_name,Familym4_Age,Familym5_name,Familym5_Age,Familym6_name,Familym6_Age,Familym7_name,Familym7_Age,Familym8_name,Familym8_Age" +
             "Total,Approved")] Registration registration)
         {
+
             if (id != registration.ID)
             {
                 return NotFound();
@@ -252,23 +322,30 @@ namespace Maonot_Net.Controllers
         // GET: Registrations/Delete/5
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
-            if (id == null)
-            {
-                return NotFound();
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals("2")){
+
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var registration = await _context.Registrations.AsNoTracking()
+                    .SingleOrDefaultAsync(m => m.ID == id);
+                if (registration == null)
+                {
+                    return NotFound();
+                }
+                if (saveChangesError.GetValueOrDefault())
+                {
+                    ViewData["EErrorMessage"] = "המחיקה נכשלה, נא נסה שנית במועד מאוחד יותר";
+                }
+
+                return View(registration);
             }
 
-            var registration = await _context.Registrations.AsNoTracking()
-                .SingleOrDefaultAsync(m => m.ID == id);
-            if (registration == null)
-            {
-                return NotFound();
-            }
-            if (saveChangesError.GetValueOrDefault())
-            {
-                ViewData["EErrorMessage"] = "המחיקה נכשלה, נא נסה שנית במועד מאוחד יותר";
-            }
+            return RedirectToAction("NotAut", "Home");
 
-            return View(registration);
         }
 
         // POST: Registrations/Delete/5
@@ -291,22 +368,29 @@ namespace Maonot_Net.Controllers
             {
                 return RedirectToAction(nameof(Index), new { id = id, saveCahngeError = true });
             }
+
         }
 
         public async Task<IActionResult> App(int? id)
 
         {
-            if (id == null)
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals("2"))
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var reg = await _context.Registrations.SingleOrDefaultAsync(m => m.ID == id);
-            if (reg == null)
-            {
-                return NotFound();
+                var reg = await _context.Registrations.SingleOrDefaultAsync(m => m.ID == id);
+                if (reg == null)
+                {
+                    return NotFound();
+                }
+                return View(reg);
             }
-            return View(reg);
+            return RedirectToAction("NotAut", "Home");
+
         }
         // צריך להוסיף שדייר יוכל לחתום רק על האורח שלו
         public async Task<ActionResult> Yes(int id)
@@ -358,11 +442,7 @@ namespace Maonot_Net.Controllers
                       select s;
             return reg;
         }
-        public IActionResult AddFamily()
-        {
-            ViewData["StudentID"] = new SelectList(_context.Registrations, "ID", "StundetId");
-            return View();
-        }
+
 
     }
 

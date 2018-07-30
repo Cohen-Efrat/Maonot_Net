@@ -71,8 +71,8 @@ namespace Maonot_Net.Controllers
             foreach (var file in filePaths)
             {
                 string s = file.Substring(15);
-                string url = "~/"+ "Upload"+s;
-                list.Add(url);
+            
+                list.Add(s);
             }
             ViewBag.url = list;
             return View();

@@ -63,16 +63,17 @@ namespace Maonot_Net.Models
     public class Registration
     {
         public int ID { get; set; }
-        [Required]
+       
         [Display(Name = "תעודת זהות")]
-        public int StundetId { get; set; }
-        [Required]
+        public int? StundetId { get; set; }
+       
         [Display(Name = "שם משפחה")]
         public string LastName { get; set; }
-        [Required]
+        
         [Display(Name = "שם פרטי")]
         public string FirstName { get; set; }
-        [Display(Name = "Full Name")]
+
+        [Display(Name = "שם מלא")]
         public string FullName
         {
             get
