@@ -240,7 +240,10 @@ namespace Maonot_Net.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    u.Authorization = 8;
+
                     _context.Add(registration);
+                    _context.Update(u);
                     await _context.SaveChangesAsync();
                     return RedirectToAction("Wellcome", "Home");
                 }
@@ -406,10 +409,14 @@ namespace Maonot_Net.Controllers
         {
 
             var reg = await _context.Registrations.SingleOrDefaultAsync(m => m.ID == id);
+            var Sid = reg.StundetId;
+            var user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId == Sid);
+
             if (reg != null)
             {
-
                 reg.Approved = true;
+                user.Authorization = 9;
+                _context.Update(user);
                 _context.Update(reg);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Registrations");

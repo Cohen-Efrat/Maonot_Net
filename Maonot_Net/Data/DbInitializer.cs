@@ -95,15 +95,15 @@ namespace Maonot_Net.Data
             context.SaveChanges();
             var Aut = new Authorization[]
            {
-                new Authorization{ AutName = "מנהל מערכת"},
-                new Authorization{ AutName = "מנהל"},
-                new Authorization{ AutName = "אבות בית"},
-                new Authorization{ AutName = "ועדת משמעת"},
-                new Authorization{ AutName = "ועדת תרבות"},
-                new Authorization{ AutName = "עובד אבטחה"},
-                new Authorization{ AutName = "אורח"},
-                new Authorization{ AutName = "מועמד"},
-                new Authorization{ AutName = "דייר"}
+                new Authorization{ AutName = "מנהל מערכת"},//1
+                new Authorization{ AutName = "מנהל"},//2
+                new Authorization{ AutName = "אבות בית"},//3
+                new Authorization{ AutName = "ועדת משמעת"},//4
+                new Authorization{ AutName = "ועדת תרבות"},//5
+                new Authorization{ AutName = "עובד אבטחה"},//6
+                new Authorization{ AutName = "אורח"},//7
+                new Authorization{ AutName = "מועמד"},//8
+                new Authorization{ AutName = "דייר"}//9
            };
             foreach (Authorization u in Aut)
             {
