@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Maonot_Net.Data;
 using Maonot_Net.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Maonot_Net.Controllers
 {
@@ -22,31 +23,44 @@ namespace Maonot_Net.Controllers
         // GET: Authorizations
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Authorizations.ToListAsync());
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals(1)) { return View(await _context.Authorizations.ToListAsync()); }
+            return RedirectToAction("NotAut", "Home");
+
         }
 
         // GET: Authorizations/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals(1))
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var authorization = await _context.Authorizations
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (authorization == null)
-            {
-                return NotFound();
-            }
+                var authorization = await _context.Authorizations
+                    .SingleOrDefaultAsync(m => m.Id == id);
+                if (authorization == null)
+                {
+                    return NotFound();
+                }
 
-            return View(authorization);
+                return View(authorization);
+            }
+            return RedirectToAction("NotAut", "Home");
         }
 
         // GET: Authorizations/Create
         public IActionResult Create()
         {
-            return View();
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals(1))
+            {
+                return View();
+            }
+            return RedirectToAction("NotAut", "Home");
         }
 
         // POST: Authorizations/Create
@@ -56,29 +70,39 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,AutName")] Authorization authorization)
         {
-            if (ModelState.IsValid)
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals(1))
             {
-                _context.Add(authorization);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(authorization);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(authorization);
             }
-            return View(authorization);
+            return RedirectToAction("NotAut", "Home");
         }
 
         // GET: Authorizations/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals(1))
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var authorization = await _context.Authorizations.SingleOrDefaultAsync(m => m.Id == id);
-            if (authorization == null)
-            {
-                return NotFound();
+                var authorization = await _context.Authorizations.SingleOrDefaultAsync(m => m.Id == id);
+                if (authorization == null)
+                {
+                    return NotFound();
+                }
+                return View(authorization);
             }
-            return View(authorization);
+            return RedirectToAction("NotAut", "Home");
         }
 
         // POST: Authorizations/Edit/5
@@ -88,50 +112,60 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,AutName")] Authorization authorization)
         {
-            if (id != authorization.Id)
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals(1))
             {
-                return NotFound();
-            }
+                if (id != authorization.Id)
+                {
+                    return NotFound();
+                }
 
-            if (ModelState.IsValid)
-            {
-                try
+                if (ModelState.IsValid)
                 {
-                    _context.Update(authorization);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AuthorizationExists(authorization.Id))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(authorization);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!AuthorizationExists(authorization.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
+                return View(authorization);
             }
-            return View(authorization);
+            return RedirectToAction("NotAut", "Home");
         }
 
         // GET: Authorizations/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals(1))
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var authorization = await _context.Authorizations
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (authorization == null)
-            {
-                return NotFound();
-            }
+                var authorization = await _context.Authorizations
+                    .SingleOrDefaultAsync(m => m.Id == id);
+                if (authorization == null)
+                {
+                    return NotFound();
+                }
 
-            return View(authorization);
+                return View(authorization);
+            }
+            return RedirectToAction("NotAut", "Home");
         }
 
         // POST: Authorizations/Delete/5
@@ -139,10 +173,15 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var authorization = await _context.Authorizations.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Authorizations.Remove(authorization);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals(1))
+            {
+                var authorization = await _context.Authorizations.SingleOrDefaultAsync(m => m.Id == id);
+                _context.Authorizations.Remove(authorization);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction("NotAut", "Home");
         }
 
         private bool AuthorizationExists(int id)
