@@ -341,29 +341,22 @@ namespace Maonot_Net.Controllers
         {
             return _context.Users.Any(e => e.ID == id);
         }
-        // bool validPassword = BCrypt.Net.BCrypt.Verify(submittedPassword, hashedPassword);
-        // http://davismj.me/blog/bcrypt
-        //https://github.com/BcryptNet/bcrypt.net
-        private bool CheckPassword(string submittedPassword, string hashedPassword)
-        {
 
-            bool validPassword = BCrypt.Net.BCrypt.Verify(submittedPassword, hashedPassword);
-            return validPassword;
-        }
-
+   
         public IActionResult LogIn()
         {
 
             return View();
         }
-        // https://gist.github.com/saad749/89293084defd99378df73b06d9e35fac לשקול אם להשתמש בזה
+     
         [HttpPost, ActionName("LogIn")]
         public IActionResult LogIn(User _user)
         {
+            var functions = new functions();
             var user = _context.Users.SingleOrDefault(u => u.StundetId == _user.StundetId);
             if (user != null)
             {
-                if (CheckPassword(_user.Password, user.Password))
+                if (functions.CheckPassword(_user.Password, user.Password))
                 {
                     string s = _user.StundetId.ToString();
                     string a = user.Authorization.ToString();

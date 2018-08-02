@@ -14,5 +14,17 @@ namespace Maonot_Net.Controllers
             bool validPassword = BCrypt.Net.BCrypt.Verify(submittedPassword, hashedPassword);
             return validPassword;
         }
+
+        public Boolean Comper()
+        {
+            DateTime EndDate = new DateTime(2019, 7, 30);
+            DateTime Today = DateTime.Now;
+            int result = DateTime.Compare(EndDate, Today);
+
+            if (result < 0)
+                return false;
+            else
+                return true;
+        }
     }
 }

@@ -10,6 +10,7 @@ using Maonot_Net.Models;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
+using System.Globalization;
 
 namespace Maonot_Net.Controllers
 {
@@ -198,6 +199,10 @@ namespace Maonot_Net.Controllers
         {
             string Id = HttpContext.Session.GetString("User");
             string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut == null)
+            {
+                Aut = "0";
+            }
 
             if (!Aut.Equals("7"))
             {
@@ -208,8 +213,9 @@ namespace Maonot_Net.Controllers
             {
                 return RedirectToAction("ExistsForm", "Home");
             }
+            ViewBag.Aut = Aut;
 
-                return this.View("Create");
+            return this.View("Create");
 
         } 
 
@@ -238,6 +244,7 @@ namespace Maonot_Net.Controllers
                     await _context.SaveChangesAsync();
                     return RedirectToAction("Wellcome", "Home");
                 }
+
             }
             catch (DbUpdateException)
             {
@@ -247,21 +254,23 @@ namespace Maonot_Net.Controllers
             return View();
         }
 
+       
+
         // GET: Registrations/Edit/5
         public async Task<IActionResult> Edit(int? id)
+
         {
-            DateTime End = DateTime.Parse("30 July 2017");
-            if (!DateTime.Now.Equals(End))
+            var functions = new functions();
+            if (functions.Comper())
             {
-
-
+               
                 string Aut = HttpContext.Session.GetString("Aut");
                 string Id = HttpContext.Session.GetString("User");
                 if (id == null)
                 {
                     return NotFound();
                 }
-                var user = await _context.Users.SingleOrDefaultAsync(m => m.ID == id);
+                var user = await _context.Registrations.SingleOrDefaultAsync(m => m.ID == id);
 
                 if (Aut.Equals("2") || Id.Equals(user.StundetId.ToString()))
                 {
@@ -392,7 +401,7 @@ namespace Maonot_Net.Controllers
             return RedirectToAction("NotAut", "Home");
 
         }
-        // צריך להוסיף שדייר יוכל לחתום רק על האורח שלו
+        
         public async Task<ActionResult> Yes(int id)
         {
 
