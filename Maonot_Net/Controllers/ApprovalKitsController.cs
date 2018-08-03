@@ -112,6 +112,7 @@ namespace Maonot_Net.Controllers
         {
             string Id = HttpContext.Session.GetString("User");
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (Aut == null)
             {
                 Aut = "0";
