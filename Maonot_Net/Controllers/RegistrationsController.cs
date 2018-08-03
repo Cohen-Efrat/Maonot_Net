@@ -215,7 +215,7 @@ namespace Maonot_Net.Controllers
             }
             ViewBag.Aut = Aut;
 
-            return this.View("Create");
+            return View();
 
         } 
 
@@ -302,7 +302,7 @@ namespace Maonot_Net.Controllers
             "Familym1_name,Familym1_Age,Familym2_name,Familym2_Age,Familym3_name,Familym3_Age,Familym4_name,Familym4_Age,Familym5_name,Familym5_Age,Familym6_name,Familym6_Age,Familym7_name,Familym7_Age,Familym8_name,Familym8_Age" +
             "Total,Approved")] Registration registration)
         {
-
+            //האם אנחנו מאפשרים למנהל  לערוך פרטי משתמש?
             if (id != registration.ID)
             {
                 return NotFound();
@@ -326,6 +326,7 @@ namespace Maonot_Net.Controllers
                         throw;
                     }
                 }
+                
                 return RedirectToAction(nameof(Index));
             }
             return View(registration);

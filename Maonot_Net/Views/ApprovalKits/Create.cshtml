@@ -16,26 +16,11 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="StundetId" class="control-label"></label>
-                <input asp-for="StundetId" class="form-control" />
-                <span asp-validation-for="StundetId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="RoomType" class="control-label"></label>
                 <select asp-for="RoomType" asp-items="Html.GetEnumSelectList<RoomType>()" class="form-control" >
                     <option selected="selected" value=""></option>
                 </select>
-                @*    <input asp-for="RoomType" class="form-control" />*@
+              
                 <span asp-validation-for="RoomType" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -43,7 +28,7 @@
                 <select asp-for="LivingWithReligious" asp-items="Html.GetEnumSelectList<Choose>()" class="form-control">
                     <option selected="selected" value=""></option>
                 </select>
-                @*<input asp-for="LivingWithReligious" class="form-control" />*@
+              
                 <span asp-validation-for="LivingWithReligious" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -85,11 +70,7 @@
                 <input asp-for="PartnerId3" class="form-control" />
                 <span asp-validation-for="PartnerId3" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PartnerId4" class="control-label"></label>
-                <input asp-for="PartnerId4" class="form-control" />
-                <span asp-validation-for="PartnerId4" class="text-danger"></span>
-            </div>
+
             בעת לחיצה על שמור הינך מאשר/ת כי קראת את החוזה ואת/ה מסכימ/ה לתנאים.<br />
 
             <a href="~/Files/contract.pdf" target="_blank"> חוזה מעונות</a>

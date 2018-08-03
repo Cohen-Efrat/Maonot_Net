@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Maonot_Net.Data;
 using Maonot_Net.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Maonot_Net.Controllers
 {
@@ -26,78 +27,109 @@ namespace Maonot_Net.Controllers
             string searchString,
             int? page)
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
-
-            if (searchString != null)
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals("2"))
             {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
+                ViewData["CurrentSort"] = sortOrder;
+                ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+                ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
 
-            ViewData["CurrentFilter"] = searchString;
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
 
-            var app = from s in _context.ApprovalKits
-                           select s;
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                app = app.Where(s => s.LastName.Contains(searchString)
-                                       || s.FirstName.Contains(searchString));
+                ViewData["CurrentFilter"] = searchString;
+
+                var app = from s in _context.ApprovalKits
+                          select s;
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    app = app.Where(s => s.LastName.Contains(searchString)
+                                           || s.FirstName.Contains(searchString));
+                }
+                switch (sortOrder)
+                {
+                    case "name_desc":
+                        app = app.OrderByDescending(s => s.LastName);
+                        break;
+                    case "first_name_desc":
+                        app = app.OrderByDescending(s => s.FirstName);
+                        break;
+                    case "first_name":
+                        app = app.OrderBy(s => s.FirstName);
+                        break;
+                    case "room_type_desc":
+                        app = app.OrderByDescending(s => s.RoomType);
+                        break;
+                    case "room_type":
+                        app = app.OrderBy(s => s.RoomType);
+                        break;
+
+                    default:
+                        app = app.OrderBy(s => s.LastName);
+                        break;
+                }
+
+                int pageSize = 3;
+                return View(await PaginatedList<ApprovalKit>.CreateAsync(app.AsNoTracking(), page ?? 1, pageSize));
             }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    app = app.OrderByDescending(s => s.LastName);
-                    break;
-                case "first_name_desc":
-                    app = app.OrderByDescending(s => s.FirstName);
-                    break;
-                case "first_name":
-                    app = app.OrderBy(s => s.FirstName);
-                    break;
-                case "room_type_desc":
-                    app = app.OrderByDescending(s => s.RoomType);
-                    break;
-                case "room_type":
-                    app = app.OrderBy(s => s.RoomType);
-                    break;
-
-                default:
-                    app = app.OrderBy(s => s.LastName);
-                    break;
-            }
-
-            int pageSize = 3;
-            return View(await PaginatedList<ApprovalKit>.CreateAsync(app.AsNoTracking(), page ?? 1, pageSize));
+            return RedirectToAction("NotAut", "Home");
         }
 
         // GET: ApprovalKits/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            string Aut = HttpContext.Session.GetString("Aut");
+            string Id = HttpContext.Session.GetString("User");
+            var app = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.ID == id);
 
-            var approvalKit = await _context.ApprovalKits
-                .SingleOrDefaultAsync(m => m.ID == id);
-            if (approvalKit == null)
+            if (Aut.Equals("2") || id.Equals(app.StundetId.ToString()))
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            return View(approvalKit);
+                var approvalKit = await _context.ApprovalKits
+                    .SingleOrDefaultAsync(m => m.ID == id);
+                if (approvalKit == null)
+                {
+                    return NotFound();
+                }
+
+                return View(approvalKit);
+            }
+            return RedirectToAction("NotAut", "Home");
         }
 
         // GET: ApprovalKits/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            string Id = HttpContext.Session.GetString("User");
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut == null)
+            {
+                Aut = "0";
+            }
+
+            if (!Aut.Equals("8"))
+            {
+                return RedirectToAction("NotAut", "Home");
+            }
+            var u = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
+            if (u != null)
+            {
+                return RedirectToAction("ExistsForm", "Home");
+            }
+            ViewBag.Aut = Aut;
 
             return View();
+
         }
 
         // POST: ApprovalKits/Create
@@ -107,10 +139,18 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("StundetId,LastName,FirstName,RoomType,LivingWithReligious,LivingWithSmoker,ReligiousType,HealthCondition,PartnerId1,PartnerId2,PartnerId3,PartnerId4")] ApprovalKit approvalKit)
         {
+            string Aut = HttpContext.Session.GetString("Aut");
+            string Id = HttpContext.Session.GetString("User");
+            var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
+
+            approvalKit.FirstName = u.FirstName;
+            approvalKit.LastName = u.LastName;
+            approvalKit.StundetId = u.StundetId;
             try
             {
                 if (ModelState.IsValid)
                 {
+                    u.Authorization = 9;
                     _context.Add(approvalKit);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -127,18 +167,33 @@ namespace Maonot_Net.Controllers
         // GET: ApprovalKits/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            var functions = new functions();
+            if (functions.Comper())
             {
-                return NotFound();
-            }
 
-            var approvalKit = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.ID == id);
-            if (approvalKit == null)
-            {
-                return NotFound();
+                string Aut = HttpContext.Session.GetString("Aut");
+                string Id = HttpContext.Session.GetString("User");
+                if (id == null)
+                {
+                    return NotFound();
+                }
+                //same line as in the if stetment
+                var user = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.ID == id);
+
+                if (Aut.Equals("2") || Id.Equals(user.StundetId.ToString()))
+                {
+                    var approvalKit = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.ID == id);
+                    if (approvalKit == null)
+                    {
+                        return NotFound();
+                    }
+                    return View(approvalKit);
+                }
+                return RedirectToAction("NotAut", "Home");
+
             }
-            return View(approvalKit);
-        }
+            return RedirectToAction("NoMore", "Home");
+        }  
 
         // POST: ApprovalKits/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 

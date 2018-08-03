@@ -24,7 +24,7 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Index()
         {
             string Aut = HttpContext.Session.GetString("Aut");
-            if (Aut.Equals(1)) { return View(await _context.Authorizations.ToListAsync()); }
+            if (Aut.Equals("1")) { return View(await _context.Authorizations.ToListAsync()); }
             return RedirectToAction("NotAut", "Home");
 
         }
