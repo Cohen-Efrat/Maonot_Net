@@ -7,7 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Maonot_Net.Data;
 using Maonot_Net.Models;
-
+using Microsoft.AspNetCore.Http;
+//blabla
+//string Aut = HttpContext.Session.GetString("Aut");
+//string Id = HttpContext.Session.GetString("User");
+// u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
+//return RedirectToAction("NotAut", "Home");
 namespace Maonot_Net.Controllers
 {
     public class VisitorsLogsController : Controller
@@ -26,73 +31,89 @@ namespace Maonot_Net.Controllers
             string searchString,
             int? page)
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
-
-
-            if (searchString != null)
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals("2") || Aut.Equals("9") || Aut.Equals("4"))
             {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
+                ViewData["CurrentSort"] = sortOrder;
+                ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+                ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
 
-            ViewData["CurrentFilter"] = searchString;
 
-            var vistor = from s in _context.VisitorsLogs
-                           select s;
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                vistor = vistor.Where(s => s.StudentFullName.Contains(searchString)
-                                       ||s.VistorName.Contains(searchString));
-            }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    vistor = vistor.OrderByDescending(s => s.StudentFullName);
-                    break;
-                case "name":
-                    vistor = vistor.OrderBy(s => s.StudentFullName);
-                    break;
-                case "date_desc":
-                    vistor = vistor.OrderByDescending(s => s.EnteryDate);
-                    break;
-                default:
-                    vistor = vistor.OrderBy(s => s.EnteryDate);
-                    
-                    break;
-            }
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
 
-            int pageSize = 3;
-            return View(await PaginatedList<VisitorsLog>.CreateAsync(vistor.AsNoTracking(), page ?? 1, pageSize));
+                ViewData["CurrentFilter"] = searchString;
+
+                var vistor = from s in _context.VisitorsLogs
+                             select s;
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    vistor = vistor.Where(s => s.StudentFullName.Contains(searchString)
+                                           || s.VistorName.Contains(searchString));
+                }
+                switch (sortOrder)
+                {
+                    case "name_desc":
+                        vistor = vistor.OrderByDescending(s => s.StudentFullName);
+                        break;
+                    case "name":
+                        vistor = vistor.OrderBy(s => s.StudentFullName);
+                        break;
+                    case "date_desc":
+                        vistor = vistor.OrderByDescending(s => s.EnteryDate);
+                        break;
+                    default:
+                        vistor = vistor.OrderBy(s => s.EnteryDate);
+
+                        break;
+                }
+
+                int pageSize = 3;
+                return View(await PaginatedList<VisitorsLog>.CreateAsync(vistor.AsNoTracking(), page ?? 1, pageSize));
+            }
+            return RedirectToAction("NotAut", "Home");
         }
 
         // GET: VisitorsLogs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals("2") || Aut.Equals("9") || Aut.Equals("4"))
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var visitorsLog = await _context.VisitorsLogs
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (visitorsLog == null)
-            {
-                return NotFound();
-            }
+                var visitorsLog = await _context.VisitorsLogs
+                    .SingleOrDefaultAsync(m => m.Id == id);
+                if (visitorsLog == null)
+                {
+                    return NotFound();
+                }
 
-            return View(visitorsLog);
+                return View(visitorsLog);
+            }
+            return RedirectToAction("NotAut", "Home");
         }
 
         // GET: VisitorsLogs/Create
         public IActionResult Create()
         {
-            ViewData["FullName"] = new SelectList(_context.ApprovalKits, "ID", "FullName");
-            return View();
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals("2") || Aut.Equals("9") || Aut.Equals("4"))
+            {
+                ViewData["FullName"] = new SelectList(_context.ApprovalKits, "ID", "FullName");
+                //make a list of appartments
+                return View();
+            }
+            return RedirectToAction("NotAut", "Home");
         }
 
         // POST: VisitorsLogs/Create
@@ -102,43 +123,46 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("EnteryDate,VistorName,VisitorID,StudentFullName,ExitDate,ApartmentNum,Room,Signature")] VisitorsLog visitorsLog)
         {
-            
-            
-            try
-            {
-                visitorsLog.EnteryDate = DateTime.Now;
-               // DateTime date1 = new DateTime(2008, 6, 1, 7, 47, 0);
-               // visitorsLog.ExitDate = date1;
-                if (ModelState.IsValid)
-                {
-                    _context.Add(visitorsLog);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-            }
-            catch (DbUpdateException)
-            {
-                ModelState.AddModelError("", "לא היה ניתן לשמור את השינויים, נא נסה שנית במועד מאוחר יותר");
 
-            }
-            return View(visitorsLog);
+                try
+                {
+                    visitorsLog.EnteryDate = DateTime.Now;
+                    if (ModelState.IsValid)
+                    {
+                        _context.Add(visitorsLog);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("", "לא היה ניתן לשמור את השינויים, נא נסה שנית במועד מאוחר יותר");
+
+                }
+                return View(visitorsLog);
+
         }
 
         // GET: VisitorsLogs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            ViewData["FullName"] = new SelectList(_context.ApprovalKits, "ID", "FullName");
-            if (id == null)
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals("2") || Aut.Equals("9") || Aut.Equals("4"))
             {
-                return NotFound();
-            }
+                ViewData["FullName"] = new SelectList(_context.ApprovalKits, "ID", "FullName");
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var visitorsLog = await _context.VisitorsLogs.SingleOrDefaultAsync(m => m.Id == id);
-            if (visitorsLog == null)
-            {
-                return NotFound();
+                var visitorsLog = await _context.VisitorsLogs.SingleOrDefaultAsync(m => m.Id == id);
+                if (visitorsLog == null)
+                {
+                    return NotFound();
+                }
+                return View(visitorsLog);
             }
-            return View(visitorsLog);
+            return RedirectToAction("NotAut", "Home");
         }
 
         // POST: VisitorsLogs/Edit/5
@@ -180,24 +204,30 @@ namespace Maonot_Net.Controllers
         // GET: VisitorsLogs/Delete/5
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
-            if (id == null)
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals("2"))
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var visitorsLog = await _context.VisitorsLogs.AsNoTracking()
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (visitorsLog == null)
-            {
-                return NotFound();
-            }
-            if (saveChangesError.GetValueOrDefault())
-            {
-                ViewData["EErrorMessage"] = "המחיקה נכשלה, נא נסה שנית במועד מאוחד יותר";
-            }
+                var visitorsLog = await _context.VisitorsLogs.AsNoTracking()
+                    .SingleOrDefaultAsync(m => m.Id == id);
+                if (visitorsLog == null)
+                {
+                    return NotFound();
+                }
+                if (saveChangesError.GetValueOrDefault())
+                {
+                    ViewData["EErrorMessage"] = "המחיקה נכשלה, נא נסה שנית במועד מאוחד יותר";
+                }
 
-            return View(visitorsLog);
+                return View(visitorsLog);
+            }
+            return RedirectToAction("NotAut", "Home");
         }
+            
 
         // POST: VisitorsLogs/Delete/5
         [HttpPost, ActionName("Delete")]

@@ -18,8 +18,8 @@ namespace Maonot_Net.Data
             }
             var users = new User[]
             {
-                new User{StundetId= 302875125, FirstName= "Miki", LastName= "Rotenstain", Password= "M2i1k2i1", Email= "mikir2127@gmail.com"},
-                new User{StundetId= 308242122, FirstName= "Efrat", LastName= "Cohen", Password= "M2i1k2i1", Email= "efratc66@gmail.com"}
+                new User{StundetId= 302875125, FirstName= "Miki", LastName= "Rotenstain", Password=BCrypt.Net.BCrypt.HashPassword("ABCabc123!"), Email = "mikir2127@gmail.com"},
+                new User{StundetId= 308242122, FirstName= "Efrat", LastName= "Cohen", Password= BCrypt.Net.BCrypt.HashPassword("ABCabc123!"), Email= "efratc66@gmail.com"}
             };
             foreach (User u in users)
             {

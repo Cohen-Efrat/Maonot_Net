@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Maonot_Net.Data;
 using Maonot_Net.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Maonot_Net.Controllers
 {
@@ -26,67 +27,94 @@ namespace Maonot_Net.Controllers
             string searchString,
             int? page)
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
-
-            if (searchString != null)
+            string Aut = HttpContext.Session.GetString("Aut");
+            string Id = HttpContext.Session.GetString("User");
+            var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
+            if (!Aut.Equals("0"))
             {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
+                ViewBag.Aut = Aut;
+                ViewData["CurrentSort"] = sortOrder;
+                ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+                ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
 
-            ViewData["CurrentFilter"] = searchString;
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
 
-            var msg = from s in _context.Messages
-                           select s;
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                msg = msg.Where(s => s.Content.Contains(searchString)
-                                       || s.Subject.Contains(searchString));
+                ViewData["CurrentFilter"] = searchString;
+
+                var msg = from s in _context.Messages
+                          where s.Addressee.Equals(u.StundetId) && s.Addressee.Equals("All")
+                          select s;
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    msg = msg.Where(s => s.Content.Contains(searchString)
+                                           || s.Subject.Contains(searchString));
+                }
+                switch (sortOrder)
+                {
+                    case "name_desc":
+                        msg = msg.OrderByDescending(s => s.Subject);
+                        break;
+
+                    default:
+                        msg = msg.OrderBy(s => s.Subject);
+                        break;
+                }
+
+                int pageSize = 3;
+                return View(await PaginatedList<Message>.CreateAsync(msg.AsNoTracking(), page ?? 1, pageSize));
             }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    msg = msg.OrderByDescending(s => s.Subject);
-                    break;
-
-                default:
-                    msg = msg.OrderBy(s => s.Subject);
-                    break;
-            }
-
-            int pageSize = 3;
-            return View(await PaginatedList<Message>.CreateAsync(msg.AsNoTracking(), page ?? 1, pageSize));
+            return RedirectToAction("NotAut", "Home");
         }
 
         // GET: Messages/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            string Aut = HttpContext.Session.GetString("Aut");
+            string Id = HttpContext.Session.GetString("User");
+            var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
+            if (!Aut.Equals("0"))
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var message = await _context.Messages
-                .SingleOrDefaultAsync(m => m.MessageID == id);
-            if (message == null)
-            {
-                return NotFound();
-            }
+                var message = await _context.Messages
+                    .SingleOrDefaultAsync(m => m.MessageID == id);
+                if (message == null)
+                {
+                    return NotFound();
+                }
+                if (u.StundetId.Equals(message.Addressee))
+                {
+                    return View(message);
+                }
 
-            return View(message);
+                
+            }
+            return RedirectToAction("NotAut", "Home");
         }
+
 
         // GET: Messages/Create
         public IActionResult Create()
         {
-            ViewData["users"] = new SelectList(_context.Users, "ID", "FullName");
 
-            return View();
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (!Aut.Equals("0"))
+            {
+                ViewData["users"] = new SelectList(_context.Users, "ID", "FullName");
+                return View();
+            }
+            return RedirectToAction("NotAut", "Home");
+
         }
 
         // POST: Messages/Create
@@ -96,10 +124,14 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Addressee,Subject,Content")] Message message)
         {
+            string Id = HttpContext.Session.GetString("User");
+            var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
+
             try
             {
                 if (ModelState.IsValid)
                 {
+                    message.From = u.FullName;
                     _context.Add(message);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -114,6 +146,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Messages/Edit/5
+        //no edit option
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -163,7 +196,7 @@ namespace Maonot_Net.Controllers
             }
             return View(message);
         }
-
+        //no Delete option
         // GET: Messages/Delete/5
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
@@ -212,5 +245,46 @@ namespace Maonot_Net.Controllers
         {
             return _context.Messages.Any(e => e.MessageID == id);
         }
+
+        public IActionResult SendAll()
+        {
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals("1")|| Aut.Equals("2") || Aut.Equals("3") || Aut.Equals("4") || Aut.Equals("5") )
+            {
+                return View();
+            }
+            return RedirectToAction("NotAut", "Home");
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SendAll([Bind("Subject,Content")] Message message)
+        {
+            string Id = HttpContext.Session.GetString("User");
+            var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
+
+            try
+            {
+                if (message.Subject != null && message.Content != null)
+                {
+                    message.Addressee = "All";
+                    message.From = u.FullName;
+                    _context.Add(message);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+
+            }
+            catch (DbUpdateException)
+            {
+                ModelState.AddModelError("", "לא היה ניתן לשמור את השינויים, נא נסה שנית במועד מאוחר יותר");
+
+            }
+            return View(message);
+            
+        }
+
+
     }
 }

@@ -130,17 +130,6 @@ namespace Maonot_Net.Controllers
             }
 
         }
-        public async Task<int> GetAut()
-        {
-            string id = HttpContext.Session.GetString("User");
-            var user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(id));
-            if (user == null) { return 0; }
-            else
-            {
-                return user.Authorization;
-            }
-            
-        }
 
         // GET: Users/Create
         public IActionResult Create()

@@ -12,9 +12,9 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.WarningNumber)
-                </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">מספר אזהרה</a>
+            </th>
                 <th>
                     @Html.DisplayNameFor(model => model.StudentId)
                 </th>

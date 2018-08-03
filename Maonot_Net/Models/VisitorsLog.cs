@@ -36,7 +36,7 @@ namespace Maonot_Net.Models
         [Display(Name = "ת.ז. אורח")]
         public int VisitorID { get; set; }
         [Required]
-        [Display(Name = "שם פרטי של הדייר")]
+        [Display(Name = "שם מלא של הדייר")]
         public string StudentFullName { get; set; }
 
         [Display(Name = "תאריך ושעת יציאה")]

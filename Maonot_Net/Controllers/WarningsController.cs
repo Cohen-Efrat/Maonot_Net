@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Maonot_Net.Data;
 using Maonot_Net.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Maonot_Net.Controllers
 {
@@ -20,33 +21,97 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Warnings
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? page)
         {
-            return View(await _context.Warnings.ToListAsync());
+            string Aut = HttpContext.Session.GetString("Aut");
+            string Id = HttpContext.Session.GetString("User");
+            var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
+            if (Aut.Equals("4")|| Aut.Equals("2")|| Aut.Equals("9"))
+            {
+                ViewBag.Aut = Aut;
+                ViewData["CurrentSort"] = sortOrder;
+                ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+                ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
+
+                ViewData["CurrentFilter"] = searchString;
+                var warning = from s in _context.Warnings
+                              select s;
+                if (Aut.Equals("9"))
+                {
+                     warning = from s in _context.Warnings
+                                  where s.StudentId.Equals(Id)
+                                  select s;
+                }
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    warning = warning.Where(s => s.StudentId.ToString().Contains(searchString));
+                }
+                switch (sortOrder)
+                {
+                    case "name_desc":
+                        warning = warning.OrderByDescending(s => s.WarningNumber);
+                        break;
+
+                    default:
+                        warning = warning.OrderBy(s => s.WarningNumber);
+                        break;
+                }
+
+                int pageSize = 3;
+                return View(await PaginatedList<Warning>.CreateAsync(warning.AsNoTracking(), page ?? 1, pageSize));
+            }
+            return RedirectToAction("NotAut", "Home");
         }
 
         // GET: Warnings/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            string Aut = HttpContext.Session.GetString("Aut");
+            string Id = HttpContext.Session.GetString("User");
+           // var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
+
             if (id == null)
             {
                 return NotFound();
             }
-
             var warning = await _context.Warnings
                 .SingleOrDefaultAsync(m => m.WarningId == id);
             if (warning == null)
             {
                 return NotFound();
             }
+            if(warning.StudentId.Equals(Id)||Aut.Equals("2")|| Aut.Equals("3"))
+            {
+                return View(warning);
+            }
+            return RedirectToAction("NotAut", "Home");
 
-            return View(warning);
+
         }
 
         // GET: Warnings/Create
         public IActionResult Create()
         {
-            return View();
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals("2") || Aut.Equals("3"))
+            {
+                return View();
+            }
+            return RedirectToAction("NotAut", "Home");
         }
 
         // POST: Warnings/Create
@@ -56,11 +121,24 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("WarningNumber,StudentId,Date,BlaBla")] Warning warning)
         {
-            try { 
+            string Id = HttpContext.Session.GetString("User");
+             //var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
+            try
+            { 
 
                 if (ModelState.IsValid)
                 {
                     _context.Add(warning);
+                    Message msg = new Message
+                    {
+                        From = "ועדת משמעת",
+                        Addressee = Id,
+                        Subject = "אזהרת משמעת",
+                        Content = "קיבלת מכתב אזהרה מועדת המשמעת בעקבות אורח שלא חתמת עליו ביומן המבקרים" +
+                        "במידה ואת/ה חושב/ת שהייתה טעות נא לפנות בהודעה לועדת המשמעת" +
+                        "במידה וזו אזהרה שלישית חל עלייך איסור לארח למשך שבוע החל מרגע זה."
+                    };
+                    _context.Add(msg);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
@@ -72,7 +150,7 @@ namespace Maonot_Net.Controllers
             }
             return View(warning);
         }
-
+        //no edit option
         // GET: Warnings/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -127,23 +205,29 @@ namespace Maonot_Net.Controllers
         // GET: Warnings/Delete/5
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
-            if (id == null)
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals("2") || Aut.Equals("3"))
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var warning = await _context.Warnings.AsNoTracking()
-                .SingleOrDefaultAsync(m => m.WarningId == id);
-            if (warning == null)
-            {
-                return NotFound();
-            }
-            if (saveChangesError.GetValueOrDefault())
-            {
-                ViewData["EErrorMessage"] = "המחיקה נכשלה, נא נסה שנית במועד מאוחד יותר";
-            }
+                var warning = await _context.Warnings.AsNoTracking()
+                    .SingleOrDefaultAsync(m => m.WarningId == id);
+                if (warning == null)
+                {
+                    return NotFound();
+                }
+                if (saveChangesError.GetValueOrDefault())
+                {
+                    ViewData["EErrorMessage"] = "המחיקה נכשלה, נא נסה שנית במועד מאוחד יותר";
+                }
 
-            return View(warning);
+                return View(warning);
+            }
+            return RedirectToAction("NotAut", "Home");
+
         }
 
         // POST: Warnings/Delete/5
