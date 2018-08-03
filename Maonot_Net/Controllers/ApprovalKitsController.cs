@@ -106,7 +106,7 @@ namespace Maonot_Net.Controllers
             }
             return RedirectToAction("NotAut", "Home");
         }
-
+        
         // GET: ApprovalKits/Create
         public async Task<IActionResult> Create()
         {
@@ -153,7 +153,7 @@ namespace Maonot_Net.Controllers
                     u.Authorization = 9;
                     _context.Add(approvalKit);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Wellcome", "Home");
                 }
             }
             catch (DbUpdateException)
@@ -170,19 +170,18 @@ namespace Maonot_Net.Controllers
             var functions = new functions();
             if (functions.Comper())
             {
-
                 string Aut = HttpContext.Session.GetString("Aut");
                 string Id = HttpContext.Session.GetString("User");
                 if (id == null)
                 {
                     return NotFound();
                 }
-                //same line as in the if stetment
-                var user = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.ID == id);
+                
+                var approvalKit = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.ID == id);
 
-                if (Aut.Equals("2") || Id.Equals(user.StundetId.ToString()))
+                if (Aut.Equals("2") || Id.Equals(approvalKit.StundetId.ToString()))
                 {
-                    var approvalKit = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.ID == id);
+                    //var approvalKit = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.ID == id);
                     if (approvalKit == null)
                     {
                         return NotFound();
@@ -202,6 +201,7 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,StundetId,LastName,FirstName,RoomType,LivingWithReligious,LivingWithSmoker,ReligiousType,HealthCondition,PartnerId1,PartnerId2,PartnerId3,PartnerId4")] ApprovalKit approvalKit)
         {
+            string Aut = HttpContext.Session.GetString("Aut");
             if (id != approvalKit.ID)
             {
                 return NotFound();
@@ -225,7 +225,12 @@ namespace Maonot_Net.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                if (Aut.Equals("2"))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+
+                return RedirectToAction("Wellcome", "Home");
             }
             return View(approvalKit);
         }
@@ -233,23 +238,29 @@ namespace Maonot_Net.Controllers
         // GET: ApprovalKits/Delete/5
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
-            if (id == null)
+            string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut.Equals("2"))
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var approvalKit = await _context.ApprovalKits.AsNoTracking()
-                .SingleOrDefaultAsync(m => m.ID == id);
-            if (approvalKit == null)
-            {
-                return NotFound();
-            }
-            if (saveChangesError.GetValueOrDefault())
-            {
-                ViewData["EErrorMessage"] = "המחיקה נכשלה, נא נסה שנית במועד מאוחד יותר";
-            }
+                var approvalKit = await _context.ApprovalKits.AsNoTracking()
+                    .SingleOrDefaultAsync(m => m.ID == id);
+                if (approvalKit == null)
+                {
+                    return NotFound();
+                }
+                if (saveChangesError.GetValueOrDefault())
+                {
+                    ViewData["EErrorMessage"] = "המחיקה נכשלה, נא נסה שנית במועד מאוחד יותר";
+                }
 
-            return View(approvalKit);
+                return View(approvalKit);
+            }
+            return RedirectToAction("NotAut", "Home");
+
         }
 
         // POST: ApprovalKits/Delete/5
