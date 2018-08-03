@@ -55,7 +55,7 @@ namespace Maonot_Net.Data
 
             var Fault = new FaultForm[]
             {
-                new FaultForm{Apartment= 927, RoomNum= 1, FullName= users.Single(u=> u.StundetId==308242122).FirstName+""+users.Single(u=> u.StundetId==308242122).LastName, PhoneNumber="050-2480441",Description="הבוילר לא עובד לי אשמח לעזרתכם" }
+                new FaultForm{StundetId=308242122, Apartment= 927, RoomNum= RoomNum.OneA, FullName= users.Single(u=> u.StundetId==308242122).FirstName+""+users.Single(u=> u.StundetId==308242122).LastName, PhoneNumber="050-2480441",Description="הבוילר לא עובד לי אשמח לעזרתכם" }
             };
             foreach (FaultForm u in Fault)
             {

@@ -15,9 +15,9 @@ namespace Maonot_Net.Controllers
             return validPassword;
         }
 
-        public Boolean Comper()
+        public Boolean Comper(DateTime EndDate)
         {
-            DateTime EndDate = new DateTime(2019, 7, 30);
+            //DateTime EndDate = new DateTime(2019, 7, 30);
             DateTime Today = DateTime.Now;
             int result = DateTime.Compare(EndDate, Today);
 

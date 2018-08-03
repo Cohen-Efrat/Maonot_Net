@@ -1,0 +1,19 @@
+﻿@model Maonot_Net.Models.FaultForm
+@{
+    ViewData["Title"] = "Fix";
+}
+
+<h2>Fix</h2>
+
+<form asp-controller="FaultForms" asp-action="Yes">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+
+        <input type="hidden" name="id" id="id" value=" @Html.DisplayFor(model => model.ID)" />
+
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="אישור" class="btn btn-default" />
+    </div>
+</form>

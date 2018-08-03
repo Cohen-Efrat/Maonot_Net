@@ -86,17 +86,14 @@ namespace Maonot_Net.Controllers
         {
             string Aut = HttpContext.Session.GetString("Aut");
             string Id = HttpContext.Session.GetString("User");
-            var app = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.ID == id);
+            var approvalKit = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.ID == id);
 
-            if (Aut.Equals("2") || id.Equals(app.StundetId.ToString()))
+            if (Aut.Equals("2") || id.Equals(approvalKit.StundetId.ToString()))
             {
                 if (id == null)
                 {
                     return NotFound();
                 }
-
-                var approvalKit = await _context.ApprovalKits
-                    .SingleOrDefaultAsync(m => m.ID == id);
                 if (approvalKit == null)
                 {
                     return NotFound();
@@ -140,36 +137,42 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("StundetId,LastName,FirstName,RoomType,LivingWithReligious,LivingWithSmoker,ReligiousType,HealthCondition,PartnerId1,PartnerId2,PartnerId3,PartnerId4")] ApprovalKit approvalKit)
         {
-            string Aut = HttpContext.Session.GetString("Aut");
-            string Id = HttpContext.Session.GetString("User");
-            var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
+            var functions = new functions();
 
-            approvalKit.FirstName = u.FirstName;
-            approvalKit.LastName = u.LastName;
-            approvalKit.StundetId = u.StundetId;
-            try
+            if (functions.Comper(new DateTime(2019, 9, 5)))
             {
-                if (ModelState.IsValid)
+                string Aut = HttpContext.Session.GetString("Aut");
+                string Id = HttpContext.Session.GetString("User");
+                var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
+
+                approvalKit.FirstName = u.FirstName;
+                approvalKit.LastName = u.LastName;
+                approvalKit.StundetId = u.StundetId;
+                try
                 {
-                    u.Authorization = 9;
-                    _context.Add(approvalKit);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction("Wellcome", "Home");
+                    if (ModelState.IsValid)
+                    {
+                        u.Authorization = 9;
+                        _context.Add(approvalKit);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction("Wellcome", "Home");
+                    }
                 }
-            }
-            catch (DbUpdateException)
-            {
-                ModelState.AddModelError("", "לא היה ניתן לשמור את השינויים, נא נסה שנית במועד מאוחר יותר");
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("", "לא היה ניתן לשמור את השינויים, נא נסה שנית במועד מאוחר יותר");
 
+                }
+                return View(approvalKit);
             }
-            return View(approvalKit);
+            return RedirectToAction("NoMore", "Home");
         }
 
         // GET: ApprovalKits/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             var functions = new functions();
-            if (functions.Comper())
+            if (functions.Comper(new DateTime(2019, 9, 5)))
             {
                 string Aut = HttpContext.Session.GetString("Aut");
                 string Id = HttpContext.Session.GetString("User");

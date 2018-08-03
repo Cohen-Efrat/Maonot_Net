@@ -264,7 +264,7 @@ namespace Maonot_Net.Controllers
 
         {
             var functions = new functions();
-            if (functions.Comper())
+            if (functions.Comper(new DateTime(2019, 7, 30)))
             {
                
                 string Aut = HttpContext.Session.GetString("Aut");
