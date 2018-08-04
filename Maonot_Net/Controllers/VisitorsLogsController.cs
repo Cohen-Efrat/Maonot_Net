@@ -274,7 +274,10 @@ namespace Maonot_Net.Controllers
         // צריך להוסיף שדייר יוכל לחתום רק על האורח שלו
         public async Task<ActionResult> ConifiremSigniture(int id, int StudentId , string password)
         {
-            
+            string Id = HttpContext.Session.GetString("User");
+            var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
+            //return RedirectToAction("NotAut", "Home");
+
             ViewBag.StudentId = StudentId;
             var functions = new functions();
             var user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId == StudentId);
