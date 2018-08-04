@@ -1,15 +1,20 @@
 ﻿
 <ul>
     @{
+
+        var a = "הה.jpg";
         foreach (string u in ViewBag.url)
         {
-            var  i= 0;
-            @u
+            var name = u;
+            var i = 0;
 
-            <a class="links" href="C:\Users\MIKIR\Source\Repos\Maonot_Net\Maonot_Net\wwwroot\Upload\@u" target="_blank"></a>
-            <li> <a href="~@u" target="_blank">  @i קובץ </a></li>
+
+
+            <li> <a href="~/Files/" target="_blank">  @i קובץ </a></li>
             i++;
         }
+        <li> <a href="~/Files/@a" target="_blank">  קובץ </a></li>
+        <li> <a href="~/Upload/הה.jpg" target="_blank">  kvkvkvk </a></li>
     }
 </ul>
-<a href="~/Upload/מבוא למסדי נתונים - הרצאה 10 - שילוב SQL ב-Java -    405000.PDF" target="_blank"> ddה ff</a>
+<a href="~/Files/contract.pdf" target="_blank"> ddה ff</a>

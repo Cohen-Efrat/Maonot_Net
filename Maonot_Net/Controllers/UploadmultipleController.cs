@@ -71,6 +71,7 @@ namespace Maonot_Net.Controllers
             foreach (var file in filePaths)
             {
                 string s = file.Substring(15);
+
             
                 list.Add(s);
             }
