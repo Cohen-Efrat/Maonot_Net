@@ -416,7 +416,7 @@ namespace Maonot_Net.Controllers
             if (reg != null)
             {
                 reg.Approved = true;
-                user.Authorization = 9;
+              //  user.Authorization = 9;
                 _context.Update(user);
                 _context.Update(reg);
                 await _context.SaveChangesAsync();
