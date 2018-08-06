@@ -28,3 +28,8 @@ namespace Maonot_Net.Controllers
         }
     }
 }
+
+// פונקציה להפעלת view 
+//@{
+   // await Html.RenderPartialAsync("_AuthorPartial");
+//}
