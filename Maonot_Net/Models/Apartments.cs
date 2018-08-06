@@ -12,11 +12,11 @@ namespace Maonot_Net.Models
 
         public String Type { get; set; }
 
-        public bool LivingWithReligious { get; set; }
+        public bool? LivingWithReligious { get; set; }
    
-        public bool LivingWithSmoker { get; set; }
+        public bool? LivingWithSmoker { get; set; }
 
-        public bool ReligiousType { get; set; }
+        public bool? ReligiousType { get; set; }
 
 
 

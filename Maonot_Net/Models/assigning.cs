@@ -10,13 +10,13 @@ namespace Maonot_Net.Models
     {
         public int ID { get; set; }
 
-        
+
         public int? StundetId { get; set; }
 
-       
+
         public int? ApartmentNum { get; set; }
-        
-      
+
+
         public RoomNum? Room { get; set; }
 
     }

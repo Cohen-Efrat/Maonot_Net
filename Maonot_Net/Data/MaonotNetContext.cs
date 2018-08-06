@@ -21,8 +21,10 @@ namespace Maonot_Net.Data
         public DbSet<Message> Messages { get; set; }
         public DbSet<VisitorsLog> VisitorsLogs { get; set; }
         public DbSet<Warning> Warnings { get; set; }
+        public DbSet<Apartments> Apartments { get; set; }
         public DbSet<Authorization> Authorizations { get; set; }
-        
+        public DbSet<Assigning> Assigning { get; set; }
+
 
         internal int IntFromSQL(string v)
         {
