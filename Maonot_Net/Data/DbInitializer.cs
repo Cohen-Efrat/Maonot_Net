@@ -53,6 +53,24 @@ namespace Maonot_Net.Data
             }
             context.SaveChanges();
 
+            var Aut = new Authorization[]
+{
+                new Authorization{ AutName = "מנהל מערכת"},//1
+                new Authorization{ AutName = "מנהל"},//2
+                new Authorization{ AutName = "אבות בית"},//3
+                new Authorization{ AutName = "ועדת משמעת"},//4
+                new Authorization{ AutName = "ועדת תרבות"},//5
+                new Authorization{ AutName = "עובד אבטחה"},//6
+                new Authorization{ AutName = "אורח"},//7
+                new Authorization{ AutName = "מועמד"},//8
+                new Authorization{ AutName = "דייר"}//9
+};
+            foreach (Authorization u in Aut)
+            {
+                context.Authorizations.Add(u);
+            }
+            context.SaveChanges();
+
             var Fault = new FaultForm[]
             {
                 new FaultForm{StundetId=308242122, Apartment= 927, RoomNum= RoomNum.OneA, FullName= users.Single(u=> u.StundetId==308242122).FirstName+""+users.Single(u=> u.StundetId==308242122).LastName, PhoneNumber="050-2480441",Description="הבוילר לא עובד לי אשמח לעזרתכם" }
@@ -65,7 +83,7 @@ namespace Maonot_Net.Data
 
             var Messg = new Message[]
             {
-                new Message{Addressee="efratc66@gmail.com", Subject= "ענת השותפות של מציקות לי", Content= "לענת שלום, השותפות שלי מטריפות אותי מה אפשר לעשות" }
+                new Message{ From="ענת לוין", Addressee="אפרת כהן", Subject="משעמם לי בדירה", Content="לה לה הלה לה" }
             };
             foreach (Message u in Messg)
             {
@@ -93,25 +111,6 @@ namespace Maonot_Net.Data
                 context.Warnings.Add(u);
             }
             context.SaveChanges();
-            var Aut = new Authorization[]
-           {
-                new Authorization{ AutName = "מנהל מערכת"},//1
-                new Authorization{ AutName = "מנהל"},//2
-                new Authorization{ AutName = "אבות בית"},//3
-                new Authorization{ AutName = "ועדת משמעת"},//4
-                new Authorization{ AutName = "ועדת תרבות"},//5
-                new Authorization{ AutName = "עובד אבטחה"},//6
-                new Authorization{ AutName = "אורח"},//7
-                new Authorization{ AutName = "מועמד"},//8
-                new Authorization{ AutName = "דייר"}//9
-           };
-            foreach (Authorization u in Aut)
-            {
-                context.Authorizations.Add(u);
-            }
-            context.SaveChanges();
-
-
 
         }
 
