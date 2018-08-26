@@ -15,39 +15,38 @@
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">מספר אזהרה</a>
             </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StudentId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Date)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.BlaBla)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.WarningNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StudentId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BlaBla)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.WarningId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.WarningId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.WarningId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WarningNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.WarningId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.WarningId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.WarningId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<div class="col-md-4">
+    <img src="~/images/warning.png" />
+</div>
