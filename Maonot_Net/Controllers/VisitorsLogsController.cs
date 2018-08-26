@@ -124,10 +124,12 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("EnteryDate,VistorName,VisitorID,StudentFullName,ExitDate,ApartmentNum,Room,Signature")] VisitorsLog visitorsLog)
         {
+            VisitorsLog v = await _context.VisitorsLogs.AsNoTracking().SingleOrDefaultAsync(m => m.ApartmentNum == visitorsLog.ApartmentNum && m.Room == visitorsLog.Room);
 
-                try
+            try
                 {
                     visitorsLog.EnteryDate = DateTime.Now;
+                    visitorsLog.StudentId = v.StudentId;
                     if (ModelState.IsValid)
                     {
                         _context.Add(visitorsLog);
