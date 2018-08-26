@@ -29,7 +29,7 @@ namespace Maonot_Net.Controllers
         {
             string Aut = HttpContext.Session.GetString("Aut");
             string Id = HttpContext.Session.GetString("User");
-            var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
+           // var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals(302875125));
             if (!Aut.Equals("0"))
             {
                 ViewBag.Aut = Aut;
@@ -49,8 +49,9 @@ namespace Maonot_Net.Controllers
                 ViewData["CurrentFilter"] = searchString;
 
                 var msg = from s in _context.Messages
-                          where s.Addressee.Equals(u.StundetId) && s.Addressee.Equals("All")
+                          where s.Addressee.Equals(Id) || s.Addressee.Equals("All")
                           select s;
+
                 if (!String.IsNullOrEmpty(searchString))
                 {
                     msg = msg.Where(s => s.Content.Contains(searchString)
@@ -110,7 +111,7 @@ namespace Maonot_Net.Controllers
             string Aut = HttpContext.Session.GetString("Aut");
             if (!Aut.Equals("0"))
             {
-                ViewData["users"] = new SelectList(_context.Users, "ID", "FullName");
+                ViewData["users"] = new SelectList(_context.Users, "StundetId", "FullName");
                 return View();
             }
             return RedirectToAction("NotAut", "Home");
@@ -125,13 +126,14 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Create([Bind("Addressee,Subject,Content")] Message message)
         {
             string Id = HttpContext.Session.GetString("User");
-            var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
+            var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
 
             try
             {
+                message.From = u.FullName;
+                
                 if (ModelState.IsValid)
                 {
-                    message.From = u.FullName;
                     _context.Add(message);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -262,7 +264,7 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> SendAll([Bind("Subject,Content")] Message message)
         {
             string Id = HttpContext.Session.GetString("User");
-            var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
+            var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
 
             try
             {

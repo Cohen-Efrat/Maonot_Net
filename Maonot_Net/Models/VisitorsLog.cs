@@ -44,7 +44,8 @@ namespace Maonot_Net.Models
         [Display(Name = "תאריך ושעת יציאה")]
         [DisplayFormat(ApplyFormatInEditMode = false)]
         [DataType(DataType.Date)]
-        //public DateTime? ExitDate { get; set; }
+       
+       
         public DateTime? ExitDate { get; set; }
 
 

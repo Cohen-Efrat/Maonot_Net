@@ -12,7 +12,7 @@ namespace Maonot_Net.Models
     {
 
         public int MessageID { set; get; }
-        [Required]
+        
         [Display(Name = "מאת")]
         public string From { set; get; }
 

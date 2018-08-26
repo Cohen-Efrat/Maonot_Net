@@ -128,8 +128,9 @@ namespace Maonot_Net.Controllers
 
             try
                 {
-                    visitorsLog.EnteryDate = DateTime.Now;
-                    visitorsLog.StudentId = v.StudentId;
+                //visitorsLog.EnteryDate = DateTime.Now;
+                visitorsLog.EnteryDate = DateTime.Parse("2018-02-14");
+                   // visitorsLog.StudentId = v.StudentId;
                     if (ModelState.IsValid)
                     {
                         _context.Add(visitorsLog);
@@ -185,6 +186,10 @@ namespace Maonot_Net.Controllers
                 try
                 {
                     visitorsLog.ExitDate = DateTime.Now;
+                    if (visitorsLog.ExitDate.Value.Date > visitorsLog.EnteryDate.Date)
+                    {
+                        SendMsg(visitorsLog.StudentId, visitorsLog.EnteryDate, visitorsLog.VistorName);
+                    }
                     _context.Update(visitorsLog);
                     await _context.SaveChangesAsync();
                 }
@@ -202,6 +207,25 @@ namespace Maonot_Net.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(visitorsLog);
+        }
+
+        private void SendMsg(int? studentId, DateTime enteryDate, string vistorName)
+        {
+            Message msg = new Message
+            {
+                Addressee = studentId.ToString(),
+                From = "אבטחה",
+                Subject = "חתימה על אורח/ת",
+                Content = "התארח/ה אצלך אורח/ת בשם" +
+                vistorName + "בתאריך" +
+                enteryDate +
+                "מכוון שעברה השעה 00:00 נדרש לחתום על האורח/ת " +
+                "לטובת כך נא לעבור לאיזור האישי וללחוץ על חתימה"
+            };
+
+            _context.Messages.Add(msg);
+            _context.SaveChanges();
+
         }
 
         // GET: VisitorsLogs/Delete/5
@@ -322,7 +346,7 @@ namespace Maonot_Net.Controllers
             List<VisitorsLog> warningList = new List<VisitorsLog>();
             foreach (var v in vistor)
             {
-                if (!(v.EnteryDate.Date == v.ExitDate))
+                if (!(v.EnteryDate.Date == v.ExitDate.Value.Date))
                 {
                     var w = await _context.Warnings.SingleOrDefaultAsync(m => m.StudentId == v.StudentId);
                     Warning warning = new Warning();

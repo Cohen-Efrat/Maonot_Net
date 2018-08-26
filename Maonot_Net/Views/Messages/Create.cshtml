@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
-    int a = ViewBag.Aut;
+    //int a = ViewBag.Aut;
 }
 
 <h2>Create</h2>
@@ -19,6 +19,7 @@
                 <select asp-for="Addressee" class="form-control" asp-items="ViewBag.users"></select>
                 <span asp-validation-for="Addressee" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Subject" class="control-label"></label>
                 <input asp-for="Subject" class="form-control" />

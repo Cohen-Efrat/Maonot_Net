@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Index";
-    int a = ViewBag.Aut;
+    string a = ViewBag.Aut;
 }
 
 <h2>דואר נכנס</h2>
@@ -11,7 +11,7 @@
 <p>
     <a asp-action="Create">שליחת הודעה</a>
 </p>
-@if (a == 1 || a == 2 || a == 3 || a == 4 || a == 5)
+@if (a.Equals("1") || a.Equals("2") || a.Equals("3") || a.Equals("4") || a.Equals("5"))
 {
 <p>
     <a asp-action="SendAll">שליחת הודעה לכולם</a>
