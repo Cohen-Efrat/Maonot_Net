@@ -31,6 +31,7 @@ namespace Maonot_Net.Controllers
             string searchString,
             int? page)
         {
+            ViewBag.LastDate = Globals.LastDate;
             string Aut = HttpContext.Session.GetString("Aut");
             if (Aut.Equals("2") || Aut.Equals("9") || Aut.Equals("4"))
             {
@@ -296,7 +297,7 @@ namespace Maonot_Net.Controllers
                 else
                 {
                     ViewBag.Message = "Thank you!";
-                    TempData["msg"] = "<script>alert('Password was incorrect');</script>";
+                    TempData["msg"] = "<script>alert('סיסמה לא נכונה');</script>";
 
                    return RedirectToAction(nameof(Index));
                 }
@@ -308,7 +309,65 @@ namespace Maonot_Net.Controllers
 
 
         }
+        public async Task<ActionResult> CheckVistorLog()
+        {
+            DateTime LastDate = Globals.LastDate;
+            var vistor = from s in _context.VisitorsLogs
+                         where s.EnteryDate > LastDate && s.EnteryDate < DateTime.Now
+                         && s.Signature == false 
+                         select s;
+
+            List<VisitorsLog> warningList = new List<VisitorsLog>();
+            foreach (var v in vistor)
+            {
+                if (!(v.EnteryDate.Date == v.ExitDate))
+                {
+                    var w = await _context.Warnings.SingleOrDefaultAsync(m => m.StudentId == v.StudentId);
+                    Warning warning = new Warning();
+                    warning.StudentId = v.StudentId;
+                    warning.Date = v.EnteryDate;
+                    if (w == null)
+                    {
+                        warning.WarningNumber = WarningNumber.ראשונה;
+                    }
+
+                    // 2 warinigs
+
+                    else if (w.WarningNumber.Equals("שנייה"))
+                    {
+                        warning.WarningNumber = WarningNumber.שלישית;
+                    }
+
+                    // 1 waring 
+                    else if (w.WarningNumber.Equals("ראשונה"))
+                    {
+                        warning.WarningNumber = WarningNumber.שנייה;
+                    }
+
+                    //  3 warnings
+                    else
+                    {
+                        warning.WarningNumber = WarningNumber.ראשונה;
+                    }
+                    warningList.Add(v);
+                    _context.Warnings.Add(warning);
+                }
+            }
+            _context.SaveChanges();
+            ViewBag.warningList = warningList;
+            Globals.LastDate = DateTime.Now;
+
+            return View();
+
+        }
+
+        private async Task SendWarning(int? studentId, DateTime date)
+        {
 
 
+        
+        
+
+        }
     }
 }

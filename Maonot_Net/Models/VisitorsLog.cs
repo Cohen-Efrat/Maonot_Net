@@ -39,6 +39,8 @@ namespace Maonot_Net.Models
         [Display(Name = "שם מלא של הדייר")]
         public string StudentFullName { get; set; }
 
+        public int? StudentId { get; set; }
+
         [Display(Name = "תאריך ושעת יציאה")]
         [DisplayFormat(ApplyFormatInEditMode = false)]
         [DataType(DataType.Date)]
@@ -54,6 +56,8 @@ namespace Maonot_Net.Models
         public RoomNum? Room { get; set; }
         [Display(Name = "חתימה")]
         public Boolean Signature { get; set; }
+
+
 
         public ICollection<ApprovalKit> App { get; set; }
 

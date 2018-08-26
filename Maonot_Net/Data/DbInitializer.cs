@@ -18,8 +18,8 @@ namespace Maonot_Net.Data
             }
             var users = new User[]
             {
-                new User{StundetId= 302875125, FirstName= "Miki", LastName= "Rotenstain", Password=BCrypt.Net.BCrypt.HashPassword("ABCabc123!"), Email = "mikir2127@gmail.com"},
-                new User{StundetId= 308242122, FirstName= "Efrat", LastName= "Cohen", Password= BCrypt.Net.BCrypt.HashPassword("ABCabc123!"), Email= "efratc66@gmail.com"}
+                new User{StundetId= 302875125, FirstName= "Miki", LastName= "Rotenstain", Password=BCrypt.Net.BCrypt.HashPassword("ABCabc123!"), Email = "mikir2127@gmail.com",Authorization=2},
+                new User{StundetId= 308242122, FirstName= "Efrat", LastName= "Cohen", Password= BCrypt.Net.BCrypt.HashPassword("ABCabc123!"), Email= "efratc66@gmail.com",Authorization=7}
             };
             foreach (User u in users)
             {
@@ -94,7 +94,9 @@ namespace Maonot_Net.Data
             var Vlog = new VisitorsLog[]
             {
                 new VisitorsLog{VistorName= "דני שובבני", StudentFullName= users.Single(u=> u.StundetId== 302875125).FullName,
-                     ApartmentNum=927,Room=RoomNum.OneA, EnteryDate= DateTime.Parse("2018-05-22"),VisitorID= 123456789}
+                     ApartmentNum=927,Room=RoomNum.OneA, EnteryDate= DateTime.Parse("2018-06-22"),VisitorID= 123456789,StudentId=302875125
+                     ,ExitDate= DateTime.Parse("2018-06-24")
+                }
             };
             foreach (VisitorsLog u in Vlog)
             {
@@ -104,7 +106,7 @@ namespace Maonot_Net.Data
 
             var War = new Warning[]
             {
-                new Warning{WarningNumber=WarningNumber.ראשונה, StudentId=users.Single(u=> u.StundetId==302875125).StundetId, Date=DateTime.Parse("2018-05-20")}
+               // new Warning{WarningNumber=WarningNumber.ראשונה, StudentId=users.Single(u=> u.StundetId==302875125).StundetId, Date=DateTime.Parse("2018-05-20")}
             };
             foreach (Warning u in War)
             {

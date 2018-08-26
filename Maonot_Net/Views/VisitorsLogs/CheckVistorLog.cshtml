@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewData["Title"] = "CheckVistorLog";
+}
+
+<h2>CheckVistorLog</h2>
+
+המעבר על היומן בוצע בהצלחה.
+
+<ul>
+    @foreach(var w in ViewBag.warningList)
+    {
+        <li>
+            @w.StudentId
+        </li>
+    }
+</ul>
+
