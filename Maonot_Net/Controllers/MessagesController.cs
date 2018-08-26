@@ -79,7 +79,7 @@ namespace Maonot_Net.Controllers
         {
             string Aut = HttpContext.Session.GetString("Aut");
             string Id = HttpContext.Session.GetString("User");
-            var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
+            var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
             if (!Aut.Equals("0"))
             {
                 if (id == null)

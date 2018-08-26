@@ -8,11 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Maonot_Net.Data;
 using Maonot_Net.Models;
 using Microsoft.AspNetCore.Http;
-//blabla
-//string Aut = HttpContext.Session.GetString("Aut");
-//string Id = HttpContext.Session.GetString("User");
-// u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
-//return RedirectToAction("NotAut", "Home");
+
 namespace Maonot_Net.Controllers
 {
     public class VisitorsLogsController : Controller
@@ -302,7 +298,7 @@ namespace Maonot_Net.Controllers
         public async Task<ActionResult> ConifiremSigniture(int id, int StudentId , string password)
         {
             string Id = HttpContext.Session.GetString("User");
-            var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
+            var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
             //return RedirectToAction("NotAut", "Home");
 
             ViewBag.StudentId = StudentId;

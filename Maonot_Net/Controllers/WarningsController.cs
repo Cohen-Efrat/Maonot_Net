@@ -29,7 +29,7 @@ namespace Maonot_Net.Controllers
         {
             string Aut = HttpContext.Session.GetString("Aut");
             string Id = HttpContext.Session.GetString("User");
-            var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
+            var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
             if (Aut.Equals("4")|| Aut.Equals("2")|| Aut.Equals("9"))
             {
                 ViewBag.Aut = Aut;

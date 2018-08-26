@@ -53,7 +53,7 @@ namespace Maonot_Net.Controllers
 
                 if (Aut.Equals("9")) {
                         faults = from s in _context.FaultForms
-                        where s.StundetId.Equals(Id)
+                        where s.StundetId.ToString().Equals(Id)
                         select s;
                 }
                 if (!String.IsNullOrEmpty(searchString))
