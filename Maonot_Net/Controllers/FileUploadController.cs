@@ -21,13 +21,16 @@ namespace Maonot_Net.Controllers
             if (file == null || file.Length == 0)
                 return Content("file not selected");
 
+            var userId = "308242122";
 
-            Directory.CreateDirectory(Path.Combine(
-                        Directory.GetCurrentDirectory(), "try1",
-                        file.FileName)); 
-
+            if (!Directory.Exists(Path.Combine(
+                        Directory.GetCurrentDirectory(), $"wwwroot/{userId}")))
+            {
+                Directory.CreateDirectory(Path.Combine(
+                        Directory.GetCurrentDirectory(), $"wwwroot/{userId}"));
+            }
             var path = Path.Combine(
-                        Directory.GetCurrentDirectory(), "wwwroot",
+                        Directory.GetCurrentDirectory(), $"wwwroot/{userId}",
                         file.FileName);
 
             using (var stream = new FileStream(path, FileMode.Create))
