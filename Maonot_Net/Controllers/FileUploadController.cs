@@ -21,7 +21,7 @@ namespace Maonot_Net.Controllers
                 return Content("file not selected");
 
             var path = Path.Combine(
-                        Directory.GetCurrentDirectory(), "wwwroot",
+                        Directory.GetCurrentDirectory(), "try1",
                         file.FileName);
 
             using (var stream = new FileStream(path, FileMode.Create))
@@ -32,24 +32,25 @@ namespace Maonot_Net.Controllers
             return RedirectToAction("Files");
         }
 
-       /* public async Task<IActionResult> Download(string filename)
-        {
-            if (filename == null)
-                return Content("filename not present");
 
-            var path = Path.Combine(
-                           Directory.GetCurrentDirectory(),
-                           "wwwroot", filename);
+        /* public async Task<IActionResult> Download(string filename)
+         {
+             if (filename == null)
+                 return Content("filename not present");
 
-            var memory = new MemoryStream();
-            using (var stream = new FileStream(path, FileMode.Open))
-            {
-                await stream.CopyToAsync(memory);
-            }
-            memory.Position = 0;
-            return File(memory, path.GetType(), Path.GetFileName(path));
-        }*/
-       
+             var path = Path.Combine(
+                            Directory.GetCurrentDirectory(),
+                            "wwwroot", filename);
+
+             var memory = new MemoryStream();
+             using (var stream = new FileStream(path, FileMode.Open))
+             {
+                 await stream.CopyToAsync(memory);
+             }
+             memory.Position = 0;
+             return File(memory, path.GetType(), Path.GetFileName(path));
+         }*/
+
 
 
     }
