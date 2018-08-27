@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,11 @@ namespace Maonot_Net.Controllers
         {
             if (file == null || file.Length == 0)
                 return Content("file not selected");
+
+
+            Directory.CreateDirectory(Path.Combine(
+                        Directory.GetCurrentDirectory(), "try1",
+                        file.FileName)); 
 
             var path = Path.Combine(
                         Directory.GetCurrentDirectory(), "try1",
