@@ -41,26 +41,21 @@ namespace Maonot_Net.Controllers
             return RedirectToAction("Files");
         }
 
-
-        /* public async Task<IActionResult> Download(string filename)
-         {
-             if (filename == null)
-                 return Content("filename not present");
-
-             var path = Path.Combine(
-                            Directory.GetCurrentDirectory(),
-                            "wwwroot", filename);
-
-             var memory = new MemoryStream();
-             using (var stream = new FileStream(path, FileMode.Open))
-             {
-                 await stream.CopyToAsync(memory);
-             }
-             memory.Position = 0;
-             return File(memory, path.GetType(), Path.GetFileName(path));
-         }*/
+        public IActionResult SeeFiles()
+        {
+            var userId = "308242122";
+            string[] filePaths = Directory.GetFiles(@"wwwroot\"+ userId);
+            List<string> list = new List<string> { };
+            foreach (var file in filePaths)
+            {
+                string s = file.Substring(8);
 
 
+                list.Add(s);
+            }
+            ViewBag.url = list;
+            return View();
+        }
 
     }
 }
