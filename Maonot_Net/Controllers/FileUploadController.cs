@@ -16,6 +16,7 @@ namespace Maonot_Net.Controllers
             return View();
         }
         [HttpPost]
+        //שיקסלת רשימה של אי כםרצ ויעבור על הרשימה ויעשה את מה שצריך
         public async Task<IActionResult> UploadFile(IFormFile file)
         {
             if (file == null || file.Length == 0)
