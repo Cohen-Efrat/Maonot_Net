@@ -27,7 +27,7 @@ namespace Maonot_Net.Controllers
                         file.FileName)); 
 
             var path = Path.Combine(
-                        Directory.GetCurrentDirectory(), "try1",
+                        Directory.GetCurrentDirectory(), "wwwroot",
                         file.FileName);
 
             using (var stream = new FileStream(path, FileMode.Create))
