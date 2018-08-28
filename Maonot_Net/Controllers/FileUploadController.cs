@@ -90,5 +90,15 @@ namespace Maonot_Net.Controllers
             return View();
         }
 
+        public IActionResult Delete(string File)
+        {
+            string filePath = @"wwwroot\" + File;
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+            return RedirectToAction("SeeFiles");
+        }
+
     }
 }
