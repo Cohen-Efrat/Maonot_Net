@@ -42,6 +42,37 @@ namespace Maonot_Net.Controllers
             return RedirectToAction("Files");
         }
 
+        public IActionResult Index_2()
+        {
+            return View();
+        }
+        public async Task<IActionResult> UploadFiles(List<IFormFile> files)
+        {
+            foreach (var file in files) {
+                if (file == null || file.Length == 0)
+                    return Content("file not selected");
+
+                var userId = "308242122";
+
+                if (!Directory.Exists(Path.Combine(
+                            Directory.GetCurrentDirectory(), $"wwwroot/{userId}")))
+                {
+                    Directory.CreateDirectory(Path.Combine(
+                            Directory.GetCurrentDirectory(), $"wwwroot/{userId}"));
+                }
+                var path = Path.Combine(
+                            Directory.GetCurrentDirectory(), $"wwwroot/{userId}",
+                            file.FileName);
+
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+            }
+
+            return RedirectToAction("Files");
+        }
+
         public IActionResult SeeFiles()
         {
             var userId = "308242122";

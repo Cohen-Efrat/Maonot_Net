@@ -3,22 +3,20 @@
     ViewData["Title"] = "SeeFiles";
 }
 
-<h2>SeeFiles</h2>
+<h2></h2>
 
 <ul>
     @{
 
-        var a = "הה.jpg";
+        int i = 1;
         foreach (string u in ViewBag.url)
         {
-            var name = u;
+            var name = u.Substring(10);
 
-           <p dir="ltr"> @name</p>
-            <li> <a href="~/@name" target="_blank">  אולי הפעם </a></li>
-       
+           <li> <a href="~/@name" target="_blank">    קובץ מספר @i : @name </a></li>
+            i++;
+
         }
-        <li> <a href="~/Files/@a" target="_blank">  קובץ </a></li>
-        <li> <a href="~/Upload/הה.jpg" target="_blank">  kvkvkvk </a></li>
+
     }
 </ul>
-<a href="~/Files/contract.pdf" target="_blank"> ddה ff</a>

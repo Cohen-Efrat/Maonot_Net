@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewData["Title"] = "Index_2";
+}
+
+<h2>Index_2</h2>
+<form asp-controller="FileUpload" asp-action="UploadFiles" method="post"
+      enctype="multipart/form-data">
+
+    <input type="file" name="files" multiple />
+    <button type="submit">Upload File</button>
+</form>
