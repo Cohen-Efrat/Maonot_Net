@@ -23,8 +23,4 @@
     <None Include="wwwroot\Files\contract.pdf" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\308242122\" />
-  </ItemGroup>
-
 </Project>

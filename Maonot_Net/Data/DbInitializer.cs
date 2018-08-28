@@ -31,8 +31,8 @@ namespace Maonot_Net.Data
             {
                 new Registration{StundetId= users.Single(u=> u.StundetId == 302875125).StundetId, FirstName= users.Single(u=> u.StundetId == 302875125).FirstName , LastName= users.Single(u=> u.StundetId == 302875125).LastName,gender=Gender.זכר, Bday= DateTime.Parse("1989-11-04"), City= "נשר", Adress= "עמוס 18",PhoneNumber= "050-2480441",
                     FieldOfStudy=FieldStudy.מערכות_מידע,SteadyYear=Year.ג, TypeOfService=Service.צבאי, HealthCondition=HealthCondition.ללא_מגבלה, Seniority=Year.ג, ApertmantType= ApertmantType.יחיד},
-                new Registration{StundetId= users.Single(u=> u.StundetId == 308242122).StundetId, FirstName= users.Single(u=> u.StundetId == 308242122).FirstName , LastName= users.Single(u=> u.StundetId == 308242122).LastName,gender=Gender.נקבה, Bday= DateTime.Parse("1992-02-14"), City= "להבים", Adress= "גומא 2",PhoneNumber= "054-6814427",
-                    FieldOfStudy=FieldStudy.מערכות_מידע,SteadyYear=Year.ג, TypeOfService=Service.צבאי, HealthCondition=HealthCondition.ללא_מגבלה, Seniority=Year.ג, ApertmantType= ApertmantType.יחיד},
+               // new Registration{StundetId= users.Single(u=> u.StundetId == 308242122).StundetId, FirstName= users.Single(u=> u.StundetId == 308242122).FirstName , LastName= users.Single(u=> u.StundetId == 308242122).LastName,gender=Gender.נקבה, Bday= DateTime.Parse("1992-02-14"), City= "להבים", Adress= "גומא 2",PhoneNumber= "054-6814427",
+                   // FieldOfStudy=FieldStudy.מערכות_מידע,SteadyYear=Year.ג, TypeOfService=Service.צבאי, HealthCondition=HealthCondition.ללא_מגבלה, Seniority=Year.ג, ApertmantType= ApertmantType.יחיד},
             };
             foreach (Registration u in reg)
             {

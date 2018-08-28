@@ -52,7 +52,7 @@ namespace Maonot_Net.Controllers
                 if (file == null || file.Length == 0)
                     return Content("file not selected");
 
-                var userId = "308242122";
+                var userId = HttpContext.Session.GetString("User");
 
                 if (!Directory.Exists(Path.Combine(
                             Directory.GetCurrentDirectory(), $"wwwroot/{userId}")))
@@ -69,13 +69,14 @@ namespace Maonot_Net.Controllers
                     await file.CopyToAsync(stream);
                 }
             }
-
-            return RedirectToAction("Files");
+            TempData["msg"] = "<script>alert('ההרשמה הושלמה בהצלחה');</script>";
+            return  RedirectToAction("Wellcome", "Home");
         }
 
         public IActionResult SeeFiles()
         {
-            var userId = "308242122";
+            var userId = HttpContext.Session.GetString("User");
+            //var userId = "308242122";
             string[] filePaths = Directory.GetFiles(@"wwwroot\"+ userId);
             List<string> list = new List<string> { };
             foreach (var file in filePaths)

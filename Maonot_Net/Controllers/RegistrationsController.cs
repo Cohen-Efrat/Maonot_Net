@@ -172,7 +172,7 @@ namespace Maonot_Net.Controllers
             string Id = HttpContext.Session.GetString("User");
             var registration = await _context.Registrations.SingleOrDefaultAsync(m => m.ID == id);
 
-            if (Aut.Equals("2") || id.Equals(registration.StundetId.ToString()))
+            if (Aut.Equals("2") || Id.Equals(registration.StundetId.ToString()))
             {
                 if (id == null)
                 {
@@ -245,7 +245,8 @@ namespace Maonot_Net.Controllers
                     _context.Add(registration);
                     _context.Update(u);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction("Wellcome", "Home");
+                    // return RedirectToAction("Wellcome", "Home");
+                    return RedirectToAction("Index_2", "FileUpload");
                 }
 
             }
