@@ -26,12 +26,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Maonot_Net</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">מעונות-נט</a>
             </div>
 
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Users" asp-action="Index">משתמשים</a></li>
                     <li><a asp-area="" asp-controller="Registrations" asp-action="Index">הרשמות</a></li>
                     <li><a asp-area="" asp-controller="ApprovalKits" asp-action="Index">ערכות קבלה</a></li>
@@ -42,11 +41,12 @@
                     <li><a asp-area="" asp-controller="Authorizations" asp-action="Index">הרשאות</a></li>
 
                 </ul>
-                <ul class="navbar-collapse collapse navbar-right nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Users" asp-action="LogOut">התנתק/י</a></li>
-
-                </ul>
+                
             </div>
+            <ul class="navbar-collapse collapse navbar-right nav navbar-nav">
+                <li><a asp-area="" asp-controller="Users" asp-action="LogOut">התנתק/י</a></li>
+
+            </ul>
         </div>
 
 
@@ -60,8 +60,14 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - Maonot_Net <script>document.write(new Date().toDateString());</script></p>
+            
+            <p>
+                <img class="img2" style="margin-right:0%;margin-left:55%" src="~/images/Logo.png" />
+                &copy; 2018 - Maonot_Net
+                <script>document.write(new Date().toDateString());</script>
+            </p>
         </footer>
+        
     </div>
 
     <environment include="Development">

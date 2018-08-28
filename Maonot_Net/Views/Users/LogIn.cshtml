@@ -2,11 +2,11 @@
 
 @{
     ViewData["Title"] = "LogInAsync";
+    Layout = "~/Views/Shared/NotUser.cshtml";
 }
 
-<h2>LogInAsync</h2>
+<h2>התחברות למערכת מעונות-נט</h2>
 
-<h4>User</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -31,7 +31,7 @@
     </div>
 </div>
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-area="" asp-controller="Home" asp-action="Index">חזרה למסך פתיחה</a>
 </div>
 @Html.Raw(TempData["msg2"])
 @Html.Raw(TempData["msg1"])

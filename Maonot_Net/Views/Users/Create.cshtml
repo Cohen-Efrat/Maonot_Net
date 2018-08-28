@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Create";
     int a = @ViewBag.Aut;
+    if (a == 0) { Layout = "~/Views/Shared/NotUser.cshtml"; }
+
 
 
 }
@@ -60,7 +62,7 @@ else
             <select asp-for="Authorization" class="form-control" asp-items="ViewBag.Authorization"></select>
                 *@
 
-            </div>}
+            </div>
             @Html.Raw(TempData["msg"])
 
             <div class="form-group">

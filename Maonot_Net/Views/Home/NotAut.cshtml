@@ -1,4 +1,4 @@
-﻿
+﻿@model Maonot_Net.Models.User
 @{
     ViewData["Title"] = "NotAut";
     Layout = "~/Views/Shared/NotUser.cshtml";
@@ -6,5 +6,4 @@
 
 <h2>משתמש יקר</h2>
 <h3>הגעת לעמוד שאינך מורשה לגשת אליו</h3>
-<a asp-action="LogIn"></a>
-
+    <a asp-action="Wellcome">חזרה לאזור האישי</a>

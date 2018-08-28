@@ -84,7 +84,13 @@ sub {
   bottom: -.25em;
 }
 img {
-  border: 0;
+    border: 0;
+}
+.img2 {
+    border: 0;
+    width: 10%;
+    margin-right: 0%;
+    margin-left: 55%;
 }
 svg:not(:root) {
   overflow: hidden;
@@ -6617,6 +6623,20 @@ button.close {
   .visible-xs-inline {
     display: inline !important;
   }
+}
+@media (max-width: 599px) {
+    .row {
+        display: block !important;
+    }
+}@media (max-width: 599px) {
+    .row {
+        display: block !important;
+    }
+}
+@media (max-width: 599px) {
+    .img2 {
+        margin-left:17%!important;
+    }
 }
 @media (max-width: 767px) {
   .visible-xs-inline-block {

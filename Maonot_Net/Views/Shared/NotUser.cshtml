@@ -20,13 +20,9 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Maonot_Net</a>
+                
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">מעונות-נט</a>
+                
             </div>
         </div>
 
@@ -41,8 +37,13 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - Maonot_Net
-            <script>document.write(new Date().toDateString());</script></p>
+            <p>
+                <img class="img2" src="~/images/Logo.png" />
+                &copy; 2018 - Maonot_Net
+                <script>document.write(new Date().toDateString());</script>
+
+            </p>
+            
         </footer>
     </div>
 
