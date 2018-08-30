@@ -4,10 +4,9 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<h2>פרטי הרשמה</h2>
 
 <div>
-    <h4>Registration</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -134,16 +133,87 @@
             @Html.DisplayNameFor(model => model.ParentAge2)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ParentAge2)
+            
         </dd>
+        <div class="form-group">
+            <table>
+                <thead>
+                <th> שם מלא</th>
+                <th>גיל </th>
+                </thead>
+                <tbody>
+                <td>
+                    @Html.DisplayFor(model => model.Familym1_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Familym1_Age)
+                </td>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.Familym2_name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Familym2_Age)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.Familym3_name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Familym3_Age)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.Familym4_name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Familym4_Age)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.Familym5_name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Familym5_Age)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.Familym6_name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Familym6_Age)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.Familym7_name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Familym7_Age)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.Familym8_name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Familym8_Age)
+                    </td>
+                </tr>
+                <tr>
+                    </tbody>
 
-        </table>
-        </dd>
-    </dl>
+
+            </table>
+</dl>
 </div>
 
 <a href="@Url.Action("SeeFiles", "FileUpload")" target="_blank"> מעבר לקבצים</a>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.ID">עריכה</a> |
+    <a asp-action="Index">חזרה לרשומות</a>
 </div>

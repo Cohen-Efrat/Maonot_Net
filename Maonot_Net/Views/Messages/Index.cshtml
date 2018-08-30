@@ -20,8 +20,8 @@
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
-            מצא לפי שם: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
-            <input type="submit" value="Search" class="btn btn-default" /> |
+            מצא לפי נושא: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+            <input type="submit" value="חפש" class="btn btn-default" /> |
             <a asp-action="Index">חזרה לכל ההודעות</a>
         </p>
     </div>
@@ -35,9 +35,7 @@
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">נושא</a>
             </th>
-            <th>
-                תוכן
-            </th>
+
             <th></th>
         </tr>
     </thead>
@@ -46,18 +44,18 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Addressee)
+                    @Html.DisplayFor(modelItem => item.From)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Subject)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Content)
+                    
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.MessageID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.MessageID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.MessageID">Delete</a>
+                    
+                    <a asp-action="Details" asp-route-id="@item.MessageID">כנס להודעה</a> |
+                    <a asp-action="Delete" asp-route-id="@item.MessageID">מחיקה</a>
                 </td>
             </tr>
         }

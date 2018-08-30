@@ -28,6 +28,7 @@ namespace Maonot_Net.Controllers
             int? page)
         {
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (Aut.Equals("2"))
             {
                 ViewData["CurrentSort"] = sortOrder;

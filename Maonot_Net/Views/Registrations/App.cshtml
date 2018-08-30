@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>App</h2>
+<h2>אישור טופס הרשמה</h2>
 
 
 <form asp-controller="Registrations" asp-action="Yes">
@@ -17,6 +17,9 @@
     </div>
 
     <div class="form-group">
-        <input type="submit" value="אישור" class="btn btn-default" />
+        <input type="submit" value="מאושר" class="btn btn-default" />
+    </div>
+    <div>
+        <a asp-action="Index">חזרה לרשומות</a>
     </div>
 </form>

@@ -40,7 +40,7 @@ namespace Maonot_Net.Models
         [Display(Name = "דואר אלקטרוני")]
         [RegularExpression(@"^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$",
         ErrorMessage = "Please Enter Correct Email Address")]
-      //  [Required]
+        [Required]
         public string Email { get; set; }
 
         

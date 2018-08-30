@@ -5,9 +5,9 @@
     string a = @ViewBag.Aut;
 }
 
-<h2>Create</h2>
+<h2>טופס הרשמה</h2>
 
-<h4>Registration</h4>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -89,97 +89,107 @@
                     <option selected="selected" value=""></option>
                 </select>
                 <span asp-validation-for="ApertmantType" class="text-danger"></span>
-                </di
-                <div class="form-group">
-                    <label asp-for="ParentFullName2" class="control-label"></label>
-                    <input asp-for="ParentFullName2" class="form-control" />
-                    <span asp-validation-for="ParentFullName2" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ParentAge2" class="control-label"></label>
-                    <input asp-for="ParentAge2" class="form-control" />
-                    <span asp-validation-for="ParentAge2" class="text-danger"></span>
-                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParentFullName1" class="control-label"></label>
+                <input asp-for="ParentFullName1" class="form-control" />
+                <span asp-validation-for="ParentFullName1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParentAge1" class="control-label"></label>
+                <input asp-for="ParentAge1" class="form-control" />
+                <span asp-validation-for="ParentAge1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParentFullName2" class="control-label"></label>
+                <input asp-for="ParentFullName2" class="form-control" />
+                <span asp-validation-for="ParentFullName2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParentAge2" class="control-label"></label>
+                <input asp-for="ParentAge2" class="form-control" />
+                <span asp-validation-for="ParentAge2" class="text-danger"></span>
+            </div>
 
-                <div class="form-group">
-                    <table>
-                        <thead>
-                        <th> שם מלא</th>
-                        <th>גיל </th>
-                        </thead>
-                        <tbody>
+            <div class="form-group">
+                <table>
+                    <thead>
+                    <th> שם מלא</th>
+                    <th>גיל </th>
+                    </thead>
+                    <tbody>
+                    <td>
+                        <input asp-for="Familym1_name " class="form-control" />
+                    </td>
+                    <td>
+                        <input asp-for="Familym1_Age " class="form-control" />
+                    </td>
+                    <tr>
                         <td>
-                            <input asp-for="Familym1_name " class="form-control" />
+                            <input asp-for="Familym2_name " class="form-control" />
                         </td>
                         <td>
-                            <input asp-for="Familym1_Age " class="form-control" />
+                            <input asp-for="Familym2_Age " class="form-control" />
                         </td>
-                        <tr>
-                            <td>
-                                <input asp-for="Familym2_name " class="form-control" />
-                            </td>
-                            <td>
-                                <input asp-for="Familym2_Age " class="form-control" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input asp-for="Familym3_name " class="form-control" />
-                            </td>
-                            <td>
-                                <input asp-for="Familym3_Age " class="form-control" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input asp-for="Familym4_name " class="form-control" />
-                            </td>
-                            <td>
-                                <input asp-for="Familym4_Age " class="form-control" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input asp-for="Familym5_name " class="form-control" />
-                            </td>
-                            <td>
-                                <input asp-for="Familym5_Age " class="form-control" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input asp-for="Familym6_name " class="form-control" />
-                            </td>
-                            <td>
-                                <input asp-for="Familym6_Age " class="form-control" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input asp-for="Familym7_name " class="form-control" />
-                            </td>
-                            <td>
-                                <input asp-for="Familym7_Age " class="form-control" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input asp-for="Familym8_name " class="form-control" />
-                            </td>
-                            <td>
-                                <input asp-for="Familym8_Age " class="form-control" />
-                            </td>
-                        </tr>
-                        <tr>
-                            </tbody>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input asp-for="Familym3_name " class="form-control" />
+                        </td>
+                        <td>
+                            <input asp-for="Familym3_Age " class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input asp-for="Familym4_name " class="form-control" />
+                        </td>
+                        <td>
+                            <input asp-for="Familym4_Age " class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input asp-for="Familym5_name " class="form-control" />
+                        </td>
+                        <td>
+                            <input asp-for="Familym5_Age " class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input asp-for="Familym6_name " class="form-control" />
+                        </td>
+                        <td>
+                            <input asp-for="Familym6_Age " class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input asp-for="Familym7_name " class="form-control" />
+                        </td>
+                        <td>
+                            <input asp-for="Familym7_Age " class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input asp-for="Familym8_name " class="form-control" />
+                        </td>
+                        <td>
+                            <input asp-for="Familym8_Age " class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        </tbody>
 
 
-                    </table>
+                </table>
 
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="הגשת הטופס ומעבר להעלאת קבצים" class="btn btn-default" />
-                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="הגשת הטופס ומעבר להעלאת קבצים" class="btn btn-default" />
+            </div>
         </form>
     </div>
 </div>

@@ -2,14 +2,14 @@
 
 @{
     ViewData["Title"] = "Create";
-    int a = @ViewBag.Aut;
-    if (a == 0) { Layout = "~/Views/Shared/NotUser.cshtml"; }
+    var a = @ViewBag.Aut;
+    if (a.Equals("0")) { Layout = "~/Views/Shared/NotUser.cshtml"; }
 
 
 
 }
 
-@if (a == 1)
+@if (a.Equals("1"))
 {
     <h2>רישום משתמש חדש</h2>
 
@@ -71,7 +71,7 @@ else
         </form>
     </div>
 </div>
-@if (a == 1)
+@if (a.Equals("1"))
 {
     <div>
         <a asp-action="Index">חזרה לרשימה</a>

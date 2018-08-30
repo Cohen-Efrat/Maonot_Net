@@ -173,18 +173,19 @@ namespace Maonot_Net.Controllers
                     
                         _context.Add(user);
                         await _context.SaveChangesAsync();
-                        string s = user.StundetId.ToString();
-                        HttpContext.Session.SetString("User", s);
-                        string a = user.Authorization.ToString();
-                        HttpContext.Session.SetString("Aut", a);
+                        
 
-                        if (user.Authorization == 1)
+                        if (Aut.Equals("1"))
                         {
 
                             return RedirectToAction(nameof(Index));
                         }
                         else
                         {
+                            string s = user.StundetId.ToString();
+                            HttpContext.Session.SetString("User", s);
+                            string a = user.Authorization.ToString();
+                            HttpContext.Session.SetString("Aut", a);
                             return RedirectToAction("Wellcome", "Home");
                         }
                     }

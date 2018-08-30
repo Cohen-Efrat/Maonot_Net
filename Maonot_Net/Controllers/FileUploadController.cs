@@ -77,6 +77,11 @@ namespace Maonot_Net.Controllers
         {
             var userId = HttpContext.Session.GetString("User");
             //var userId = "308242122";
+            if(!Directory.Exists(Path.Combine(
+                            Directory.GetCurrentDirectory(), $"wwwroot/{userId}")))
+            {
+                return NotFound();
+            }
             string[] filePaths = Directory.GetFiles(@"wwwroot\"+ userId);
             List<string> list = new List<string> { };
             foreach (var file in filePaths)

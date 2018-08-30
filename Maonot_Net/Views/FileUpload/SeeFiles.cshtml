@@ -4,7 +4,7 @@
 
 }
 
-<h2></h2>
+<h2>הקבצים שהועלו</h2>
 
 <ul>
     @{
@@ -16,7 +16,6 @@
 
             <li> <a href="~/@name" target="_blank">    קובץ מספר @i : @name </a></li>
             i++;
-            <a asp-action="Delete" asp-route-id="@u">Delete</a>
             @Html.ActionLink("מחיקת קובץ", "Delete", new { File = @u })
         }
 

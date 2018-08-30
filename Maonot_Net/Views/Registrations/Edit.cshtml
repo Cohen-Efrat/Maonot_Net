@@ -4,9 +4,8 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>עריכה</h2>
 
-<h4>Registration</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -223,11 +222,9 @@
                 </table>
 
             </div>
-            <a href="@Url.Action("SeeFiles", "FileUpload")" target="_blank"> צפייה בקבצים</a>
-            <a href="@Url.Action("UploadFiles", "FileUpload")" target="_blank"> הוספת קבצים נוספים</a>
-            </br>
-            <input onblur="findTotal()" type="text" name="qty" id="qty4" /><br>
 
+
+            <input onblur="findTotal()" type="text" name="qty" id="qty4" /><br>
             <div class="form-group">
                 <label asp-for="Total" class="control-label"></label>
                 <input asp-for="Total" class="form-control" name="total" id="total" />
@@ -236,9 +233,8 @@
 
 
 
-
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="שמור" class="btn btn-default" />
             </div>
 
         </form>
@@ -246,9 +242,15 @@
 </div>
 
 
+<a href="@Url.Action("SeeFiles", "FileUpload")" target="_blank"> צפייה בקבצים</a>
+<a href="@Url.Action("Index_2", "FileUpload")" target="_blank"> הוספת קבצים נוספים</a>
+            </br>
+
+
+
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">חזרה לרשומות</a>
 </div>
 
 @section Scripts {

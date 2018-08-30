@@ -54,8 +54,7 @@ namespace Maonot_Net.Controllers
 
                 if (!String.IsNullOrEmpty(searchString))
                 {
-                    msg = msg.Where(s => s.Content.Contains(searchString)
-                                           || s.Subject.Contains(searchString));
+                    msg = msg.Where(s => s.Subject.Contains(searchString));
                 }
                 switch (sortOrder)
                 {
@@ -93,7 +92,7 @@ namespace Maonot_Net.Controllers
                 {
                     return NotFound();
                 }
-                if (u.StundetId.Equals(message.Addressee))
+                if (u.StundetId.ToString().Equals(message.Addressee))
                 {
                     return View(message);
                 }

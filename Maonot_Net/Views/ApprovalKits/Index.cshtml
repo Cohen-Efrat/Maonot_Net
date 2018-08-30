@@ -5,17 +5,17 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>ערכות קבלה</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">יצירת ערכה חדש</a>
 </p>
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
-            Find by name: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
-            <input type="submit" value="Search" class="btn btn-default" /> |
-            <a asp-action="Index">Back to Full List</a>
+            חיפוש על פי שם <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+            <input type="submit" value="חפש" class="btn btn-default" /> |
+            <a asp-action="Index">חזור לרשימה</a>
         </p>
     </div>
 </form>
@@ -26,7 +26,7 @@
                 תעודת זהות
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Last Name</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">שם משפחה</a>
             </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"> שם פרטי</a>
@@ -36,31 +36,7 @@
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"> סוג חדר</a>
 
             </th>
-            <th>
-                מגורים עם סטודנט/ית דתי/יה
-            </th>
-            <th>
-                מגורים עם סטודנט/ית מעשנ/ת
-            </th>
-            <th>
-                דת
-            </th>
-            <th>
-                מצב רפואי
-            </th>
-            <th>
-                ת.ז שותפ/ה 1
-            </th>
-            <th>
-                ת.ז שותפ/ה 2
-            </th>
-            <th>
-                ת.ז שותפ/ה 3
-            </th>
-            <th>
-                ת.ז שותפ/ה 4
-            </th>
-            <th></th>
+            
         </tr>
     </thead>
     <tbody>
@@ -80,31 +56,9 @@
                     @Html.DisplayFor(modelItem => item.RoomType)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.LivingWithReligious)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LivingWithSmoker)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReligiousType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HealthCondition)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PartnerId1)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PartnerId2)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PartnerId3)
-                </td>
-
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.ID">עריכה</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">מידע</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">מחיקה</a>
                 </td>
             </tr>
         }
