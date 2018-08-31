@@ -34,5 +34,7 @@ namespace Maonot_Net.Models
         [Display(Name = "תוקן")]
         public bool Fix { get; set; }
 
+        public User User { get; set; }
+
     }
 }

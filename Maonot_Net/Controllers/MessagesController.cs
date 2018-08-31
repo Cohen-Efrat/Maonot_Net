@@ -130,7 +130,7 @@ namespace Maonot_Net.Controllers
             try
             {
                 message.From = u.FullName;
-                
+                message.MsgTime = DateTime.Now;
                 if (ModelState.IsValid)
                 {
                     _context.Add(message);
@@ -271,6 +271,7 @@ namespace Maonot_Net.Controllers
                 {
                     message.Addressee = "All";
                     message.From = u.FullName;
+                    message.MsgTime = DateTime.Now;
                     _context.Add(message);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));

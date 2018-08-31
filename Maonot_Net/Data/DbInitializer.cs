@@ -83,7 +83,7 @@ namespace Maonot_Net.Data
 
             var Messg = new Message[]
             {
-                new Message{ From="ענת לוין", Addressee="אפרת כהן", Subject="משעמם לי בדירה", Content="לה לה הלה לה" }
+                new Message{ From="ענת לוין",MsgTime=DateTime.Now, Addressee="אפרת כהן", Subject="משעמם לי בדירה", Content="לה לה הלה לה" }
             };
             foreach (Message u in Messg)
             {

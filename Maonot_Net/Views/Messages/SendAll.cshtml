@@ -4,9 +4,9 @@
     ViewData["Title"] = "SendAll";
 }
 
-<h2>SendAll</h2>
+<h2>תפוצה לכל המשתמשים</h2>
 
-<h4>Message</h4>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -19,8 +19,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Content" class="control-label"></label>
-                <input asp-for="Content" class="form-control" />
-                <span asp-validation-for="Content" class="text-danger"></span>
+                @Html.TextAreaFor(m => m.Content, new { @class = "form-control" })                <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -30,6 +29,6 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">בחזרה לדואר נכנס</a>
 </div>
 

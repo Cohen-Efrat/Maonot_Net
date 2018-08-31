@@ -36,7 +36,9 @@
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">נושא</a>
             </th>
 
-            <th></th>
+            <th>
+                תאריך ושעה
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -50,11 +52,11 @@
                     @Html.DisplayFor(modelItem => item.Subject)
                 </td>
                 <td>
-                    
+                    @Html.DisplayFor(modelItem => item.MsgTime)
                 </td>
                 <td>
                     
-                    <a asp-action="Details" asp-route-id="@item.MessageID">כנס להודעה</a> |
+                    <a asp-action="Details" asp-route-id="@item.MessageID">צפייה בהודעה</a> |
                     <a asp-action="Delete" asp-route-id="@item.MessageID">מחיקה</a>
                 </td>
             </tr>

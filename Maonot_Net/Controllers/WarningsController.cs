@@ -133,6 +133,7 @@ namespace Maonot_Net.Controllers
                     {
                         From = "ועדת משמעת",
                         Addressee = Id,
+                        MsgTime=DateTime.Now,
                         Subject = "אזהרת משמעת",
                         Content = "קיבלת מכתב אזהרה מועדת המשמעת בעקבות אורח שלא חתמת עליו ביומן המבקרים" +
                         "במידה ואת/ה חושב/ת שהייתה טעות נא לפנות בהודעה לועדת המשמעת" +

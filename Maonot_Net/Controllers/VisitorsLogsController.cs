@@ -211,6 +211,7 @@ namespace Maonot_Net.Controllers
             {
                 Addressee = studentId.ToString(),
                 From = "אבטחה",
+                MsgTime = DateTime.Now,
                 Subject = "חתימה על אורח/ת",
                 Content = "התארח/ה אצלך אורח/ת בשם" +
                 vistorName + "בתאריך" +

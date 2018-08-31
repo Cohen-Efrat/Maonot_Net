@@ -24,8 +24,14 @@ namespace Maonot_Net.Models
         [Required]
         [Display(Name = "תוכן הודעה")]
         public string Content { set; get; }
-   
 
+
+        [Display(Name = "תאריך ושעה")]
+        [DisplayFormat(ApplyFormatInEditMode = false)]
+        [DataType(DataType.Date)]
+        public DateTime? MsgTime { get; set; }
+
+        public User User { get; set; }
 
 
 
