@@ -75,7 +75,7 @@ namespace Maonot_Net.Controllers
                 }
 
                 int pageSize = 3;
-                return View("viewReg", await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
+                return View(await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
             }
             else
             {
@@ -115,7 +115,7 @@ namespace Maonot_Net.Controllers
                 }
 
                 int pageSize = 3;
-                return View("viewReg", await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
+                return View( await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
             }
             else
             {
@@ -155,8 +155,8 @@ namespace Maonot_Net.Controllers
                                            || s.FirstName.Contains(searchString));
                 }
 
-                int pageSize = 3;
-                return View("viewReg", await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
+                int pageSize = 1;
+                return View( await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
             }
             else
             {

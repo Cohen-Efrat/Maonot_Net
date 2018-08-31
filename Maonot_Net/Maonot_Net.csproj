@@ -23,4 +23,13 @@
     <None Include="wwwroot\Files\contract.pdf" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Registrations\Index_Couple.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Registrations\Index_Single_Female.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
 </Project>
