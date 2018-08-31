@@ -419,7 +419,19 @@ namespace Maonot_Net.Controllers
             if (reg != null)
             {
                 reg.Approved = true;
-              //  user.Authorization = 9;
+                user.Authorization = 9;
+                Message msg = new Message
+                {
+                    Addressee = user.StundetId.ToString(),
+                    From = "אבטחה",
+                    MsgTime = DateTime.Now,
+                    Subject = "אישור קבלה למעונות",
+                    Content = "ברצוני לבשר לך כי התקבלת למעונות כעת עלייך למלא את " +
+                    "הטופס ערכת קבלה לצורך שיבוצך לדירה." +
+                    "תודה רבה"
+                };
+
+                _context.Messages.Add(msg);
                 _context.Update(user);
                 _context.Update(reg);
                 await _context.SaveChangesAsync();

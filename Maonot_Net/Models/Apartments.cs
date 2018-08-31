@@ -18,7 +18,7 @@ namespace Maonot_Net.Models
 
         public bool? ReligiousType { get; set; }
 
-
+        public Assigning assigning { get; set; }
 
     }
 }
