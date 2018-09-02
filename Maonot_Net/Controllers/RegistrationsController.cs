@@ -437,7 +437,7 @@ namespace Maonot_Net.Controllers
                 Message msg = new Message
                 {
                     Addressee = user.StundetId.ToString(),
-                    From = "אבטחה",
+                    From = "מנהל/ת מעונות",
                     MsgTime = DateTime.Now,
                     Subject = "אישור קבלה למעונות",
                     Content = "ברצוני לבשר לך כי התקבלת למעונות כעת עלייך למלא את " +

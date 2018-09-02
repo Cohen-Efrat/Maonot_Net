@@ -117,7 +117,7 @@ namespace Maonot_Net.Controllers
                 Aut = "0";
             }
 
-            if (!Aut.Equals("8"))
+            if (!Aut.Equals("9"))
             {
                 return RedirectToAction("NotAut", "Home");
             }
