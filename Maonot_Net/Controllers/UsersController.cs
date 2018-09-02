@@ -138,7 +138,7 @@ namespace Maonot_Net.Controllers
             string Aut = HttpContext.Session.GetString("Aut");
             if (Aut == null)
             {
-                ViewBag.Aut = 0;
+                ViewBag.Aut = "0";
             }
             else
             {
@@ -159,10 +159,15 @@ namespace Maonot_Net.Controllers
         {
             ViewData["Authorization"] = new SelectList(_context.Authorizations, "Id", "AutName");
             string Aut = HttpContext.Session.GetString("Aut");
+            if (Aut == null)
+            {
+                Aut = "0";
+            }
+
             try
             {
-                if (user.Authorization == 0)
-                { user.Authorization = 7; }
+                //if (user.Authorization == 0)
+                //{ user.Authorization = 7; }
                 
                 if (ModelState.IsValid)
                 {
@@ -177,7 +182,7 @@ namespace Maonot_Net.Controllers
 
                         if (Aut.Equals("1"))
                         {
-
+                            ViewBag.Aut = Aut;
                             return RedirectToAction(nameof(Index));
                         }
                         else
@@ -186,6 +191,7 @@ namespace Maonot_Net.Controllers
                             HttpContext.Session.SetString("User", s);
                             string a = user.Authorization.ToString();
                             HttpContext.Session.SetString("Aut", a);
+                            ViewBag.Aut = Aut;
                             return RedirectToAction("Wellcome", "Home");
                         }
                     }
@@ -212,7 +218,7 @@ namespace Maonot_Net.Controllers
             string Aut = HttpContext.Session.GetString("Aut");
             
             ViewBag.Aut = Aut;
-            if (Aut.Equals("0"))
+            if (!Aut.Equals("0"))
             {
                 if (id == null)
                 {

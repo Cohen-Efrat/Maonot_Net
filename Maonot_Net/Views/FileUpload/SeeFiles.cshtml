@@ -1,6 +1,15 @@
 ﻿
 @{
     ViewData["Title"] = "SeeFiles";
+    var a = ViewBag.Aut;
+    if (a.Equals("2"))
+    {
+        Layout = "~/Views/Shared/Manger.cshtml";
+    }
+    else if (a.Equals("8"))
+    {
+        Layout = "~/Views/Shared/Visitor.cshtml";
+    }
 
 }
 

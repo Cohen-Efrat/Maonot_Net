@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/Admin.cshtml";
 }
 
 <h2>רשימת משתמשים</h2>
@@ -35,12 +36,11 @@
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">שם משפחה</a>
             </th>
+
             <th>
-                @*    @Html.DisplayNameFor(model => model.Password)*@ סיסמא
+                @*   @Html.DisplayNameFor(model => model.Email)*@ דוא"ל
             </th>
-            <th>
-                @*   @Html.DisplayNameFor(model => model.Email)*@ דוא"ל"
-            </th>
+            <th>הרשאה</th>
 
                     <th></th>
                 </tr>
@@ -57,9 +57,6 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.LastName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Password)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Email)

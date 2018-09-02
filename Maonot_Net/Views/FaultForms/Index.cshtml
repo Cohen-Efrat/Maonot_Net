@@ -2,6 +2,15 @@
 
 @{
     ViewData["Title"] = "Index";
+    var a = ViewBag.Aut;
+    if (a.Equals("2"))
+    {
+        Layout = "~/Views/Shared/Manger.cshtml";
+    }
+    else if (a.Equals("3"))
+    {
+        Layout = "~/Views/Shared/HouseKeep.cshtml";
+    }
 }
 
 <h2>Index</h2>
@@ -69,8 +78,8 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-                <a asp-controller="FaultForms" asp-action="App" asp-route-id="@item.ID">מאשר</a>
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>|
+                <a asp-controller="FaultForms" asp-action="Fix" asp-route-id="@item.ID">תוקן</a>
             </td>
         </tr>
 }

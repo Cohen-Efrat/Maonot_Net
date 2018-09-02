@@ -33,7 +33,7 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             string Aut = HttpContext.Session.GetString("Aut");
-            if (Aut.Equals(1))
+            if (Aut.Equals("1"))
             {
                 if (id == null)
                 {
@@ -56,7 +56,7 @@ namespace Maonot_Net.Controllers
         public IActionResult Create()
         {
             string Aut = HttpContext.Session.GetString("Aut");
-            if (Aut.Equals(1))
+            if (Aut.Equals("1"))
             {
                 return View();
             }
@@ -71,7 +71,7 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Create([Bind("Id,AutName")] Authorization authorization)
         {
             string Aut = HttpContext.Session.GetString("Aut");
-            if (Aut.Equals(1))
+            if (Aut.Equals("1"))
             {
                 if (ModelState.IsValid)
                 {
@@ -88,7 +88,7 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             string Aut = HttpContext.Session.GetString("Aut");
-            if (Aut.Equals(1))
+            if (Aut.Equals("1"))
             {
                 if (id == null)
                 {
@@ -113,7 +113,7 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("Id,AutName")] Authorization authorization)
         {
             string Aut = HttpContext.Session.GetString("Aut");
-            if (Aut.Equals(1))
+            if (Aut.Equals("1"))
             {
                 if (id != authorization.Id)
                 {

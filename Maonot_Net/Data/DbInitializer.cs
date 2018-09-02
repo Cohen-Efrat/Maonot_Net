@@ -19,7 +19,9 @@ namespace Maonot_Net.Data
             var users = new User[]
             {
                 new User{StundetId= 302875125, FirstName= "Miki", LastName= "Rotenstain", Password=BCrypt.Net.BCrypt.HashPassword("ABCabc123!"), Email = "mikir2127@gmail.com",Authorization=2},
-                new User{StundetId= 308242122, FirstName= "Efrat", LastName= "Cohen", Password= BCrypt.Net.BCrypt.HashPassword("ABCabc123!"), Email= "efratc66@gmail.com",Authorization=7}
+                new User{StundetId= 308242122, FirstName= "Efrat", LastName= "Cohen", Password= BCrypt.Net.BCrypt.HashPassword("ABCabc123!"), Email= "efratc66@gmail.com",Authorization=7},
+                new User{StundetId= 123456789, FirstName= "מנהל", LastName= "מערכת", Password= BCrypt.Net.BCrypt.HashPassword("ABCabc123!"), Email= "efratc66@gmail.com",Authorization=1}
+
             };
             foreach (User u in users)
             {
@@ -44,8 +46,8 @@ namespace Maonot_Net.Data
             {
                 new ApprovalKit{StundetId= users.Single(u=> u.StundetId == 302875125).StundetId, FirstName= users.Single(u=> u.StundetId == 302875125).FirstName , LastName= users.Single(u=> u.StundetId == 302875125).LastName, RoomType=RoomType.חדר_ליחיד,
                     LivingWithSmoker = Choose.אפשרי,LivingWithReligious=Choose.אפשרי, ReligiousType=Religious.דרוזי, HealthCondition=HealthCondition.ללא_מגבלה},
-                new ApprovalKit{StundetId= users.Single(u=> u.StundetId == 308242122).StundetId, FirstName= users.Single(u=> u.StundetId == 308242122).FirstName , LastName= users.Single(u=> u.StundetId == 308242122).LastName, RoomType=RoomType.חדר_ליחיד,
-                    LivingWithSmoker = Choose.לא_מעוניין,LivingWithReligious=Choose.מעוניין, ReligiousType=Religious.יהודי, HealthCondition=HealthCondition.ללא_מגבלה}
+               // new ApprovalKit{StundetId= users.Single(u=> u.StundetId == 308242122).StundetId, FirstName= users.Single(u=> u.StundetId == 308242122).FirstName , LastName= users.Single(u=> u.StundetId == 308242122).LastName, RoomType=RoomType.חדר_ליחיד,
+                  //  LivingWithSmoker = Choose.לא_מעוניין,LivingWithReligious=Choose.מעוניין, ReligiousType=Religious.יהודי, HealthCondition=HealthCondition.ללא_מגבלה}
             };
             foreach (ApprovalKit u in App)
             {

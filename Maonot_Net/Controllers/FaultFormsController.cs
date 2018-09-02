@@ -29,7 +29,8 @@ namespace Maonot_Net.Controllers
         {
             string Aut = HttpContext.Session.GetString("Aut");
             string Id = HttpContext.Session.GetString("User");
-           // var faultForm = await _context.FaultForms.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
+            ViewBag.Aut = Aut;
+            // var faultForm = await _context.FaultForms.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
 
             if (Aut.Equals("3") || Aut.Equals("2") || Aut.Equals("9"))
             {
@@ -86,6 +87,7 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             string Id = HttpContext.Session.GetString("User");
             var faultForm = await _context.FaultForms.SingleOrDefaultAsync(m => m.ID == id);
 
@@ -108,6 +110,7 @@ namespace Maonot_Net.Controllers
         public IActionResult Create()
         {
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (Aut.Equals("9"))
             {
                 return View();
@@ -123,6 +126,8 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Create([Bind("Apartment,RoomNum,FullName,PhoneNumber,Description")] FaultForm faultForm)
         {
             string Id = HttpContext.Session.GetString("User");
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
             var r = await _context.Registrations.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
             try
@@ -154,6 +159,8 @@ namespace Maonot_Net.Controllers
         {
           
             string Id = HttpContext.Session.GetString("User");
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             var faultForm = await _context.FaultForms.SingleOrDefaultAsync(m => m.ID == id);
             if (faultForm.StundetId.Equals(Id))
             {
@@ -183,6 +190,8 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Apartment,RoomNum,FullName,PhoneNumber,Description")] FaultForm faultForm)
         {
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (id != faultForm.ID)
             {
                 return NotFound();
@@ -215,6 +224,7 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             string Id = HttpContext.Session.GetString("User");
             if (id == null)
             {
@@ -245,6 +255,8 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             var faultForm = await _context.FaultForms.AsNoTracking().SingleOrDefaultAsync(m => m.ID == id);
             if (faultForm == null)
             {
@@ -275,6 +287,7 @@ namespace Maonot_Net.Controllers
 
         {
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (Aut.Equals("3"))
             {
                 if (id == null)
@@ -295,7 +308,8 @@ namespace Maonot_Net.Controllers
 
         public async Task<ActionResult> Yes(int id)
         {
-
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             var fault = await _context.FaultForms.SingleOrDefaultAsync(m => m.ID == id);
 
 

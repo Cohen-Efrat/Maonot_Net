@@ -44,6 +44,8 @@ namespace Maonot_Net.Controllers
 
         public IActionResult Index_2()
         {
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             return View();
         }
         public async Task<IActionResult> UploadFiles(List<IFormFile> files)
@@ -75,8 +77,11 @@ namespace Maonot_Net.Controllers
 
         public IActionResult SeeFiles()
         {
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             var userId = HttpContext.Session.GetString("User");
             //var userId = "308242122";
+
             if(!Directory.Exists(Path.Combine(
                             Directory.GetCurrentDirectory(), $"wwwroot/{userId}")))
             {

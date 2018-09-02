@@ -3,9 +3,13 @@
 @{
     ViewData["Title"] = "Create";
     var a = @ViewBag.Aut;
-    if (a.Equals("0")) { Layout = "~/Views/Shared/NotUser.cshtml"; }
 
+    if (a.Equals("1")) {
 
+        Layout = "~/Views/Shared/Admin.cshtml";
+    }
+
+    else { Layout = "~/Views/Shared/NotUser.cshtml"; }
 
 }
 

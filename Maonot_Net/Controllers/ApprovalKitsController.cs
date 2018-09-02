@@ -86,6 +86,7 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             string Id = HttpContext.Session.GetString("User");
             var approvalKit = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.ID == id);
 
@@ -138,11 +139,14 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("StundetId,LastName,FirstName,RoomType,LivingWithReligious,LivingWithSmoker,ReligiousType,HealthCondition,PartnerId1,PartnerId2,PartnerId3,PartnerId4")] ApprovalKit approvalKit)
         {
+            
+            
             var functions = new functions();
 
             if (functions.Comper(new DateTime(2019, 9, 5)))
             {
                 string Aut = HttpContext.Session.GetString("Aut");
+                ViewBag.Aut = Aut;
                 string Id = HttpContext.Session.GetString("User");
                 var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
 
@@ -153,7 +157,7 @@ namespace Maonot_Net.Controllers
                 {
                     if (ModelState.IsValid)
                     {
-                        u.Authorization = 9;
+                        //u.Authorization = 9;
                         _context.Add(approvalKit);
                         await _context.SaveChangesAsync();
                         return RedirectToAction("Wellcome", "Home");
@@ -176,6 +180,7 @@ namespace Maonot_Net.Controllers
             if (functions.Comper(new DateTime(2019, 9, 5)))
             {
                 string Aut = HttpContext.Session.GetString("Aut");
+                ViewBag.Aut = Aut;
                 string Id = HttpContext.Session.GetString("User");
                 if (id == null)
                 {
@@ -207,6 +212,7 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("ID,StundetId,LastName,FirstName,RoomType,LivingWithReligious,LivingWithSmoker,ReligiousType,HealthCondition,PartnerId1,PartnerId2,PartnerId3,PartnerId4")] ApprovalKit approvalKit)
         {
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (id != approvalKit.ID)
             {
                 return NotFound();
@@ -244,6 +250,7 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (Aut.Equals("2"))
             {
                 if (id == null)
@@ -273,6 +280,8 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             var approvalKit = await _context.ApprovalKits.AsNoTracking().SingleOrDefaultAsync(m => m.ID == id);
             if (approvalKit == null)
             {

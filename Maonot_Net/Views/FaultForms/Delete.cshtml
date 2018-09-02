@@ -2,6 +2,15 @@
 
 @{
     ViewData["Title"] = "Delete";
+    var a = ViewBag.Aut;
+    if (a.Equals("2"))
+    {
+        Layout = "~/Views/Shared/Manger.cshtml";
+    }
+    else if (a.Equals("3"))
+    {
+        Layout = "~/Views/Shared/HouseKeep.cshtml";
+    }
 }
 
 <h2>Delete</h2>
