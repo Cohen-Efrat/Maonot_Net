@@ -224,5 +224,7 @@
 <a href="@Url.Action("SeeFiles", "FileUpload")" target="_blank"> מעבר לקבצים</a>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.ID">עריכה</a> |
+    @if (a.Equals("2")){ 
     <a asp-action="Index">חזרה לרשומות</a>
+    }
 </div>

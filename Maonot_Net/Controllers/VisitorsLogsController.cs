@@ -296,49 +296,63 @@ namespace Maonot_Net.Controllers
         }
 
         public async Task<IActionResult> Signature(int? id)
-     
         {
-            if (id == null)
+            string Id = HttpContext.Session.GetString("User");
+            var visitorsLog = await _context.VisitorsLogs.SingleOrDefaultAsync(m => m.Id == id);
+
+            if (Id.Equals(visitorsLog.StudentId.ToString()))
             {
-                return NotFound();
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                if (visitorsLog == null)
+                {
+                    return NotFound();
+                }
+                return View(visitorsLog);
+            }
+            else
+            {
+                TempData["msg1"] = "<script>alert('ת.ז לא נמצאה במערכת');</script>";
+                return RedirectToAction("Wellcome", "Home");
+                
             }
 
-            var visitorsLog = await _context.VisitorsLogs.SingleOrDefaultAsync(m => m.Id == id);
-            if (visitorsLog == null)
-            {
-                return NotFound();
-            }
-            return View(visitorsLog);
         }
-        // צריך להוסיף שדייר יוכל לחתום רק על האורח שלו
+        
         public async Task<ActionResult> ConifiremSigniture(int id, int StudentId , string password)
         {
             string Id = HttpContext.Session.GetString("User");
+            //user by session
             var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
             //return RedirectToAction("NotAut", "Home");
 
             ViewBag.StudentId = StudentId;
             var functions = new functions();
+            //user by StudentId
             var user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId == StudentId);
             if (user != null)
             {
-                if (functions.CheckPassword(password, user.Password))
-                {
-         
-                    var visitorsLog = await _context.VisitorsLogs.SingleOrDefaultAsync(m => m.Id == id);
-                    visitorsLog.Signature = true;
-                    _context.Update(visitorsLog);
-                    await _context.SaveChangesAsync();
+                    if (functions.CheckPassword(password, user.Password))
+                    {
 
-                    return View();
-                }
-                else
-                {
-                    ViewBag.Message = "Thank you!";
-                    TempData["msg"] = "<script>alert('סיסמה לא נכונה');</script>";
+                        var visitorsLog = await _context.VisitorsLogs.SingleOrDefaultAsync(m => m.Id == id);
+                        visitorsLog.Signature = true;
+                        _context.Update(visitorsLog);
+                        await _context.SaveChangesAsync();
 
-                   return RedirectToAction(nameof(Index));
-                }
+                        return View();
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Thank you!";
+                        TempData["msg"] = "<script>alert('סיסמה לא נכונה');</script>";
+
+                        return RedirectToAction(nameof(Index));
+                    }
+                
             }
            return  RedirectToAction("Index", "Home");
 

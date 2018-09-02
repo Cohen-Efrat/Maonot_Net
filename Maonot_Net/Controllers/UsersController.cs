@@ -364,14 +364,14 @@ namespace Maonot_Net.Controllers
                 else
                 {
                   ViewBag.Message = "Thank you!";
-                  TempData["msg2"] = "<script>alert('Password was incorrect');</script>";
+                  TempData["msg2"] = "<script>alert('סיסמה שגויה');</script>";
                     
                    // return View();
                 }
             }
             else
             {
-                TempData["msg1"] = "<script>alert('E-mail not Found');</script>";
+                TempData["msg1"] = "<script>alert('ת.ז לא נמצאה במערכת');</script>";
                // return View();
             }
             return View();

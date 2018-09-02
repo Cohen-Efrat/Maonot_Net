@@ -257,10 +257,13 @@
 
 
 
+@if (a.Equals("2"))
+{
+    <div>
+        <a asp-action="Index">חזרה לרשימה</a>
+    </div>
+}
 
-<div>
-    <a asp-action="Index">חזרה לרשומות</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -3,6 +3,8 @@
 
 @{
     ViewData["Title"] = "Index";
+    var a = ViewBag.Aut;
+
     if (a.Equals("2"))
     {
         Layout = "~/Views/Shared/Manger.cshtml";
@@ -20,10 +22,14 @@
 
 <h2>Index</h2>
 
-<p>
-    <a asp-action="CheckVistorLog">מעבר על היומן</a>
-    @ViewBag.LastDate תאריך בדיקה אחרון
-</p>
+@if (a.Equals("2") || a.Equals("4"))
+{
+    <p>
+        <a asp-action="CheckVistorLog">מעבר על היומן</a>
+        @ViewBag.LastDate תאריך בדיקה אחרון
+    </p>
+}
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -44,7 +50,7 @@
 
             </th>
             <th>
-              שם מבקר
+                שם מבקר
             </th>
             <th>
                 תז מבקר
@@ -101,8 +107,14 @@
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    @if (a.Equals("2"))
+                    {
                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+                    @if (a.Equals("9"))
+                    {
                     <a asp-controller="VisitorsLogs" asp-action="Signature" asp-route-id="@item.Id">חתום</a>
+                    }
                 </td>
             </tr>
         }
