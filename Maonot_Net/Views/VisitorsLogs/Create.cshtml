@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/Security.cshtml";
 }
 
 <h2>Create</h2>
@@ -13,12 +14,7 @@
         <form asp-action="Create">
             @ViewBag.users
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*
-        <div class="form-group">
-            <label asp-for="EnteryDate" class="control-label"></label>
-            <input asp-for="EnteryDate" class="form-control" />
-            <span asp-validation-for="EnteryDate" class="text-danger"></span>
-        </div> *@
+
             <div class="form-group">
                 <label asp-for="VistorName" class="control-label"></label>
                 <input asp-for="VistorName" class="form-control" />

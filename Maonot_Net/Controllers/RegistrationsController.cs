@@ -28,6 +28,7 @@ namespace Maonot_Net.Controllers
         public IActionResult Index()
         {
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (Aut.Equals("2"))
             {
                 ViewBag.cF = queryFemale().Count();
@@ -51,6 +52,7 @@ namespace Maonot_Net.Controllers
     )
         {
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (Aut.Equals("2"))
             {
                 ViewBag.type = "Index_Couples";
@@ -91,6 +93,7 @@ namespace Maonot_Net.Controllers
             )
         {
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (Aut.Equals("2"))
             {
                 ViewBag.type = "Index_Single_Female";
@@ -132,6 +135,7 @@ namespace Maonot_Net.Controllers
 
         {
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (Aut.Equals("2"))
             {
                 ViewBag.type = "Index_Single_Male";
@@ -169,6 +173,7 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             string Id = HttpContext.Session.GetString("User");
             var registration = await _context.Registrations.SingleOrDefaultAsync(m => m.ID == id);
 
@@ -199,10 +204,11 @@ namespace Maonot_Net.Controllers
         {
             string Id = HttpContext.Session.GetString("User");
             string Aut = HttpContext.Session.GetString("Aut");
-            if (Aut == null)
-            {
-                Aut = "0";
-            }
+            ViewBag.Aut = Aut;
+            //if (Aut == null)
+          //  {
+             //   Aut = "0";
+           // }
 
             if (!Aut.Equals("7"))
             {
@@ -229,6 +235,7 @@ namespace Maonot_Net.Controllers
             "Total,Approved")] Registration registration)
         {
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             string Id = HttpContext.Session.GetString("User");
             var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
 
@@ -269,6 +276,7 @@ namespace Maonot_Net.Controllers
             {
                
                 string Aut = HttpContext.Session.GetString("Aut");
+                ViewBag.Aut = Aut;
                 string Id = HttpContext.Session.GetString("User");
                 if (id == null)
                 {
@@ -304,7 +312,8 @@ namespace Maonot_Net.Controllers
             "Total,Approved")] Registration registration)
                     //public async Task<IActionResult> Edit(int id, Registration registration)
         {
-            
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (id != registration.ID)
             {
                 return NotFound();
@@ -339,6 +348,7 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (Aut.Equals("2")){
 
                 if (id == null)
@@ -369,6 +379,8 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             var registration = await _context.Registrations.AsNoTracking().SingleOrDefaultAsync(m => m.ID == id);
             if (registration == null)
             {
@@ -391,6 +403,7 @@ namespace Maonot_Net.Controllers
 
         {
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (Aut.Equals("2"))
             {
                 if (id == null)
@@ -415,7 +428,8 @@ namespace Maonot_Net.Controllers
             var reg = await _context.Registrations.SingleOrDefaultAsync(m => m.ID == id);
             var Sid = reg.StundetId;
             var user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId == Sid);
-
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (reg != null)
             {
                 reg.Approved = true;
@@ -454,7 +468,7 @@ namespace Maonot_Net.Controllers
         {
             var reg = from s in _context.Registrations
                       orderby s.Total descending
-                      where s.gender.Equals(Gender.נקבה) && s.ApertmantType.Equals(ApertmantType.יחיד)
+                      where s.gender.Equals(Gender.נקבה) && s.ApertmantType.Equals(ApertmantType.יחיד) && s.Approved==false
                       select s;
             return reg;
         }
@@ -462,7 +476,7 @@ namespace Maonot_Net.Controllers
         {
             var reg = from s in _context.Registrations
                       orderby s.Total descending
-                      where s.gender.Equals(Gender.זכר) && s.ApertmantType.Equals(ApertmantType.יחיד)
+                      where s.gender.Equals(Gender.זכר) && s.ApertmantType.Equals(ApertmantType.יחיד) && s.Approved == false
                       select s;
             return reg;
         }
@@ -470,7 +484,7 @@ namespace Maonot_Net.Controllers
         {
             var reg = from s in _context.Registrations
                       orderby s.Total descending
-                      where s.ApertmantType.Equals(ApertmantType.זוגי)
+                      where s.ApertmantType.Equals(ApertmantType.זוגי) && s.Approved == false
                       select s;
             return reg;
         }

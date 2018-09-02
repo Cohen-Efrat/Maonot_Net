@@ -2,6 +2,16 @@
 
 @{
     ViewData["Title"] = "Create";
+    var a = ViewBag.Aut;
+    if (a.Equals("2"))
+    {
+        Layout = "~/Views/Shared/Manger.cshtml";
+    }
+    else if (a.Equals("4"))
+    {
+        Layout = "~/Views/Shared/Discipline.cshtml";
+    }
+
 }
 
 <h2>Create</h2>
@@ -26,11 +36,6 @@
                 <label asp-for="Date" class="control-label"></label>
                 <input asp-for="Date" class="form-control" />
                 <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BlaBla" class="control-label"></label>
-                <input asp-for="BlaBla" class="form-control" />
-                <span asp-validation-for="BlaBla" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

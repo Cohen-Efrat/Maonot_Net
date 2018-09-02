@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Delete";
+
+    Layout = "~/Views/Shared/Manger.cshtml";
 }
 
 <h2>Delete</h2>
@@ -30,17 +32,11 @@
         <dd>
             @Html.DisplayFor(model => model.Date)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.BlaBla)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.BlaBla)
-        </dd>
     </dl>
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="WarningId" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index">בחזרה לרשימה</a>
     </form>
 </div>

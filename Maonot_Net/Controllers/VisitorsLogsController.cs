@@ -29,6 +29,7 @@ namespace Maonot_Net.Controllers
         {
             ViewBag.LastDate = Globals.LastDate;
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (Aut.Equals("2") || Aut.Equals("9") || Aut.Equals("4"))
             {
                 ViewData["CurrentSort"] = sortOrder;
@@ -81,6 +82,7 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (Aut.Equals("2") || Aut.Equals("9") || Aut.Equals("4"))
             {
                 if (id == null)
@@ -104,7 +106,8 @@ namespace Maonot_Net.Controllers
         public IActionResult Create()
         {
             string Aut = HttpContext.Session.GetString("Aut");
-            if (Aut.Equals("2") || Aut.Equals("9") || Aut.Equals("4"))
+            ViewBag.Aut = Aut;
+            if ( Aut.Equals("9"))
             {
                 ViewData["FullName"] = new SelectList(_context.ApprovalKits, "ID", "FullName");
                 //make a list of appartments
@@ -122,11 +125,14 @@ namespace Maonot_Net.Controllers
         {
             VisitorsLog v = await _context.VisitorsLogs.AsNoTracking().SingleOrDefaultAsync(m => m.ApartmentNum == visitorsLog.ApartmentNum && m.Room == visitorsLog.Room);
 
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
+
             try
-                {
-                //visitorsLog.EnteryDate = DateTime.Now;
-                visitorsLog.EnteryDate = DateTime.Parse("2018-02-14");
-                   // visitorsLog.StudentId = v.StudentId;
+            {
+                visitorsLog.EnteryDate = DateTime.Now;
+                //visitorsLog.EnteryDate = DateTime.Parse("2018-02-14");
+                    visitorsLog.StudentId = v.StudentId;
                     if (ModelState.IsValid)
                     {
                         _context.Add(visitorsLog);
@@ -147,7 +153,8 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             string Aut = HttpContext.Session.GetString("Aut");
-            if (Aut.Equals("2") || Aut.Equals("9") || Aut.Equals("4"))
+            ViewBag.Aut = Aut;
+            if (Aut.Equals("9"))
             {
                 ViewData["FullName"] = new SelectList(_context.ApprovalKits, "ID", "FullName");
                 if (id == null)
@@ -172,6 +179,9 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,EnteryDate,VistorName,VisitorID,StudentFullName,ExitDate,ApartmentNum,Room,Signature")] VisitorsLog visitorsLog)
         {
+
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (id != visitorsLog.Id)
             {
                 return NotFound();
@@ -228,7 +238,9 @@ namespace Maonot_Net.Controllers
         // GET: VisitorsLogs/Delete/5
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
+
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (Aut.Equals("2"))
             {
                 if (id == null)
@@ -258,6 +270,9 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             var visitorsLog = await _context.VisitorsLogs.AsNoTracking().SingleOrDefaultAsync(m => m.Id == id);
             if (visitorsLog == null)
             {
@@ -334,6 +349,9 @@ namespace Maonot_Net.Controllers
         }
         public async Task<ActionResult> CheckVistorLog()
         {
+
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             DateTime LastDate = Globals.LastDate;
             var vistor = from s in _context.VisitorsLogs
                          where s.EnteryDate > LastDate && s.EnteryDate < DateTime.Now
@@ -384,13 +402,5 @@ namespace Maonot_Net.Controllers
 
         }
 
-        private async Task SendWarning(int? studentId, DateTime date)
-        {
-
-
-        
-        
-
-        }
     }
 }

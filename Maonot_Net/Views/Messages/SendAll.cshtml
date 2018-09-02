@@ -2,6 +2,29 @@
 
 @{
     ViewData["Title"] = "SendAll";
+    var a = ViewBag.Aut;
+
+    if (a.Equals("1"))
+    {
+        Layout = "~/Views/Shared/Admin.cshtml";
+    }
+    else if (a.Equals("2"))
+    {
+        Layout = "~/Views/Shared/Manger.cshtml";
+    }
+    else if (a.Equals("3"))
+    {
+        Layout = "~/Views/Shared/HouseKeep.cshtml";
+    }
+    else if (a.Equals("4"))
+    {
+        Layout = "~/Views/Shared/Discipline.cshtml";
+    }
+    else if (a.Equals("5"))
+    {
+        Layout = "~/Views/Shared/Culture.cshtml";
+    }
+
 }
 
 <h2>תפוצה לכל המשתמשים</h2>

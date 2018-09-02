@@ -2,6 +2,19 @@
 
 @{
     ViewData["Title"] = "Index";
+    var a = ViewBag.Aut;
+    if (a.Equals("2"))
+    {
+        Layout = "~/Views/Shared/Manger.cshtml";
+    }
+    else if (a.Equals("4"))
+    {
+        Layout = "~/Views/Shared/Discipline.cshtml";
+    }
+    else if (a.Equals("9"))
+    {
+        Layout = "~/Views/Shared/Tenant.cshtml";
+    }
 }
 
 <h2>רשימת אורחים</h2>

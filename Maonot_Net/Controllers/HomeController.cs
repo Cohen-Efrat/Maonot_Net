@@ -24,30 +24,20 @@ namespace Maonot_Net.Controllers
             return View();
         }
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
         public IActionResult NotAut()
         {
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             return View();
         }
         public async Task<IActionResult> Wellcome()
         {
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             string ID = HttpContext.Session.GetString("User");
             var user = await _context.Users.AsNoTracking().SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(ID));
             if (user != null)
@@ -63,6 +53,8 @@ namespace Maonot_Net.Controllers
         }
         public IActionResult NoMore()
         {
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             return View();
         }
 

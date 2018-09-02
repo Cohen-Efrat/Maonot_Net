@@ -166,8 +166,8 @@ namespace Maonot_Net.Controllers
 
             try
             {
-                //if (user.Authorization == 0)
-                //{ user.Authorization = 7; }
+                if (user.Authorization == 0)
+                { user.Authorization = 7; }
                 
                 if (ModelState.IsValid)
                 {

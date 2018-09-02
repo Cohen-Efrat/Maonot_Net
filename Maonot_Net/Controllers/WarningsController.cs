@@ -27,7 +27,9 @@ namespace Maonot_Net.Controllers
             string searchString,
             int? page)
         {
+
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             string Id = HttpContext.Session.GetString("User");
             var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
             if (Aut.Equals("4")|| Aut.Equals("2")|| Aut.Equals("9"))
@@ -80,7 +82,9 @@ namespace Maonot_Net.Controllers
         // GET: Warnings/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             string Id = HttpContext.Session.GetString("User");
            // var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
 
@@ -106,8 +110,10 @@ namespace Maonot_Net.Controllers
         // GET: Warnings/Create
         public IActionResult Create()
         {
+
             string Aut = HttpContext.Session.GetString("Aut");
-            if (Aut.Equals("2") || Aut.Equals("3"))
+            ViewBag.Aut = Aut;
+            if (Aut.Equals("2") || Aut.Equals("4"))
             {
                 return View();
             }
@@ -122,7 +128,10 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Create([Bind("WarningNumber,StudentId,Date,BlaBla")] Warning warning)
         {
             string Id = HttpContext.Session.GetString("User");
-             //var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
+
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
+            //var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
             try
             { 
 
@@ -155,6 +164,7 @@ namespace Maonot_Net.Controllers
         // GET: Warnings/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            //delete function
             if (id == null)
             {
                 return NotFound();
@@ -206,8 +216,10 @@ namespace Maonot_Net.Controllers
         // GET: Warnings/Delete/5
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
+
             string Aut = HttpContext.Session.GetString("Aut");
-            if (Aut.Equals("2") || Aut.Equals("3"))
+            ViewBag.Aut = Aut;
+            if (Aut.Equals("2"))
             {
                 if (id == null)
                 {
@@ -236,6 +248,9 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             var warning = await _context.Warnings.AsNoTracking().SingleOrDefaultAsync(m => m.WarningId == id);
             if (warning == null)
             {

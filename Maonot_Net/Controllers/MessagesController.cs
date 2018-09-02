@@ -28,6 +28,7 @@ namespace Maonot_Net.Controllers
             int? page)
         {
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             string Id = HttpContext.Session.GetString("User");
            // var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals(302875125));
             if (!Aut.Equals("0"))
@@ -77,6 +78,7 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             string Id = HttpContext.Session.GetString("User");
             var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
             if (!Aut.Equals("0"))
@@ -108,6 +110,7 @@ namespace Maonot_Net.Controllers
         {
 
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (!Aut.Equals("0"))
             {
                 ViewData["users"] = new SelectList(_context.Users, "StundetId", "FullName");
@@ -125,6 +128,9 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Create([Bind("Addressee,Subject,Content")] Message message)
         {
             string Id = HttpContext.Session.GetString("User");
+
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
 
             try
@@ -150,6 +156,7 @@ namespace Maonot_Net.Controllers
         //no edit option
         public async Task<IActionResult> Edit(int? id)
         {
+            //delete function
             if (id == null)
             {
                 return NotFound();
@@ -170,6 +177,7 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("MessageID,Addressee,Subject,Content")] Message message)
         {
+            //delete function
             if (id != message.MessageID)
             {
                 return NotFound();
@@ -201,6 +209,7 @@ namespace Maonot_Net.Controllers
         // GET: Messages/Delete/5
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
+            //delete function
             if (id == null)
             {
                 return NotFound();
@@ -225,6 +234,7 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            //delete function
             var message = await _context.Messages.AsNoTracking().SingleOrDefaultAsync(m => m.MessageID == id);
             if (message == null)
             {

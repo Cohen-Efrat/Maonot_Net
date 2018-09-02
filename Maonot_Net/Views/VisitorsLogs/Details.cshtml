@@ -2,6 +2,20 @@
 
 @{
     ViewData["Title"] = "Details";
+    var a = ViewBag.Aut;
+    if (a.Equals("2"))
+    {
+        Layout = "~/Views/Shared/Manger.cshtml";
+    }
+    else if (a.Equals("4"))
+    {
+        Layout = "~/Views/Shared/Discipline.cshtml";
+    }
+    else if (a.Equals("6"))
+    {
+
+        Layout = "~/Views/Shared/Security.cshtml";
+    }
 }
 
 <h2>Details</h2>

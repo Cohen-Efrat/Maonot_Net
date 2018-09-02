@@ -3,7 +3,48 @@
 
 @{
     ViewData["Title"] = "Index";
-    string a = ViewBag.Aut;
+    var a = ViewBag.Aut;
+
+    if (a.Equals("1"))
+    {
+        Layout = "~/Views/Shared/Admin.cshtml";
+    }
+    else if (a.Equals("2"))
+    {
+        Layout = "~/Views/Shared/Manger.cshtml";
+    }
+    else if (a.Equals("3"))
+    {
+        Layout = "~/Views/Shared/HouseKeep.cshtml";
+    }
+    else if (a.Equals("4"))
+    {
+        Layout = "~/Views/Shared/Discipline.cshtml";
+    }
+    else if (a.Equals("5"))
+    {
+        Layout = "~/Views/Shared/Culture.cshtml";
+    }
+    else if (a.Equals("6"))
+    {
+        Layout = "~/Views/Shared/Security.cshtml";
+    }
+    else if (a.Equals("7"))
+    {
+        Layout = "~/Views/Shared/Visitor.cshtml";
+    }
+    else if (a.Equals("8"))
+    {
+        Layout = "~/Views/Shared/Candidate.cshtml";
+    }
+    else if (a.Equals("9"))
+    {
+        Layout = "~/Views/Shared/Tenant.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/NotUser.cshtml";
+    }
 }
 
 <h2>דואר נכנס</h2>

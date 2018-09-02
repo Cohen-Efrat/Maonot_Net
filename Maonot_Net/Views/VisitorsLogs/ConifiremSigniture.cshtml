@@ -1,7 +1,12 @@
 ﻿
 @{
     ViewData["Title"] = "ConifiremSigniture";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    var a = ViewBag.Aut;
+    if (a.Equals("9"))
+    {
+        Layout = "~/Views/Shared/Tenant.cshtml";
+    }
+
 }
 
 <h2>ConifiremSigniture</h2>

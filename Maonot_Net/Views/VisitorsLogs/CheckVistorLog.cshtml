@@ -1,6 +1,15 @@
 ﻿
 @{
     ViewData["Title"] = "CheckVistorLog";
+    var a = ViewBag.Aut;
+    if (a.Equals("2"))
+    {
+        Layout = "~/Views/Shared/Manger.cshtml";
+    }
+    else if (a.Equals("4"))
+    {
+        Layout = "~/Views/Shared/Discipline.cshtml";
+    }
 }
 
 <h2>CheckVistorLog</h2>
@@ -8,7 +17,7 @@
 המעבר על היומן בוצע בהצלחה.
 
 <ul>
-    @foreach(var w in ViewBag.warningList)
+    @foreach (var w in ViewBag.warningList)
     {
         <li>
             @w.StudentId

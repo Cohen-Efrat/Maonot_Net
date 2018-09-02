@@ -2,6 +2,19 @@
 
 @{
     ViewData["Title"] = "Details";
+    var a = ViewBag.Aut;
+    if (a.Equals("2"))
+    {
+        Layout = "~/Views/Shared/Manger.cshtml";
+    }
+    else if (a.Equals("4"))
+    {
+        Layout = "~/Views/Shared/Discipline.cshtml";
+    }
+    else if (a.Equals("9"))
+    {
+        Layout = "~/Views/Shared/Tenant.cshtml";
+    }
 }
 
 <h2>Details</h2>
@@ -28,15 +41,9 @@
         <dd>
             @Html.DisplayFor(model => model.Date)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.BlaBla)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.BlaBla)
-        </dd>
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.WarningId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">בחזרה לרשימה</a>
 </div>

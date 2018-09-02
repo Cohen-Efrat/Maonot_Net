@@ -2,6 +2,15 @@
 
 @{
     ViewData["Title"] = "Details";
+    var a = ViewBag.Aut;
+    if (a.Equals("2"))
+    {
+        Layout = "~/Views/Shared/Manger.cshtml";
+    }
+    else if (a.Equals("8"))
+    {
+        Layout = "~/Views/Shared/Candidate.cshtml";
+    }
 }
 
 <h2>פרטי הרשמה</h2>
