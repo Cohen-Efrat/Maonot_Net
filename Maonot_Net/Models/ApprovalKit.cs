@@ -48,7 +48,7 @@ namespace Maonot_Net.Models
         {
             get
             {
-                return LastName + FirstName;
+                return LastName + " " + FirstName;
             }
         }
         public Registration Reg { get; set; }
