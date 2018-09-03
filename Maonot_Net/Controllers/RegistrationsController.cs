@@ -230,8 +230,8 @@ namespace Maonot_Net.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID1,ParentfullName1,ParentAge1,ParentID2,ParentfullName2,ParentAge2," +
-            "Familym1_name,Familym1_Age,Familym2_name,Familym2_Age,Familym3_name,Familym3_Age,Familym4_name,Familym4_Age,Familym5_name,Familym5_Age,Familym6_name,Familym6_Age,Familym7_name,Familym7_Age,Familym8_name,Familym8_Age" +
+        public async Task<IActionResult> Create([Bind("Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID1,ParentFullName1,ParentAge1,ParentID2,ParentFullName2,ParentAge2," +
+            "Familym1_name,Familym1_Age,Familym2_name,Familym2_Age,Familym3_name,Familym3_Age,Familym4_name,Familym4_Age,Familym5_name,Familym5_Age,Familym6_name,Familym6_Age,Familym7_name,Familym7_Age,Familym8_name,Familym8_Age," +
             "Total,Approved")] Registration registration)
         {
             string Aut = HttpContext.Session.GetString("Aut");
@@ -284,7 +284,8 @@ namespace Maonot_Net.Controllers
                 }
                 var registration = await _context.Registrations.SingleOrDefaultAsync(m => m.ID == id);
 
-                if (Aut.Equals("2") || Id.Equals(registration.StundetId.ToString()))
+                if(Aut.Equals("2") || registration.StundetId.ToString().Equals(Id))
+               
                 {
                    // var registration = await _context.Registrations.SingleOrDefaultAsync(m => m.ID == id);
                     if (registration == null)

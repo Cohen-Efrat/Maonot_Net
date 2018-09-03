@@ -3,14 +3,26 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Maonot_Net.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Maonot_Net.Controllers
 {
+    
     public class FileUploadController : Controller
     {
+
+        private readonly MaonotNetContext _context;
+
+        public FileUploadController(MaonotNetContext context)
+        {
+
+            _context = context;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -46,7 +58,11 @@ namespace Maonot_Net.Controllers
         {
             string Aut = HttpContext.Session.GetString("Aut");
             ViewBag.Aut = Aut;
-            return View();
+            if (Aut.Equals("8")|| Aut.Equals("7"))
+            {
+                return View();
+            }
+            return RedirectToAction("NotAut", "Home");
         }
         public async Task<IActionResult> UploadFiles(List<IFormFile> files)
         {
@@ -75,29 +91,37 @@ namespace Maonot_Net.Controllers
             return  RedirectToAction("Wellcome", "Home");
         }
 
-        public IActionResult SeeFiles()
+        public async Task<IActionResult> SeeFiles()
         {
             string Aut = HttpContext.Session.GetString("Aut");
             ViewBag.Aut = Aut;
             var userId = HttpContext.Session.GetString("User");
-            //var userId = "308242122";
+            var functions = new functions();
+            var u = await _context.Registrations.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(userId));
 
-            if(!Directory.Exists(Path.Combine(
-                            Directory.GetCurrentDirectory(), $"wwwroot/{userId}")))
+            if (functions.Comper(new DateTime(2019, 7, 30)))
             {
-                return NotFound();
-            }
-            string[] filePaths = Directory.GetFiles(@"wwwroot\"+ userId);
-            List<string> list = new List<string> { };
-            foreach (var file in filePaths)
-            {
-                string s = file.Substring(8);
+                if (Aut.Equals("2") || userId.Equals(u.StundetId.ToString()))
+                {
+                    if (!Directory.Exists(Path.Combine(
+                                Directory.GetCurrentDirectory(), $"wwwroot/{userId}")))
+                    {
+                        return NotFound();
+                    }
+                    string[] filePaths = Directory.GetFiles(@"wwwroot\" + userId);
+                    List<string> list = new List<string> { };
+                    foreach (var file in filePaths)
+                    {
+                        string s = file.Substring(8);
 
 
-                list.Add(s);
+                        list.Add(s);
+                    }
+                    ViewBag.url = list;
+                    return View();
+                }
             }
-            ViewBag.url = list;
-            return View();
+            return RedirectToAction("NotAut", "Home");
         }
 
         public IActionResult Delete(string File)

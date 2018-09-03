@@ -119,9 +119,7 @@ namespace Maonot_Net.Models
         [Required]
         [Display(Name = "סוג דירה")]
         public ApertmantType? ApertmantType { get; set; }
-        // להוסיף אפשרות לצרף מסמכים לשדות חייל בודד, שרות צבאי, ומגבלות רפואיות
-        // יש אפשרות לצרף מסמכי תעודת זהות של ההורים
-        // יצירת טבלה דינמית שמאפשרת להוסיף הורים\אחים ולתת עליהם את הנתונים הרלוונטים
+
         public int? ParentID1 { get; set; }
         public string ParentFullName1 { get; set; }
         public int? ParentAge1 { get; set; }

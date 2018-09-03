@@ -53,9 +53,12 @@
                 <input asp-for="City" class="form-control" />
                 <span asp-validation-for="City" class="text-danger"></span>
             </div>
-            <p>
-                ניקוד: <input onblur="findTotal()" class="control-label" type="text" name="qty" id="qty1" /><br>
-            </p>
+            @if (a.Equals("2"))
+            {
+                <p>
+                    ניקוד: <input onblur="findTotal()" class="control-label" type="text" name="qty" id="qty1" /><br>
+                </p>
+            }
             <br />
             <div class="form-group">
                 <label asp-for="Adress" class="control-label"></label>
@@ -93,160 +96,172 @@
                 </select>
                 <span asp-validation-for="TypeOfService" class="text-danger"></span>
             </div>
-            <input onblur="findTotal()" type="text" name="qty" id="qty1" /><br>
-
+            @if (a.Equals("2"))
+            {
+                <input onblur="findTotal()" type="text" name="qty" id="qty1" /><br>
+            }
             <div class="form-group">
                 <label asp-for="HealthCondition" class="control-label"></label>
                 <select asp-for="HealthCondition" asp-items="Html.GetEnumSelectList<HealthCondition>()" class="form-control">
                     <option selected="selected" value=""></option>
                 </select>
                 <span asp-validation-for="HealthCondition" class="text-danger"></span>
-                <input onblur="findTotal()" type="text" name="qty" id="qty2" /><br>
+
+
 
             </div>
+            @if (a.Equals("2"))
+            {
+                <input onblur="findTotal()" type="text" name="qty" id="qty2" /><br>
+            }
             <div class="form-group">
                 <label asp-for="Seniority" class="control-label"></label>
                 <select asp-for="Seniority" asp-items="Html.GetEnumSelectList<Year>()" class="form-control">
                     <option selected="selected" value=""></option>
                 </select>
                 <span asp-validation-for="Seniority" class="text-danger"></span>
+
+
+            </div>
+            @if (a.Equals("2"))
+            {
                 <input onblur="findTotal()" type="text" name="qty" id="qty3" /><br>
+            }
+                <div class="form-group">
+                    <label asp-for="ApertmantType" class="control-label"></label>
+                    <select asp-for="ApertmantType" asp-items="Html.GetEnumSelectList<ApertmantType>()" class="form-control">
+                        <option selected="selected" value=""></option>
+                    </select>
+                    <span asp-validation-for="ApertmantType" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ParentID1" class="control-label"></label>
+                    <input asp-for="ParentID1" class="form-control" />
+                    <span asp-validation-for="ParentID1" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ParentFullName1" class="control-label"></label>
+                    <input asp-for="ParentFullName1" class="form-control" />
+                    <span asp-validation-for="ParentFullName1" class="text-danger"></span>
+                </div>
 
-            </div>
-            <div class="form-group">
-                <label asp-for="ApertmantType" class="control-label"></label>
-                <select asp-for="ApertmantType" asp-items="Html.GetEnumSelectList<ApertmantType>()" class="form-control">
-                    <option selected="selected" value=""></option>
-                </select>
-                <span asp-validation-for="ApertmantType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ParentID1" class="control-label"></label>
-                <input asp-for="ParentID1" class="form-control" />
-                <span asp-validation-for="ParentID1" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ParentFullName1" class="control-label"></label>
-                <input asp-for="ParentFullName1" class="form-control" />
-                <span asp-validation-for="ParentFullName1" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="ParentAge1" class="control-label"></label>
+                    <input asp-for="ParentAge1" class="form-control" />
+                    <span asp-validation-for="ParentAge1" class="text-danger"></span>
 
-            <div class="form-group">
-                <label asp-for="ParentAge1" class="control-label"></label>
-                <input asp-for="ParentAge1" class="form-control" />
-                <span asp-validation-for="ParentAge1" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ParentID2" class="control-label"></label>
+                    <input asp-for="ParentID2" class="form-control" />
+                    <span asp-validation-for="ParentID2" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ParentFullName2" class="control-label"></label>
+                    <input asp-for="ParentFullName2" class="form-control" />
+                    <span asp-validation-for="ParentFullName2" class="text-danger"></span>
+                </div>
 
-            </div>
-            <div class="form-group">
-                <label asp-for="ParentID2" class="control-label"></label>
-                <input asp-for="ParentID2" class="form-control" />
-                <span asp-validation-for="ParentID2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ParentFullName2" class="control-label"></label>
-                <input asp-for="ParentFullName2" class="form-control" />
-                <span asp-validation-for="ParentFullName2" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="ParentAge2" class="control-label"></label>
+                    <input asp-for="ParentAge2" class="form-control" />
+                    <span asp-validation-for="ParentAge2" class="text-danger"></span>
 
-            <div class="form-group">
-                <label asp-for="ParentAge2" class="control-label"></label>
-                <input asp-for="ParentAge2" class="form-control" />
-                <span asp-validation-for="ParentAge2" class="text-danger"></span>
+                </div>
 
-            </div>
-
-            <div class="form-group">
-                <table>
-                    <thead>
-                    <th> שם מלא</th>
-                    <th>גיל </th>
-                    </thead>
-                    <tbody>
-                    <td>
-                        <input asp-for="Familym1_name " class="form-control" />
-                    </td>
-                    <td>
-                        <input asp-for="Familym1_Age " class="form-control" />
-                    </td>
-                    <tr>
+                <div class="form-group">
+                    <table>
+                        <thead>
+                        <th> שם מלא</th>
+                        <th>גיל </th>
+                        </thead>
+                        <tbody>
                         <td>
-                            <input asp-for="Familym2_name " class="form-control" />
+                            <input asp-for="Familym1_name " class="form-control" />
                         </td>
                         <td>
-                            <input asp-for="Familym2_Age " class="form-control" />
+                            <input asp-for="Familym1_Age " class="form-control" />
                         </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input asp-for="Familym3_name " class="form-control" />
-                        </td>
-                        <td>
-                            <input asp-for="Familym3_Age " class="form-control" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input asp-for="Familym4_name " class="form-control" />
-                        </td>
-                        <td>
-                            <input asp-for="Familym4_Age " class="form-control" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input asp-for="Familym5_name " class="form-control" />
-                        </td>
-                        <td>
-                            <input asp-for="Familym5_Age " class="form-control" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input asp-for="Familym6_name " class="form-control" />
-                        </td>
-                        <td>
-                            <input asp-for="Familym6_Age " class="form-control" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input asp-for="Familym7_name " class="form-control" />
-                        </td>
-                        <td>
-                            <input asp-for="Familym7_Age " class="form-control" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input asp-for="Familym8_name " class="form-control" />
-                        </td>
-                        <td>
-                            <input asp-for="Familym8_Age " class="form-control" />
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>
+                                <input asp-for="Familym2_name " class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="Familym2_Age " class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input asp-for="Familym3_name " class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="Familym3_Age " class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input asp-for="Familym4_name " class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="Familym4_Age " class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input asp-for="Familym5_name " class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="Familym5_Age " class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input asp-for="Familym6_name " class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="Familym6_Age " class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input asp-for="Familym7_name " class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="Familym7_Age " class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input asp-for="Familym8_name " class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="Familym8_Age " class="form-control" />
+                            </td>
+                        </tr>
 
-                    </tbody>
-
-
-                </table>
-
-            </div>
-
-
-            <input onblur="findTotal()" type="text" name="qty" id="qty4" /><br>
-            <div class="form-group">
-                <label asp-for="Total" class="control-label"></label>
-                <input asp-for="Total" class="form-control" name="total" id="total" />
-                <span asp-validation-for="Total" class="text-danger"></span>
-            </div>
+                        </tbody>
 
 
+                    </table>
 
-            <div class="form-group">
-                <input type="submit" value="שמור" class="btn btn-default" />
-            </div>
+                </div>
 
-        </form>
+                @if (a.Equals("2"))
+                {
+                    <input onblur="findTotal()" type="text" name="qty" id="qty4" /><br>
+                    <div class="form-group">
+                        <label asp-for="Total" class="control-label"></label>
+                        <input asp-for="Total" class="form-control" name="total" id="total" />
+                        <span asp-validation-for="Total" class="text-danger"></span>
+                    </div>
+
+                }
+
+                <div class="form-group">
+                    <input type="submit" value="שמור" class="btn btn-default" />
+                </div>
+
+            </form>
     </div>
 </div>
 
