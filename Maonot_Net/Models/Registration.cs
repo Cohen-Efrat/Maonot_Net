@@ -58,7 +58,7 @@ namespace Maonot_Net.Models
     {
         זכר,
         נקבה,
-        מעדיף_לא_להגדיר
+       
     }
     public class Registration
     {

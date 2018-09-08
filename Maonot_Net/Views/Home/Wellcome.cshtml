@@ -47,10 +47,78 @@
 
 <h2>
     ברוכ/ה הבא/ה
-
     @ViewBag.username
-
 </h2>
+<section id="user">
+    <h3>פרטיים אישיים</h3>
+    <table class="table" width="40">
+        <thead>
+            <tr>
+                <th>
+                    שם מלא
+                </th>
+                <th>
+                    תעודת זהות
+                </th>
+
+                <th>
+                    כתובת דוא"ל
+                </th>
+                <th>
+                    מספר דירה
+                </th>
+                <th>
+                    מספר חדר
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@ViewBag.user.FullName</td>
+                <td>@ViewBag.user.StundetId</td>
+                <td>@ViewBag.user.Email</td>
+                <td>@ViewBag.user.ApartmentNum</td>
+                <td>@ViewBag.user.Room</td>
+
+                <td> <a asp-controller="Users" asp-action="Edit" asp-route-id="@ViewBag.user.ID">עריכה</a></td>
+            </tr>
+        </tbody>
+        </table>
+</section>
+<section id="listFaults">
+    <h3>תקלות</h3>
+    <table class="table" width="40" >
+        <thead>
+            <tr>
+                <th>
+                    תיאור התקלה
+                </th>
+                <th>
+                    תוקן / לא תוקן
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (FaultForm f in ViewBag.listFaults)
+                {
+            <tr>
+                <td>
+                    @f.Description
+                </td>
+                <td>
+                    @f.Fix
+                </td>
+
+            </tr>
+                }
+
+            }
+            </tbody>
+        </table>
+</section>
 
 @Html.Raw(TempData["msg"])
 @Html.Raw(TempData["msg1"])

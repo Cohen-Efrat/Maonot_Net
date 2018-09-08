@@ -39,15 +39,28 @@ namespace Maonot_Net.Controllers
             string Aut = HttpContext.Session.GetString("Aut");
             ViewBag.Aut = Aut;
             string ID = HttpContext.Session.GetString("User");
+            //Beging Personl Info
             var user = await _context.Users.AsNoTracking().SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(ID));
+
+            ViewBag.user = user;
+            //Beging falutForm
+            var faults = from s in _context.FaultForms
+                     where s.StundetId.ToString().Equals(ID)
+                     select s;
+            List<FaultForm> listFaults = new List<FaultForm> { };
+            foreach (var fault in faults)
+            {
+                listFaults.Add(fault);
+            }
+            ViewBag.listFaults = listFaults;
+            //End falutForm
+
+
             if (user != null)
             {
                 ViewBag.username = user.FullName;
             }
-            else
-            {
-                ViewBag.username = "haha not working";
-            }
+
             
             return View();
         }

@@ -75,7 +75,5 @@ namespace Maonot_Net.Models
         public int? PartnerId3 { get; set; }
 
 
-        //הוספת אופציית העלאת נתונים
-
     }
 }
