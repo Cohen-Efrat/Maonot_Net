@@ -50,42 +50,46 @@
     @ViewBag.username
 </h2>
 <section id="user">
-    <h3>פרטיים אישיים</h3>
-    <table class="table" width="40">
+    <table class="table">
         <thead>
             <tr>
                 <th>
-                    שם מלא
+                    פרטיים אישיים
                 </th>
                 <th>
-                    תעודת זהות
+                    פרטי השיבוץ
                 </th>
-
-                <th>
-                    כתובת דוא"ל
-                </th>
-                <th>
-                    מספר דירה
-                </th>
-                <th>
-                    מספר חדר
-                </th>
-                <th></th>
             </tr>
         </thead>
+
         <tbody>
             <tr>
-                <td>@ViewBag.user.FullName</td>
-                <td>@ViewBag.user.StundetId</td>
-                <td>@ViewBag.user.Email</td>
-                <td>@ViewBag.user.ApartmentNum</td>
-                <td>@ViewBag.user.Room</td>
+                <td>
+                    <ul>
+                        <li>  שם מלא:@ViewBag.user.FullName
+                        <li> תעודת זהות: @ViewBag.user.StundetId</li>
+                        <li> כתובת דוא"ל:@ViewBag.user.Email</li>
+                    </ul>
+                      <a asp-controller="Users" asp-action="Edit" asp-route-id="@ViewBag.user.ID">עריכה</a>
 
-                <td> <a asp-controller="Users" asp-action="Edit" asp-route-id="@ViewBag.user.ID">עריכה</a></td>
+                </td>
+                <td>
+                    <ul>
+                        <li>
+                            מספר דירה:@ViewBag.user.ApartmentNum
+                        </li>
+                        <li> מספר חדר:@ViewBag.user.Room</li>
+
+                    </ul>
+                    <a asp-controller="Messages" asp-action="Create">שליחת הודעה לשינוי שיבוץ</a>
+
+                </td>
             </tr>
+
         </tbody>
-        </table>
+</table>
 </section>
+
 <section id="listFaults">
     <h3>תקלות</h3>
     <table class="table" width="40" >
@@ -109,7 +113,17 @@
                     @f.Description
                 </td>
                 <td>
-                    @f.Fix
+                    @{
+                        var tmp = @f.Fix;
+                        string str="";
+                        if (tmp){
+                            str = "תוקן";
+                        }
+                        else
+                        {
+                            str = "לא תוקן";                        }
+                    }
+                    @str
                 </td>
 
             </tr>
@@ -119,6 +133,42 @@
             </tbody>
         </table>
 </section>
+
+<section id="Warninglist">
+    <h3>אזהרות</h3>
+    <table class="table" width="40">
+        <thead>
+            <tr>
+                <th>
+                    מספר אזהרה 
+                </th>
+                <th>
+                    תאריך הפרת נוהל אירוח 
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (Warning w in ViewBag.Warninglist)
+                {
+                    <tr>
+                        <td>
+                            @w.WarningNumber
+                        </td>
+                        <td>
+                            @w.Date
+                        </td>
+
+                    </tr>
+                }
+
+            }
+        </tbody>
+    </table>
+</section>
+
+
 
 @Html.Raw(TempData["msg"])
 @Html.Raw(TempData["msg1"])

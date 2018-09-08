@@ -41,8 +41,8 @@ namespace Maonot_Net.Controllers
             string ID = HttpContext.Session.GetString("User");
             //Beging Personl Info
             var user = await _context.Users.AsNoTracking().SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(ID));
-
             ViewBag.user = user;
+            //End Personl Info
             //Beging falutForm
             var faults = from s in _context.FaultForms
                      where s.StundetId.ToString().Equals(ID)
@@ -55,6 +55,20 @@ namespace Maonot_Net.Controllers
             ViewBag.listFaults = listFaults;
             //End falutForm
 
+            //Beging Warning
+
+           var warning = from s in _context.Warnings
+                      where s.StudentId.ToString().Equals(ID)
+                      select s;
+
+            List<Warning> Warninglist = new List<Warning> { };
+            foreach (var w in warning)
+            {
+                Warninglist.Add(w);
+            }
+            ViewBag.Warninglist = Warninglist;
+
+            //End Warning
 
             if (user != null)
             {
