@@ -329,7 +329,7 @@ namespace Maonot_Net.Controllers
             string Id = HttpContext.Session.GetString("User");
             //user by session
             var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
-            //return RedirectToAction("NotAut", "Home");
+       
 
             ViewBag.StudentId = StudentId;
             var functions = new functions();
@@ -352,11 +352,11 @@ namespace Maonot_Net.Controllers
                         ViewBag.Message = "Thank you!";
                         TempData["msg"] = "<script>alert('סיסמה לא נכונה');</script>";
 
-                        return RedirectToAction(nameof(Index));
+                       // return RedirectToAction(nameof(Index));
                     }
                 
             }
-           return  RedirectToAction("Index", "Home");
+           return  RedirectToAction("Wellcom", "Home");
 
 
 

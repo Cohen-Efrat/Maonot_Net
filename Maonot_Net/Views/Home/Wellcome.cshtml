@@ -208,42 +208,43 @@
                 @{
                     foreach (VisitorsLog v in ViewBag.Visitorslist)
                     {
-                        <tr>
-                            <td>
-                                @v.EnteryDate
-                            </td>
-                            <td>
-                                @v.VistorName
-                            </td>
-                            <td>@v.ExitDate</td>
-                            <td>
+                <tr>
+                    <td>
+                        @v.EnteryDate
+                    </td>
+                    <td>
+                        @v.VistorName
+                    </td>
+                    <td>@v.ExitDate</td>
+                    <td>
 
-                                @{
-                                    var tmp = @v.Signature;
-                                    string str = "";
-                                    if (tmp)
-                                    {
-                                        str = "כן";
-                                    }
-                                    else
-                                    {
-                                        str = "לא ";
-                                    }
-                                }
-                                @str
-
-                            </td>
-
-                            @{
-                                if (!@v.Signature)
-                                {
-                                    <td>
-                                        <a asp-controller="VisitorsLogs" asp-action="Signature" asp-route-id="@v.Id">חתימה</a>
-                                    </td>
-                                }
+                        @{
+                            var tmp = @v.Signature;
+                            string str = "";
+                            if (tmp)
+                            {
+                                str = "כן";
                             }
+                            else
+                            {
+                                str = "לא ";
+                            }
+                        }
+                        @str
 
-                        </tr>
+                    </td>
+
+
+                    @{
+                        if (!@v.Signature)
+                        {
+                            <td>
+                                <a asp-controller="VisitorsLogs" asp-action="Signature" asp-route-id="@v.Id">חתימה</a>
+                            </td>
+                        }
+                    }
+
+                </tr>
                     }
                 }
             </tbody>
@@ -254,3 +255,17 @@
 
 @Html.Raw(TempData["msg"])
 @Html.Raw(TempData["msg1"])
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#btnclick").click(function () {
+            $("#signature").modal('show');
+        });
+        $("hidebtnModal").click(function () {
+            $("#asignature").modal('hide');
+        });
+    })
+</script>
