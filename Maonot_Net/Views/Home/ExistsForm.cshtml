@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "NoMore";
+    ViewData["Title"] = "ExistsForm";
     var a = ViewBag.Aut;
 
     if (a.Equals("1"))
@@ -43,10 +43,7 @@
     {
         Layout = "~/Views/Shared/NotUser.cshtml";
     }
-
 }
 
-<h3>
-    לא ניתן יותר לערוך את הטופס.
-</h3>
+<h2>הטופס כבר קיים במערכת לטובת עריכת הטופס יש לעבור לאיזור האישי. </h2>
 <a asp-action="Wellcome">חזרה לאזור האישי</a>

@@ -40,67 +40,70 @@ namespace Maonot_Net.Controllers
             ViewBag.Aut = Aut;
             string ID = HttpContext.Session.GetString("User");
 
-            if (Aut.Equals("8"))
-            {
-                //edit registration form
-                //show  peraonl info
-            }
-            if (Aut.Equals("9"))
-            {
-                //edit ApprovlalKit form
-            }
-
-            if (Aut.Equals("1")|| Aut.Equals("2")|| Aut.Equals("3")|| Aut.Equals("4")|| Aut.Equals("5")|| Aut.Equals("6"))
-            {
-                //show just peraonl info
-            }
-
-
             //Beging Personl Info
             var user = await _context.Users.AsNoTracking().SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(ID));
             ViewBag.user = user;
             //End Personl Info
-            //Beging falutForm
-            var faults = from s in _context.FaultForms
-                     where s.StundetId.ToString().Equals(ID)
-                     select s;
-            List<FaultForm> listFaults = new List<FaultForm> { };
-            foreach (var fault in faults)
+
+            if (Aut.Equals("8"))
             {
-                listFaults.Add(fault);
+                //edit registration form
+                var u = await _context.Registrations.AsNoTracking().SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(ID));
+                ViewBag.RegID = u.ID;
             }
-            ViewBag.listFaults = listFaults;
-            //End falutForm
-
-            //Beging Warning
-
-           var warning = from s in _context.Warnings
-                      where s.StudentId.ToString().Equals(ID)
-                      select s;
-
-            List<Warning> Warninglist = new List<Warning> { };
-            foreach (var w in warning)
+            if (Aut.Equals("9"))
             {
-                Warninglist.Add(w);
+                //edit ApprovlalKit form
+
+                var u = await _context.ApprovalKits.AsNoTracking().SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(ID));
+                ViewBag.AppID = u.ID;
+                //Beging falutForm
+                var faults = from s in _context.FaultForms
+                             where s.StundetId.ToString().Equals(ID)
+                             select s;
+                List<FaultForm> listFaults = new List<FaultForm> { };
+                foreach (var fault in faults)
+                {
+                    listFaults.Add(fault);
+                }
+                ViewBag.listFaults = listFaults;
+                //End falutForm
+
+                //Beging Warning
+
+                var warning = from s in _context.Warnings
+                              where s.StudentId.ToString().Equals(ID)
+                              select s;
+
+                List<Warning> Warninglist = new List<Warning> { };
+                foreach (var w in warning)
+                {
+                    Warninglist.Add(w);
+                }
+                ViewBag.Warninglist = Warninglist;
+
+                //End Warning
+
+                //Beging visitorLog
+
+                var visitors = from s in _context.VisitorsLogs
+                               where s.StudentId.ToString().Equals(ID)
+                               select s;
+
+                List<VisitorsLog> Visitorslist = new List<VisitorsLog> { };
+                foreach (var v in visitors)
+                {
+                    Visitorslist.Add(v);
+                }
+                ViewBag.Visitorslist = Visitorslist;
+
+                //End visitorLog
             }
-            ViewBag.Warninglist = Warninglist;
 
-            //End Warning
 
-            //Beging visitorLog
 
-            var visitors = from s in _context.VisitorsLogs
-                          where s.StudentId.ToString().Equals(ID)
-                          select s;
 
-            List<VisitorsLog> Visitorslist = new List<VisitorsLog> { };
-            foreach (var v in visitors)
-            {
-                Visitorslist.Add(v);
-            }
-            ViewBag.Visitorslist = Visitorslist;
 
-            //End visitorLog
 
             if (user != null)
             {
@@ -111,6 +114,13 @@ namespace Maonot_Net.Controllers
             return View();
         }
         public IActionResult NoMore()
+        {
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
+            return View();
+        }
+
+        public IActionResult ExistsForm()
         {
             string Aut = HttpContext.Session.GetString("Aut");
             ViewBag.Aut = Aut;
