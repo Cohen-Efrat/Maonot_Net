@@ -27,12 +27,14 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a asp-area="" asp-controller="Home" asp-action="Wellcome" class="navbar-brand">מעונות-נט</a>
+
             </div>
 
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Messages" asp-action="Index">הודעות</a></li>
                     <li><a asp-area="" asp-controller="FaultForms" asp-action="Index">תקלות</a></li>
+                    <li class="glyphicon"><a asp-area="" asp-controller="Messages" asp-action="Index">&#x2709;</a></li>
+                    <li  class="glyphicon"><a asp-area="" asp-controller="Home" asp-action="Wellcome">&#xe008;</a></li>
 
                 </ul>
 

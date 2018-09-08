@@ -15,9 +15,6 @@
 
 <h2>רשימת תקלות</h2>
 
-<p>
-    <a asp-action="Create">טופס תקלה</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -78,10 +75,72 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">עריכה</a> |
                 <a asp-action="Details" asp-route-id="@item.ID">פרטי התקלה</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">מחיקת תקלה</a>|
-                <a asp-controller="FaultForms" asp-action="Fix" asp-route-id="@item.ID">תוקן</a>
+                <a asp-action="Delete" asp-route-id="@item.ID">מחיקת תקלה</a>
+                @*  <a asp-controller="FaultForms" asp-action="Fix" asp-route-id="@item.ID">תוקן</a>*@
+
+                @{
+                    if (!item.Fix)
+                    {
+                        <div>
+                            <div>
+                                <button id="btnclick" type="button">
+                                    אישור תיקון
+                                </button>
+                                <div class="modal fade" id="fix">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    x
+                                                </button>
+                                                <h4>אישור תיקון</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h3>  האם את/ה מאשר/ת כי התקלה תוקנה? </h3>
+                                                <br />
+                                                <form asp-controller="FaultForms" asp-action="Yes">
+                                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                                    <div class="form-group">
+
+                                                        <input type="hidden" name="id" id="id" value=" @Html.DisplayFor(model => item.ID)" />
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="submit" value="אישור" class="btn btn-default" />
+                                                    </div>
+                                                </form>
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    }
+                }
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#btnclick").click(function () {
+            $("#fix").modal('show');
+        });
+        $("hidebtnModal").click(function () {
+            $("#fix").modal('hide');
+        });
+    })
+</script>

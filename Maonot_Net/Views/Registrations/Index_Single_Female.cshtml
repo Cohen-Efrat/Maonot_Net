@@ -37,8 +37,8 @@
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">שם פרטי</a>
             </th>
-            <th> 
-            ניקוד
+            <th>
+                ניקוד
             </th>
         </tr>
     </thead>
@@ -59,7 +59,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.FirstName)
                 </td>
-                
+
                 <td>
                     @Html.DisplayFor(modelItem => item.Total)
                 </td>
@@ -68,6 +68,50 @@
                     <a asp-action="Details" asp-route-id="@item.ID">פרטים</a> |
                     <a asp-action="Delete" asp-route-id="@item.ID">מחיקה</a>
                     <a asp-controller="Registrations" asp-action="App" asp-route-id="@item.ID">אישור</a>
+
+
+                            <div>
+                                <div>
+                                    <button id="btnclick" type="button">
+                                        אישור הרשמה
+                                    </button>
+                                    <div class="modal fade" id="app">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">
+                                                        x
+                                                    </button>
+                                                    <h4>אישור הרשמה</h4>
+                                                </div>
+                                                <div class="modal-body">
+
+                                                    <h3>האם את/ה בטוח/ה שאת/ה רוצה לאשר את ההרשמה?</h3>
+                                                    <br />
+                                                    <form asp-controller="Registrations" asp-action="Yes">
+                                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                                        <div class="form-group">
+
+                                                            <input type="hidden" name="id" id="id" value="@item.ID" />
+
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <input type="submit" value="אישור" class="btn btn-default" />
+                                                        </div>
+                                                    </form>
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
                 </td>
             </tr>
 
@@ -94,3 +138,16 @@
     הבא
 </a>
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#btnclick").click(function () {
+            $("#app").modal('show');
+        });
+        $("hidebtnModal").click(function () {
+            $("#app").modal('hide');
+        });
+    })
+</script>

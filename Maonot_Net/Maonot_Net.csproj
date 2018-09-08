@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\Registrations\Index_Couple.cshtml">
+    <Content Update="Views\Registrations\Index_Couples.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Registrations\Index_Single_Female.cshtml">

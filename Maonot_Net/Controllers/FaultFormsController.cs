@@ -318,7 +318,7 @@ namespace Maonot_Net.Controllers
                 fault.Fix = true;
                 _context.Update(fault);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Registrations");
+                return RedirectToAction("Index", "FaultForms");
 
 
 

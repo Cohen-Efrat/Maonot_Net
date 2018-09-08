@@ -91,18 +91,25 @@
         </tbody>
     </table>
 </section>
-<h4> עריכת טופס</h4>
+
 @if (a.Equals("8"))
 {
+    <h4> עריכת טופס</h4>
     <a asp-controller="Registrations" asp-action="Edit" asp-route-id="@ViewBag.RegID">עריכת טופס הרשמה</a>
 }
 
 
 @if (a.Equals("9"))
 {
-    <div>
-        <a asp-controller="ApprovalKits" asp-action="Edit" asp-route-id="@ViewBag.AppID">עריכת ערכת הקבלה</a>
-    </div>
+    if (ViewBag.flage == 1)
+    {
+        <h4> עריכת טופס</h4>
+        <div>
+            <a asp-controller="ApprovalKits" asp-action="Edit" asp-route-id="@ViewBag.AppID">עריכת ערכת הקבלה</a>
+        </div>
+    }
+
+
     <section id="listFaults">
         <h4>תקלות</h4>
         <table class="table" width="40">

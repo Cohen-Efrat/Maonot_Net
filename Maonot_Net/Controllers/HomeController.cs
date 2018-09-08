@@ -56,7 +56,17 @@ namespace Maonot_Net.Controllers
                 //edit ApprovlalKit form
 
                 var u = await _context.ApprovalKits.AsNoTracking().SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(ID));
-                ViewBag.AppID = u.ID;
+                if (u == null)
+                {
+                    ViewBag.flage = 0;
+                }
+                else
+                {
+                    ViewBag.AppID = u.ID;
+                    ViewBag.flage = 1;
+                }
+                
+                
                 //Beging falutForm
                 var faults = from s in _context.FaultForms
                              where s.StundetId.ToString().Equals(ID)
