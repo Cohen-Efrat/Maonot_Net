@@ -324,6 +324,8 @@ namespace Maonot_Net.Controllers
         
         public async Task<ActionResult> ConifiremSigniture(int id, int StudentId , string password)
         {
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             string Id = HttpContext.Session.GetString("User");
             //user by session
             var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
