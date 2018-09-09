@@ -165,8 +165,8 @@ namespace Maonot_Net.Controllers
             }
             //Male ApprovalKit
             var Male = from s in _context.ApprovalKits
-                      where s.RoomType.Equals("חדר_ליחיד") && s.Reg.gender.Equals("זכר")
-                       select s;
+                      where s.RoomType.Equals("חדר_ליחיד") && s.Reg.gender.Equals("זכר") && s.HealthCondition.Equals("ללא_מגבלה")
+                      select s;
 
             List<ApprovalKit> Males = new List<ApprovalKit> { };
             foreach (var m in Male)
@@ -176,19 +176,27 @@ namespace Maonot_Net.Controllers
 
             //Female ApprovalKit
             var Female = from s in _context.ApprovalKits
-                       where s.RoomType.Equals("חדר_ליחיד") && s.Reg.gender.Equals("נקבה")
+                       where s.RoomType.Equals("חדר_ליחיד") && s.Reg.gender.Equals("נקבה") && s.HealthCondition.Equals("ללא_מגבלה")
                        select s;
 
             List<ApprovalKit> Females = new List<ApprovalKit> { };
-            foreach (var f in Male)
+            foreach (var f in Female)
             {
                 Females.Add(f);
             }
 
-            // Couples Apartments
-            var CApartments = from s in _context.Apartments
-                              where s.Type.Equals("Couples")
-                              select s;
+            var Acs = from s in _context.ApprovalKits
+                      where s.RoomType.Equals("חדר_ליחיד") && s.HealthCondition.Equals("נכה_צהל") 
+                      || s.HealthCondition.Equals("נכות")
+                      || s.HealthCondition.Equals("מגבלה_פיזית_אחרת")
+                      select s;
+
+            List<ApprovalKit> Accessible = new List<ApprovalKit> { };
+            foreach (var f in Acs)
+            {
+                Accessible.Add(f);
+            }
+
 
             // single Apartments
             var SApartments = from s in _context.Apartments
@@ -236,8 +244,6 @@ namespace Maonot_Net.Controllers
                     Couples.Remove(item2);
                     _context.Add(p1);
                     _context.Add(p2);
-                    await _context.SaveChangesAsync();
-
                 }
                 //if there is no partner
                 else
@@ -245,10 +251,78 @@ namespace Maonot_Net.Controllers
                     NotAssigning.Add(a);
                 };
             }
+            //Accessible
+            foreach (ApprovalKit a in Accessible)
+            {
+                ApprovalKit[] roomies = new ApprovalKit[3];
+                roomies[0] = a;
+                if (a.PartnerId1!= null)
+                {
+                    var c = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.StundetId == a.PartnerId1.Value &&  m.Reg.gender == a.Reg.gender);
+                    if (c.PartnerId1==a.StundetId || c.PartnerId2 == a.StundetId)
+                    {
+                        roomies[1] = c;
+                    }
+                    
+                }
+                if(a.PartnerId2!= null)
+                {
+                    var c = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.StundetId == a.PartnerId2.Value && m.Reg.gender == a.Reg.gender);
+                    if (c.PartnerId1 == a.StundetId || c.PartnerId2 == a.StundetId)
+                    {
+                        roomies[2] = c;
+                    }
+                }
+                var apartment = await _context.Apartments.SingleOrDefaultAsync(m => m.Type.Equals("Accessible") && m.capacity == 0);
+                apartment.LivingWithReligious = a.LivingWithReligious;
+                apartment.LivingWithSmoker = a.LivingWithSmoker;
+                apartment.Gender = a.Reg.gender;
+
+                _context.Add(apartment);
 
 
+                foreach (ApprovalKit u in roomies)
+                {
+                    int c = 1;
+                    if (u != null)
+                    {
+                        var user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId == u.StundetId);
+                        Assigning r = new Assigning
+                        {
+                            StundetId = u.StundetId.Value,
+                            ApartmentNum = apartment.ApartmentNum,
+                            Room = c,
+                            User = user
+                        };
+                        c++;
+
+                        var item = Accessible.Single(x => x.StundetId == u.StundetId);
+                        if (item != null)
+                        {
+                            Accessible.Remove(item);
+                        }
+                        else
+                        {
+                            if (a.Reg.gender.Equals("נקבה"))
+                            {
+                                item = Females.Single(x => x.StundetId == u.StundetId);
+                                Females.Remove(item);
+                            }
+                            else
+                            {
+                                item = Males.Single(x => x.StundetId == u.StundetId);
+                                Males.Remove(item);
+                            }
+
+                             
+                        }
+                    }
+                }
+
+            }
 
 
+            await _context.SaveChangesAsync();
             return View();
         }
     }

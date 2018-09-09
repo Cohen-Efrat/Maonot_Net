@@ -16,7 +16,7 @@ namespace Maonot_Net.Models
 
         public int? ApartmentNum { get; set; }
 
-        public RoomNum? Room { get; set; }
+        public int? Room { get; set; }
 
         
 
