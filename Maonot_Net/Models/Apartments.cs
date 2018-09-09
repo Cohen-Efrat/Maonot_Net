@@ -18,7 +18,13 @@ namespace Maonot_Net.Models
 
         public bool? ReligiousType { get; set; }
 
+        public Gender? Gender { get; set; }
+
+        public int? capacity { get; set; }
+
         public Assigning assigning { get; set; }
+
+
 
     }
 }
