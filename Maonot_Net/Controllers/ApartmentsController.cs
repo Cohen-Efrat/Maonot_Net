@@ -150,10 +150,11 @@ namespace Maonot_Net.Controllers
             return _context.Apartments.Any(e => e.ID == id);
         }
 
+        List<ApprovalKit> NotAssigning = new List<ApprovalKit> { };
 
         public async Task<IActionResult> Assigning()
         {
-            List<ApprovalKit> NotAssigning = new List<ApprovalKit> { };
+           // List<ApprovalKit> NotAssigning = new List<ApprovalKit> { };
             //Couples ApprovalKit
             var Cop = from s in _context.ApprovalKits 
                          where s.RoomType.Equals("דירה_זוגית")
@@ -196,13 +197,10 @@ namespace Maonot_Net.Controllers
             {
                 Accessible.Add(f);
             }
-
-
             // single Apartments
             var SApartments = from s in _context.Apartments
                               where s.Type.Equals("Single") && s.Type.Equals("Accessible")
                               select s;
-
 
             //Couples
 
@@ -215,6 +213,8 @@ namespace Maonot_Net.Controllers
                 {
                     //get empty apartment
                     var apartment = await _context.Apartments.SingleOrDefaultAsync(m => m.Type.Equals("Couples") && m.capacity==0);
+                    apartment.capacity=2;
+                    _context.Update(apartment);
                     //if there is no empty apartment
                     if (apartment==null)
                     {
@@ -244,6 +244,7 @@ namespace Maonot_Net.Controllers
                     Couples.Remove(item2);
                     _context.Add(p1);
                     _context.Add(p2);
+                    await _context.SaveChangesAsync();
                 }
                 //if there is no partner
                 else
@@ -256,12 +257,14 @@ namespace Maonot_Net.Controllers
             {
                 ApprovalKit[] roomies = new ApprovalKit[3];
                 roomies[0] = a;
+                int size = 1;
                 if (a.PartnerId1!= null)
                 {
                     var c = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.StundetId == a.PartnerId1.Value &&  m.Reg.gender == a.Reg.gender);
                     if (c.PartnerId1==a.StundetId || c.PartnerId2 == a.StundetId)
                     {
                         roomies[1] = c;
+                        size++;
                     }
                     
                 }
@@ -271,16 +274,21 @@ namespace Maonot_Net.Controllers
                     if (c.PartnerId1 == a.StundetId || c.PartnerId2 == a.StundetId)
                     {
                         roomies[2] = c;
+                        size++;
                     }
                 }
+                //change proprties of apartment
                 var apartment = await _context.Apartments.SingleOrDefaultAsync(m => m.Type.Equals("Accessible") && m.capacity == 0);
                 apartment.LivingWithReligious = a.LivingWithReligious;
                 apartment.LivingWithSmoker = a.LivingWithSmoker;
                 apartment.Gender = a.Reg.gender;
+                apartment.capacity = size;
 
-                _context.Add(apartment);
 
 
+                _context.Update(apartment);
+
+                // save proprties of roomeis
                 foreach (ApprovalKit u in roomies)
                 {
                     int c = 1;
@@ -294,6 +302,7 @@ namespace Maonot_Net.Controllers
                             Room = c,
                             User = user
                         };
+                        _context.Add(r);
                         c++;
 
                         var item = Accessible.Single(x => x.StundetId == u.StundetId);
@@ -312,18 +321,23 @@ namespace Maonot_Net.Controllers
                             {
                                 item = Males.Single(x => x.StundetId == u.StundetId);
                                 Males.Remove(item);
-                            }
-
-                             
+                            }    
                         }
                     }
                 }
 
             }
-
-
+            //Single
+            Single(Males);
+            Single(Females);
             await _context.SaveChangesAsync();
             return View();
+        }
+
+        private void Single(List<ApprovalKit> list)
+        {
+            //אחרי שסיימו לאחד את השותפים למערך לחפש דירה שמתאימה בגודל לכמות של המערך ולתנאים של האנשים.
+            throw new NotImplementedException();
         }
     }
 
