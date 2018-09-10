@@ -20,7 +20,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Assignings
-        public async Task<IActionResult> IndexAsync(string sortOrder, string currentFilter, string searchString, int? page)
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -135,7 +135,7 @@ namespace Maonot_Net.Controllers
             {
                 _context.Add(assigning);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(IndexAsync));
+                return RedirectToAction(nameof(Index));
             }
             return View(assigning);
         }
@@ -186,7 +186,7 @@ namespace Maonot_Net.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(IndexAsync));
+                return RedirectToAction(nameof(Index));
             }
             return View(assigning);
         }
@@ -217,7 +217,7 @@ namespace Maonot_Net.Controllers
             var assigning = await _context.Assigning.SingleOrDefaultAsync(m => m.ID == id);
             _context.Assigning.Remove(assigning);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(IndexAsync));
+            return RedirectToAction(nameof(Index));
         }
 
         private bool AssigningExists(int id)
