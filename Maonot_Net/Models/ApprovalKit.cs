@@ -17,7 +17,7 @@ namespace Maonot_Net.Models
     {
         מעוניין,
         לא_מעוניין,
-        אפשרי
+       
     }
     public enum Religious
     {
@@ -25,7 +25,7 @@ namespace Maonot_Net.Models
         מוסלמי,
         נוצרי,
         דרוזי,
-        אחר
+      
     }
     public class ApprovalKit
     {
