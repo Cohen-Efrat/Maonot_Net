@@ -150,7 +150,7 @@ namespace Maonot_Net.Controllers
             return _context.Apartments.Any(e => e.ID == id);
         }
 
-        List<ApprovalKit> NotAssigning = new List<ApprovalKit> { };
+        
 
         public async Task<IActionResult> Assigning()
         {
@@ -218,8 +218,8 @@ namespace Maonot_Net.Controllers
                     //if there is no empty apartment
                     if (apartment==null)
                     {
-                        NotAssigning.Add(c);
-                        NotAssigning.Add(a);
+                        Globals.NotAssigning.Add(c);
+                        Globals.NotAssigning.Add(a);
                     }
                     // the user obj of a 
                     var u1 = await _context.Users.SingleOrDefaultAsync(m => m.StundetId == a.StundetId);
@@ -249,7 +249,7 @@ namespace Maonot_Net.Controllers
                 //if there is no partner
                 else
                 {
-                    NotAssigning.Add(a);
+                    Globals.NotAssigning.Add(a);
                 };
             }
             //Accessible
@@ -290,7 +290,7 @@ namespace Maonot_Net.Controllers
                     // save proprties of roomeis
                     foreach (ApprovalKit u in roomies)
                     {
-                        int c = 1;
+                        int c = 3;
                         if (u != null)
                         {
                             var user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId == u.StundetId);
@@ -302,7 +302,7 @@ namespace Maonot_Net.Controllers
                                 User = user
                             };
                             _context.Add(r);
-                            c++;
+                            c--;
 
                             var item = Accessible.Single(x => x.StundetId == u.StundetId);
                             if (item != null)
@@ -330,7 +330,7 @@ namespace Maonot_Net.Controllers
                 {
                     foreach (ApprovalKit u in roomies)
                     {
-                        NotAssigning.Add(u);
+                        Globals.NotAssigning.Add(u);
                         var item = Accessible.Single(x => x.StundetId == u.StundetId);
                         if (item != null)
                         {
@@ -357,6 +357,13 @@ namespace Maonot_Net.Controllers
             Single(Males);
             Single(Females);
             await _context.SaveChangesAsync();
+            ViewBag.NotAssigning = Globals.NotAssigning;
+
+            return View("NotAssigning");
+        }
+        public IActionResult NotAssigning()
+        {
+            ViewBag.NotAssigning = Globals.NotAssigning;
             return View();
         }
 
@@ -402,20 +409,21 @@ namespace Maonot_Net.Controllers
 
                 }
                 //capacity- how many spots opne
-                var apartment = await _context.Apartments.SingleOrDefaultAsync(m =>( m.Type.Equals("Single") || m.Type.Equals("Accessible"))
+                var apartment = await _context.Apartments.SingleOrDefaultAsync(m =>(( m.Type.Equals("Single") || m.Type.Equals("Accessible"))
                 && m.capacity >= size && m.Gender.Equals(a.Reg.gender)&& m.LivingWithReligious.Equals(a.LivingWithReligious)
-                && m.LivingWithSmoker.Equals(a.LivingWithSmoker)&& m.ReligiousType.Equals(a.ReligiousType));
+                && m.LivingWithSmoker.Equals(a.LivingWithSmoker)&& m.ReligiousType.Equals(a.ReligiousType)) || m.capacity == 4);
                 if (apartment != null)
                 {
                     apartment.LivingWithReligious = a.LivingWithReligious;
                     apartment.LivingWithSmoker = a.LivingWithSmoker;
                     apartment.Gender = a.Reg.gender;
                     apartment.capacity = apartment.capacity - size;
-
+                    _context.Update(apartment);
+                    await _context.SaveChangesAsync();
 
                     foreach (ApprovalKit u in roomies)
                     {
-                        int c = 1;
+                        int c = 4;
                         if (u != null)
                         {
                             var user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId == u.StundetId);
@@ -427,7 +435,7 @@ namespace Maonot_Net.Controllers
                                 User = user
                             };
                             _context.Add(r);
-                            c++;
+                            c--;
 
                             var item = list.Single(x => x.StundetId == u.StundetId);
                             list.Remove(item);
@@ -440,7 +448,7 @@ namespace Maonot_Net.Controllers
                 {
                     foreach (ApprovalKit u in roomies)
                     {
-                        NotAssigning.Add(u);
+                        Globals.NotAssigning.Add(u);
                         var item = list.Single(x => x.StundetId == u.StundetId);
                         list.Remove(item);
 
