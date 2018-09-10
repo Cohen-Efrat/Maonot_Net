@@ -1,0 +1,127 @@
+﻿@model Maonot_Net.Models.Assigning
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/Manger.cshtml";
+    ApprovalKit a = ViewBag.app;
+}
+
+<section>
+    <table>
+        <thead>
+            <tr>
+                <th>פרטי ערכת הקבלה</th>
+                <th>דירות פנויות</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            שם מלא
+                        </dt>
+                        <dd>
+                           @a.FullName
+                        </dd>
+                        <dt>
+                           סוג חדר
+                        </dt>
+                        <dd>
+                            @a.RoomType
+                        </dd>
+                        <dt>
+                           מגורים עם סטודנט/ית דתי/יה
+                        </dt>
+                        <dd>
+                            @a.LivingWithReligious
+                        </dd>
+                        <dt>
+                           מגורים עם סטודנט/ית מעשנ/ת
+                        </dt>
+                        <dd>
+                            @a.LivingWithSmoker
+                        </dd>
+                        <dt>
+                           דת
+                        </dt>
+                        <dd>
+                            @a.ReligiousType
+                        </dd>
+                        <dt>
+                           מגבלה רפואית
+                        </dt>
+                        <dd>
+                            @a.HealthCondition
+                        </dd>
+                    </dl>
+                </td>
+                <td>
+
+                   
+                    <dl class="dl-horizontal">
+                        @{foreach (Apartments ap in ViewBag.apartment)
+                            {
+                                <dt>
+                                    מספר דירה
+                                </dt>
+                                <dd>
+                                    @ap.ApartmentNum
+                                </dd>
+                                <dt>
+                                    חדרים פנויים
+                                </dt>
+                                <dd>
+                                    @{ 
+                                        for( int i=1; i< @ap.capacity+1; i++)
+                                        {
+                                            @i,
+                                        }
+                                    }
+                                    
+                                </dd>
+                            }
+                        }
+
+                    </dl>
+                    </td>
+
+            </tr>
+
+        </tbody>
+    </table>
+
+</section>
+
+<h4>Assigning</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="StundetId" class="control-label"></label>
+                <input asp-for="StundetId" class="form-control" />
+                <span asp-validation-for="StundetId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApartmentNum" class="control-label"></label>
+                <select asp-for="ApartmentNum" class="form-control" asp-items="ViewBag.ap"></select>
+                <span asp-validation-for="ApartmentNum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Room" class="control-label"></label>
+                <input asp-for="Room" class="form-control" />
+                <span asp-validation-for="Room" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="שמירה" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">בחזרה לרשימה</a>
+</div>
+

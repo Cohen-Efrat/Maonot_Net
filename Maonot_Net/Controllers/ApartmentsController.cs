@@ -150,8 +150,8 @@ namespace Maonot_Net.Controllers
             return _context.Apartments.Any(e => e.ID == id);
         }
 
-        
 
+        //capacity כמה מקום פנוי יש
         public async Task<IActionResult> Assigning()
         {
            // List<ApprovalKit> NotAssigning = new List<ApprovalKit> { };
@@ -212,8 +212,8 @@ namespace Maonot_Net.Controllers
                 if (c.PartnerId1.Value==a.StundetId)
                 {
                     //get empty apartment
-                    var apartment = await _context.Apartments.SingleOrDefaultAsync(m => m.Type.Equals("Couples") && m.capacity==0);
-                    apartment.capacity=2;
+                    var apartment = await _context.Apartments.SingleOrDefaultAsync(m => m.Type.Equals("Couples") && m.capacity==2);
+                    apartment.capacity=0;
                     _context.Update(apartment);
                     //if there is no empty apartment
                     if (apartment==null)

@@ -45,7 +45,7 @@ namespace Maonot_Net.Data
             var App = new ApprovalKit[]
             {
                 new ApprovalKit{StundetId= users.Single(u=> u.StundetId == 302875125).StundetId, FirstName= users.Single(u=> u.StundetId == 302875125).FirstName , LastName= users.Single(u=> u.StundetId == 302875125).LastName, RoomType=RoomType.חדר_ליחיד,
-                    LivingWithSmoker = Choose.אפשרי,LivingWithReligious=Choose.אפשרי, ReligiousType=Religious.דרוזי, HealthCondition=HealthCondition.ללא_מגבלה},
+                    LivingWithSmoker = Choose.מעוניין,LivingWithReligious=Choose.לא_מעוניין, ReligiousType=Religious.דרוזי, HealthCondition=HealthCondition.ללא_מגבלה},
                // new ApprovalKit{StundetId= users.Single(u=> u.StundetId == 308242122).StundetId, FirstName= users.Single(u=> u.StundetId == 308242122).FirstName , LastName= users.Single(u=> u.StundetId == 308242122).LastName, RoomType=RoomType.חדר_ליחיד,
                   //  LivingWithSmoker = Choose.לא_מעוניין,LivingWithReligious=Choose.מעוניין, ReligiousType=Religious.יהודי, HealthCondition=HealthCondition.ללא_מגבלה}
             };
