@@ -94,7 +94,7 @@ namespace Maonot_Net.Controllers
             if (approvalKit.RoomType.Equals(RoomType.חדר_ליחיד))
             {
                   var apartments = from s in _context.Apartments
-                                 where (s.Gender.Equals(approvalKit.Reg.gender) && (s.Type.Equals("Single") || s.Type.Equals("Accessible"))
+                                 where (s.Gender.Equals(approvalKit.Gender) && (s.Type.Equals("Single") || s.Type.Equals("Accessible"))
                                  && s.LivingWithSmoker.Equals(approvalKit.LivingWithSmoker) && s.LivingWithReligious.Equals(approvalKit.LivingWithSmoker)
                                  && s.ReligiousType.Equals(approvalKit.ReligiousType) && s.capacity>0) || s.capacity==4
                                  select s;
@@ -129,7 +129,7 @@ namespace Maonot_Net.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StundetId,ApartmentNum,Room")] Assigning assigning)
+        public async Task<IActionResult> Create(int id,[Bind("StundetId,ApartmentNum,Room")] Assigning assigning)
         {
             if (ModelState.IsValid)
             {

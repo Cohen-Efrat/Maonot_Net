@@ -10,9 +10,6 @@
         <thead>
             <tr>
                 <th> שם מלא</th>
-                <th> טלפון</th>
-                <th>חוג לימודים</th>
-                <th>שנת לימודים</th>
                 <th> סוג דירה</th>
                 <th>מגורים עם סטודנט/ית דתי/יה</th>
                 <th>מגורים עם סטודנט/ית מעשנ/ת</th>
@@ -26,11 +23,8 @@
                     @if (a != null)
                     {
             <tr>
+                <td>@a.ID </td>
                 <td>@a.FullName</td>
-                @*
-        <td>@a.Reg.PhoneNumber</td>
-        <td>@a.Reg.FieldOfStudy</td>
-        <td>@a.Reg.SteadyYear </td>*@
                 <td>@a.RoomType</td>
                 <td>@a.LivingWithReligious</td>
                 <td>@a.LivingWithSmoker</td>

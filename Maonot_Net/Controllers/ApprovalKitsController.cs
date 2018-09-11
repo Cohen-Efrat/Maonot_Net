@@ -148,11 +148,12 @@ namespace Maonot_Net.Controllers
                 string Aut = HttpContext.Session.GetString("Aut");
                 ViewBag.Aut = Aut;
                 string Id = HttpContext.Session.GetString("User");
-                var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
+                var u = await _context.Registrations.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(Id));
 
                 approvalKit.FirstName = u.FirstName;
                 approvalKit.LastName = u.LastName;
                 approvalKit.StundetId = u.StundetId;
+                approvalKit.Gender = u.gender;
                 try
                 {
                     if (ModelState.IsValid)

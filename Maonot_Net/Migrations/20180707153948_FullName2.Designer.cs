@@ -298,7 +298,7 @@ namespace Maonot_Net.Migrations
 
             modelBuilder.Entity("Maonot_Net.Models.ApprovalKit", b =>
                 {
-                    b.HasOne("Maonot_Net.Models.Registration", "Reg")
+                    b.HasOne("Maonot_Net.Models.Registration", "Registration")
                         .WithMany()
                         .HasForeignKey("RegID");
                 });

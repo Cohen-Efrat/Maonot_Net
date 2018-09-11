@@ -72,6 +72,8 @@ namespace Maonot_Net.Models
         [Display(Name = "העדפה לשותף 3")]
         public int? PartnerId3 { get; set; }
 
+        public Gender? Gender { get; set; }
+
 
     }
 }
