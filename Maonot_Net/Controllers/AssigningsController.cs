@@ -46,11 +46,11 @@ namespace Maonot_Net.Controllers
             }
             switch (sortOrder)
             {
-                case "FullName_desc":
-                    a = a.OrderByDescending(s => s.User.FullName);
+                case "ID_desc":
+                    a = a.OrderByDescending(s => s.StundetId);
                     break;
-                case "FullName":
-                    a = a.OrderBy(s => s.User.FullName);
+                case "ID":
+                    a = a.OrderBy(s => s.StundetId);
                     break;
                 case "apartment_desc":
                     a = a.OrderByDescending(s => s.ApartmentNum);
@@ -61,7 +61,7 @@ namespace Maonot_Net.Controllers
             }
 
             ViewBag.c = a.Count();
-            int pageSize = 3;
+            int pageSize = 20;
 
             return View(await PaginatedList<Assigning>.CreateAsync(a.AsNoTracking(), page ?? 1, pageSize));
         }
@@ -114,7 +114,7 @@ namespace Maonot_Net.Controllers
                 {
                     apartment.Add(a);
                 }
-
+                ViewBag.apartment = apartment;
             }
 
         

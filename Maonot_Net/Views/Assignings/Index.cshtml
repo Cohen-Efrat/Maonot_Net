@@ -21,7 +21,7 @@
     <thead>
         <tr>
             <th>
-                @Html.ActionLink("שם מלא", "Index", new { sortOrder = ViewBag.NameSortParm })
+                @Html.ActionLink("ת.ז", "Index", new { sortOrder = ViewBag.NameSortParm })
             </th>
             <th>
                 @Html.ActionLink("מספר דירה", "Index", new { sortOrder = ViewBag.NameSortParm })
@@ -46,9 +46,9 @@
                     @Html.DisplayFor(modelItem => item.Room)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.ID">עריכה</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">פרטים</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">מחיקה</a>
                 </td>
             </tr>
         }
