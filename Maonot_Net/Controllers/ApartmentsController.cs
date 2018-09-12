@@ -338,9 +338,10 @@ namespace Maonot_Net.Controllers
                 }
             }
             //Single
-
-            Single(Males);
-            Single(Females);
+            string male = "m";
+            string female = "w";
+            Single(male);
+            Single(female);
             //await _context.SaveChangesAsync();
             ViewBag.NotAssigning = Globals.NotAssigning;
 
@@ -363,11 +364,30 @@ namespace Maonot_Net.Controllers
             return View();
         }
 
-        private async void Single(List<ApprovalKit> list)
+        private async void Single(string gender)
         {
-            foreach (var a in list)
+            List<ApprovalKit> list = new List<ApprovalKit> { };
+            if (gender.Equals("m"))
             {
-                 var asaing = await _context.Assigning.SingleOrDefaultAsync(u => u.StundetId.Value == a.StundetId.Value);
+               list = _context.ApprovalKits.Where(
+               r =>
+               r.RoomType == RoomType.חדר_ליחיד &&
+               r.HealthCondition == HealthCondition.ללא_מגבלה &&
+               r.Gender == Gender.זכר
+               ).ToList();
+            }
+            if(gender.Equals("w"))
+            {
+                list = _context.ApprovalKits.Where(
+                    r =>
+                    r.RoomType == RoomType.חדר_ליחיד &&
+                    r.HealthCondition == HealthCondition.ללא_מגבלה &&
+                    r.Gender == Gender.נקבה
+                    ).ToList();
+            }
+            foreach (ApprovalKit a in list)
+            {
+                var asaing = await _context.Assigning.SingleOrDefaultAsync(u => u.StundetId.Value == a.StundetId.Value);
                 if (asaing == null)
                 {
                     ApprovalKit[] roomies = new ApprovalKit[4];
@@ -411,11 +431,11 @@ namespace Maonot_Net.Controllers
 
 
                     Apartments apartment = await _context.Apartments.FirstOrDefaultAsync(m => m.capacity >= size &&
-                    m.Type.Equals("Single") //&&
-                                            // m.LivingWithReligious == a.LivingWithReligious &&
-                                            // m.LivingWithSmoker == a.LivingWithSmoker &&
-                                            // m.ReligiousType == a.ReligiousType &&
-                                            //m.Gender == a.Gender
+                    m.Type.Equals("Single") &&
+                                             m.LivingWithReligious == a.LivingWithReligious &&
+                                             m.LivingWithSmoker == a.LivingWithSmoker &&
+                                             m.ReligiousType == a.ReligiousType &&
+                                             m.Gender == a.Gender
                     );
 
                     if (apartment != null)
