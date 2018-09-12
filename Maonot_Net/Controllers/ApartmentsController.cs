@@ -160,21 +160,13 @@ namespace Maonot_Net.Controllers
                 a =>
                 a.RoomType == RoomType.דירה_זוגית).ToList();
 
-            //Male ApprovalKit
-            List<ApprovalKit> Males = _context.ApprovalKits.Where(
+            //Single ApprovalKit
+            List<ApprovalKit> Single = _context.ApprovalKits.Where(
                 r =>
                 r.RoomType == RoomType.חדר_ליחיד &&
-                r.HealthCondition == HealthCondition.ללא_מגבלה &&
-                r.Gender == Gender.זכר
+                r.HealthCondition == HealthCondition.ללא_מגבלה 
                 ).ToList();
 
-            //Female ApprovalKit
-            List<ApprovalKit> Females = _context.ApprovalKits.Where(
-                r =>
-                r.RoomType == RoomType.חדר_ליחיד &&
-                r.HealthCondition == HealthCondition.ללא_מגבלה &&
-                r.Gender == Gender.נקבה
-                ).ToList();
 
             //Accessible ApprovalKit
             List<ApprovalKit> Accessible = _context.ApprovalKits.Where(
@@ -272,20 +264,26 @@ namespace Maonot_Net.Controllers
                     if (a.PartnerId1 != null)
                     {
                         var c = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.StundetId.Value == a.PartnerId1.Value && m.Gender == a.Gender);
-                        if (c.PartnerId1.Value == a.StundetId.Value || c.PartnerId2.Value == a.StundetId.Value)
+                        if (c != null)
                         {
-                            roomies[1] = c;
-                            size++;
+                            if (c.PartnerId1.Value == a.StundetId.Value || c.PartnerId2.Value == a.StundetId.Value)
+                            {
+                                roomies[1] = c;
+                                size++;
+                            };
                         };
 
                     };
                     if (a.PartnerId2 != null)
                     {
                         var c = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.StundetId == a.PartnerId2.Value && m.Gender == a.Gender);
-                        if (c.PartnerId1.Value == a.StundetId.Value || c.PartnerId2.Value == a.StundetId.Value)
+                        if (c != null)
                         {
-                            roomies[2] = c;
-                            size++;
+                            if (c.PartnerId1.Value == a.StundetId.Value || c.PartnerId2.Value == a.StundetId.Value)
+                            {
+                                roomies[2] = c;
+                                size++;
+                            };
                         };
                     };
                     //change proprties of apartment
@@ -298,8 +296,8 @@ namespace Maonot_Net.Controllers
                         apartment.capacity = apartment.capacity - size;
                         _context.Update(apartment);
                         await _context.SaveChangesAsync();
-
-                        int c = 3;
+                        int c = apartment.capacity.Value;
+                       
                         // save proprties of roomeis
                         foreach (ApprovalKit u in roomies)
                         {
@@ -340,53 +338,7 @@ namespace Maonot_Net.Controllers
 
             };
             //Single
-            string male = "m";
-            string female = "w";
-            Single(male);
-            //  Single(female);
-            //await _context.SaveChangesAsync();
-            ViewBag.NotAssigning = Globals.NotAssigning;
-
-            return RedirectToAction("NotAssigning", "Apartments");
-        }
-        public IActionResult NotAssigning()
-        {
-            List<User> users = _context.Users.Where(r => r.ApartmentNum == null && r.Authorization == 9).ToList();
-            foreach (User u in users)
-            {
-                var item = _context.ApprovalKits.SingleOrDefault(a => a.StundetId.Value == u.StundetId);
-                var temp = Globals.NotAssigning.Find(x => x.StundetId == u.StundetId);
-                if (temp == null)
-                {
-                    Globals.NotAssigning.Add(item);
-                }
-            }
-
-            ViewBag.NotAssigning = Globals.NotAssigning;
-            return View();
-        }
-
-        private async void Single(string gender)
-        {
-            List<ApprovalKit> list = new List<ApprovalKit> { };
-            if (gender.Equals("m"))
-            {
-                list = _context.ApprovalKits.Where(
-                r =>
-                r.RoomType == RoomType.חדר_ליחיד &&
-                r.HealthCondition == HealthCondition.ללא_מגבלה &&
-                r.Gender == Gender.זכר).ToList();
-            }
-            else if (gender.Equals("w"))
-            {
-                list = _context.ApprovalKits.Where(
-                r =>
-                r.RoomType == RoomType.חדר_ליחיד &&
-                r.HealthCondition == HealthCondition.ללא_מגבלה &&
-                r.Gender == Gender.נקבה).ToList();
-
-            };
-            foreach (ApprovalKit a in list)
+            foreach (ApprovalKit a in Single)
             {
                 var asaing = await _context.Assigning.SingleOrDefaultAsync(x => x.StundetId.Value == a.StundetId.Value);
                 if (asaing == null)
@@ -397,30 +349,38 @@ namespace Maonot_Net.Controllers
                     if (a.PartnerId1 != null)
                     {
                         var c = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.StundetId.Value == a.PartnerId1.Value && m.Gender == a.Gender);
-                        if (c.PartnerId1.Value == a.StundetId.Value || c.PartnerId2.Value == a.StundetId.Value || c.PartnerId3.Value == a.StundetId.Value)
+                        if (c != null)
                         {
-                            roomies[1] = c;
-                            size++;
-                        }
+                            if (c.PartnerId1.Value == a.StundetId.Value || c.PartnerId2.Value == a.StundetId.Value || c.PartnerId3.Value == a.StundetId.Value)
+                            {
+                                roomies[1] = c;
+                                size++;
+                            };
+                        };
 
                     };
                     if (a.PartnerId2 != null)
                     {
                         var c = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.StundetId.Value == a.PartnerId2.Value && m.Gender == a.Gender);
-                        if (c.PartnerId1.Value == a.StundetId.Value || c.PartnerId2.Value == a.StundetId.Value || c.PartnerId3.Value == a.StundetId.Value)
+                        if (c != null)
                         {
-                            roomies[2] = c;
-                            size++;
-                        }
-
+                            if (c.PartnerId1.Value == a.StundetId.Value || c.PartnerId2.Value == a.StundetId.Value || c.PartnerId3.Value == a.StundetId.Value)
+                            {
+                                roomies[2] = c;
+                                size++;
+                            }
+                        };
                     };
                     if (a.PartnerId3 != null)
                     {
                         var c = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.StundetId == a.PartnerId3.Value && m.Gender == a.Gender);
-                        if (c.PartnerId1.Value == a.StundetId.Value || c.PartnerId2.Value == a.StundetId.Value || c.PartnerId3.Value == a.StundetId.Value)
+                        if (c != null)
                         {
-                            roomies[3] = c;
-                            size++;
+                            if (c.PartnerId1.Value == a.StundetId.Value || c.PartnerId2.Value == a.StundetId.Value || c.PartnerId3.Value == a.StundetId.Value)
+                            {
+                                roomies[3] = c;
+                                size++;
+                            }
                         }
 
                     };
@@ -431,6 +391,10 @@ namespace Maonot_Net.Controllers
                          m.LivingWithSmoker == a.LivingWithSmoker &&
                          m.ReligiousType == a.ReligiousType &&
                          m.Gender == a.Gender);
+                    if (apartment == null)
+                    {
+                        apartment = _context.Apartments.FirstOrDefault(m=> m.capacity>=size && m.Type.Equals("Single"));
+                    };
 
                     if (apartment != null)
                     {
@@ -443,7 +407,7 @@ namespace Maonot_Net.Controllers
                         await _context.SaveChangesAsync();
                         foreach (ApprovalKit u in roomies)
                         {
-                            int c = 4;
+                            int c = apartment.capacity.Value;
                             if (u != null)
                             {
                                 var user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId == u.StundetId);
@@ -481,7 +445,29 @@ namespace Maonot_Net.Controllers
 
             };//foreach approval kit
 
-        }// end function
+            //await _context.SaveChangesAsync();
+            ViewBag.NotAssigning = Globals.NotAssigning;
+
+            return RedirectToAction("NotAssigning", "Apartments");
+        }
+        public IActionResult NotAssigning()
+        {
+            List<User> users = _context.Users.Where(r => r.ApartmentNum == null && r.Authorization == 9).ToList();
+            foreach (User u in users)
+            {
+                var item = _context.ApprovalKits.SingleOrDefault(a => a.StundetId.Value == u.StundetId);
+                var temp = Globals.NotAssigning.Find(x => x.StundetId == u.StundetId);
+                if (temp == null)
+                {
+                    Globals.NotAssigning.Add(item);
+                }
+            }
+
+            ViewBag.NotAssigning = Globals.NotAssigning;
+            return View();
+        }
+
+ 
     }// close controller
 }// close name space
 
