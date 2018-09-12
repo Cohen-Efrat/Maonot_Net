@@ -179,7 +179,7 @@ namespace Maonot_Net.Controllers
             //Accessible ApprovalKit
             List<ApprovalKit> Accessible = _context.ApprovalKits.Where(
                     r =>
-                    r.RoomType == RoomType.חדר_ליחיד &&(
+                    r.RoomType == RoomType.חדר_ליחיד && (
                     r.HealthCondition == HealthCondition.מגבלה_פיזית_אחרת ||
                     r.HealthCondition == HealthCondition.נכה_צהל ||
                     r.HealthCondition == HealthCondition.נכות)
@@ -243,8 +243,8 @@ namespace Maonot_Net.Controllers
                                 _context.Add(p1);
                                 _context.Add(p2);
                                 await _context.SaveChangesAsync();
-                            }
-                        }
+                            };
+                        };
                         //if there is no partner
 
 
@@ -255,11 +255,11 @@ namespace Maonot_Net.Controllers
                         if (temp == null)
                         {
                             Globals.NotAssigning.Add(a);
-                        }
+                        };
 
                     };
-                }
-            }
+                };
+            };
             //Accessible
             foreach (ApprovalKit a in Accessible)
             {
@@ -276,9 +276,9 @@ namespace Maonot_Net.Controllers
                         {
                             roomies[1] = c;
                             size++;
-                        }
+                        };
 
-                    }
+                    };
                     if (a.PartnerId2 != null)
                     {
                         var c = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.StundetId == a.PartnerId2.Value && m.Gender == a.Gender);
@@ -286,8 +286,8 @@ namespace Maonot_Net.Controllers
                         {
                             roomies[2] = c;
                             size++;
-                        }
-                    }
+                        };
+                    };
                     //change proprties of apartment
                     var apartment = await _context.Apartments.FirstOrDefaultAsync(m => m.Type.Equals("Accessible") && m.capacity == 3);
                     if (apartment != null)
@@ -313,12 +313,12 @@ namespace Maonot_Net.Controllers
                                     Room = c,
                                     User = user
                                 };
-                                
+
                                 _context.Add(r);
                                 await _context.SaveChangesAsync();
                                 c--;
-                            }
-                        }
+                            };
+                        };
 
                     }
                     else
@@ -331,17 +331,19 @@ namespace Maonot_Net.Controllers
                                 if (temp == null)
                                 {
                                     Globals.NotAssigning.Add(u);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+                                };
+                            };
+                        };
+                    };
+                };
+
+
+            };
             //Single
             string male = "m";
             string female = "w";
             Single(male);
-            Single(female);
+            //  Single(female);
             //await _context.SaveChangesAsync();
             ViewBag.NotAssigning = Globals.NotAssigning;
 
@@ -349,7 +351,7 @@ namespace Maonot_Net.Controllers
         }
         public IActionResult NotAssigning()
         {
-            List<User> users = _context.Users.Where(r =>r.ApartmentNum == null&&r.Authorization==9).ToList();
+            List<User> users = _context.Users.Where(r => r.ApartmentNum == null && r.Authorization == 9).ToList();
             foreach (User u in users)
             {
                 var item = _context.ApprovalKits.SingleOrDefault(a => a.StundetId.Value == u.StundetId);
@@ -369,31 +371,29 @@ namespace Maonot_Net.Controllers
             List<ApprovalKit> list = new List<ApprovalKit> { };
             if (gender.Equals("m"))
             {
-               list = _context.ApprovalKits.Where(
-               r =>
-               r.RoomType == RoomType.חדר_ליחיד &&
-               r.HealthCondition == HealthCondition.ללא_מגבלה &&
-               r.Gender == Gender.זכר
-               ).ToList();
+                list = _context.ApprovalKits.Where(
+                r =>
+                r.RoomType == RoomType.חדר_ליחיד &&
+                r.HealthCondition == HealthCondition.ללא_מגבלה &&
+                r.Gender == Gender.זכר).ToList();
             }
-            if(gender.Equals("w"))
+            else if (gender.Equals("w"))
             {
                 list = _context.ApprovalKits.Where(
-                    r =>
-                    r.RoomType == RoomType.חדר_ליחיד &&
-                    r.HealthCondition == HealthCondition.ללא_מגבלה &&
-                    r.Gender == Gender.נקבה
-                    ).ToList();
-            }
+                r =>
+                r.RoomType == RoomType.חדר_ליחיד &&
+                r.HealthCondition == HealthCondition.ללא_מגבלה &&
+                r.Gender == Gender.נקבה).ToList();
+
+            };
             foreach (ApprovalKit a in list)
             {
-                var asaing = await _context.Assigning.SingleOrDefaultAsync(u => u.StundetId.Value == a.StundetId.Value);
+                var asaing = await _context.Assigning.SingleOrDefaultAsync(x => x.StundetId.Value == a.StundetId.Value);
                 if (asaing == null)
                 {
                     ApprovalKit[] roomies = new ApprovalKit[4];
                     roomies[0] = a;
                     int size = 1;
-
                     if (a.PartnerId1 != null)
                     {
                         var c = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.StundetId.Value == a.PartnerId1.Value && m.Gender == a.Gender);
@@ -403,7 +403,7 @@ namespace Maonot_Net.Controllers
                             size++;
                         }
 
-                    }
+                    };
                     if (a.PartnerId2 != null)
                     {
                         var c = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.StundetId.Value == a.PartnerId2.Value && m.Gender == a.Gender);
@@ -413,7 +413,7 @@ namespace Maonot_Net.Controllers
                             size++;
                         }
 
-                    }
+                    };
                     if (a.PartnerId3 != null)
                     {
                         var c = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.StundetId == a.PartnerId3.Value && m.Gender == a.Gender);
@@ -423,20 +423,14 @@ namespace Maonot_Net.Controllers
                             size++;
                         }
 
-                    }
-                    //capacity- how many spots opne
-                    //  Apartments apartment2 = await _context.Apartments.FirstOrDefaultAsync(m => m.capacity >= size && (m.Type.Equals("Single") || m.Type.Equals("Accessible"))
-                    // && m.LivingWithReligious.Equals(a.LivingWithReligious) && m.LivingWithSmoker.Equals(a.LivingWithSmoker)
-                    // && m.ReligiousType.Equals(a.ReligiousType) && m.Gender.ToString().Equals(a.Gender.ToString()));
-
+                    };
 
                     Apartments apartment = await _context.Apartments.FirstOrDefaultAsync(m => m.capacity >= size &&
                     m.Type.Equals("Single") &&
-                                             m.LivingWithReligious == a.LivingWithReligious &&
-                                             m.LivingWithSmoker == a.LivingWithSmoker &&
-                                             m.ReligiousType == a.ReligiousType &&
-                                             m.Gender == a.Gender
-                    );
+                         m.LivingWithReligious == a.LivingWithReligious &&
+                         m.LivingWithSmoker == a.LivingWithSmoker &&
+                         m.ReligiousType == a.ReligiousType &&
+                         m.Gender == a.Gender);
 
                     if (apartment != null)
                     {
@@ -444,9 +438,9 @@ namespace Maonot_Net.Controllers
                         apartment.LivingWithSmoker = a.LivingWithSmoker;
                         apartment.Gender = a.Gender;
                         apartment.capacity = apartment.capacity - size;
+                        apartment.ReligiousType = a.ReligiousType;
                         _context.Update(apartment);
-                        
-
+                        await _context.SaveChangesAsync();
                         foreach (ApprovalKit u in roomies)
                         {
                             int c = 4;
@@ -458,16 +452,15 @@ namespace Maonot_Net.Controllers
                                     StundetId = u.StundetId.Value,
                                     ApartmentNum = apartment.ApartmentNum,
                                     Room = c,
-                                    User = user
+
                                 };
                                 _context.Add(r);
-                                
+                                await _context.SaveChangesAsync();
                                 c--;
-                  }
-                        }
-                        
-                    }
-                
+                            };//end if u!=null
+                        };//end foreach roomies
+
+                    }// apartment!=null
                     else
                     {
                         foreach (ApprovalKit u in roomies)
@@ -478,17 +471,17 @@ namespace Maonot_Net.Controllers
                                 if (temp == null)
                                 {
                                     Globals.NotAssigning.Add(u);
-                                }
-                            }
-                        }
-                    }
-                    await _context.SaveChangesAsync();
-                }
+                                };
+                            };
+                        };
 
-            }
-            }
+                    };
 
+                }; //assing==null
 
-        }
-    }
+            };//foreach approval kit
+
+        }// end function
+    }// close controller
+}// close name space
 
