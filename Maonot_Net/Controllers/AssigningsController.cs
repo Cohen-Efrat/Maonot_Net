@@ -183,8 +183,12 @@ namespace Maonot_Net.Controllers
         {
             var assigning = await _context.Assigning.SingleOrDefaultAsync(m => m.ID == id);
             User user = await _context.Users.SingleOrDefaultAsync(u => u.StundetId == assigning.StundetId.Value);
+            var apartment = await _context.Apartments.SingleOrDefaultAsync(a => a.ApartmentNum == assigning.ApartmentNum.Value);
+
             user.ApartmentNum = null;
             user.Room = null;
+            apartment.capacity = apartment.capacity + 1;
+            _context.Update(apartment);
 
             _context.Update(user);
             _context.Assigning.Remove(assigning);
@@ -237,6 +241,8 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> ChangeA(Assigning assigning)
         {
             var user = await _context.Users.SingleOrDefaultAsync(u => u.StundetId == assigning.StundetId.Value);
+            var apartment = await _context.Apartments.SingleOrDefaultAsync(a => a.ApartmentNum == assigning.ApartmentNum.Value);
+
             if (ModelState.IsValid)
             {
                 _context.Add(assigning);
@@ -258,6 +264,8 @@ namespace Maonot_Net.Controllers
                     user.Room = RoomNum.FourA;
                 }
                 _context.Update(user);
+                apartment.capacity = apartment.capacity - 1;
+                _context.Update(apartment);
                 await _context.SaveChangesAsync();
                
             }

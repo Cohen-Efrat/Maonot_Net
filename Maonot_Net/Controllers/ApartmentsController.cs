@@ -296,13 +296,14 @@ namespace Maonot_Net.Controllers
                     var apartment = await _context.Apartments.FirstOrDefaultAsync(m => m.Type.Equals("Accessible") && m.capacity == 3);
                     if (apartment != null)
                     {
+                        int c = apartment.capacity.Value;
                         apartment.LivingWithReligious = a.LivingWithReligious;
                         apartment.LivingWithSmoker = a.LivingWithSmoker;
                         apartment.Gender = a.Gender;
                         apartment.capacity = apartment.capacity - size;
                         _context.Update(apartment);
                         await _context.SaveChangesAsync();
-                        int c = apartment.capacity.Value;
+                        
                        
                         // save proprties of roomeis
                         foreach (ApprovalKit u in roomies)
@@ -318,15 +319,15 @@ namespace Maonot_Net.Controllers
                                     
                                 };
                                 user.ApartmentNum = apartment.ApartmentNum;
-                                if (r.Room == 0)
+                                if (r.Room == 1)
                                 {
                                     user.Room = RoomNum.OneA;
                                 }
-                                else if (r.Room == 1)
+                                else if (r.Room == 2)
                                 {
                                     user.Room = RoomNum.TwoA;
                                 }
-                                else if (r.Room == 2)
+                                else if (r.Room == 3)
                                 {
                                     user.Room = RoomNum.ThreeA;
                                 }
@@ -364,7 +365,7 @@ namespace Maonot_Net.Controllers
             //Single
             foreach (ApprovalKit a in Single)
             {
-                var asaing = await _context.Assigning.SingleOrDefaultAsync(x => x.StundetId.Value == a.StundetId.Value);
+                var asaing = await _context.Assigning.FirstOrDefaultAsync(x => x.StundetId.Value == a.StundetId.Value);
                 if (asaing == null)
                 {
                     ApprovalKit[] roomies = new ApprovalKit[4];
@@ -422,6 +423,7 @@ namespace Maonot_Net.Controllers
 
                     if (apartment != null)
                     {
+                        int c = apartment.capacity.Value;
                         apartment.LivingWithReligious = a.LivingWithReligious;
                         apartment.LivingWithSmoker = a.LivingWithSmoker;
                         apartment.Gender = a.Gender;
@@ -431,7 +433,7 @@ namespace Maonot_Net.Controllers
                         await _context.SaveChangesAsync();
                         foreach (ApprovalKit u in roomies)
                         {
-                            int c = apartment.capacity.Value;
+                            
                             if (u != null)
                             {
                                 var user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId == u.StundetId);
@@ -443,15 +445,15 @@ namespace Maonot_Net.Controllers
 
                                 };
                                 user.ApartmentNum = apartment.ApartmentNum;
-                                if (r.Room == 0)
+                                if (r.Room == 1)
                                 {
                                     user.Room = RoomNum.OneA;
                                 }
-                                else if (r.Room == 1)
+                                else if (r.Room == 2)
                                 {
                                     user.Room = RoomNum.TwoA;
                                 }
-                                else if (r.Room == 2)
+                                else if (r.Room == 3)
                                 {
                                     user.Room = RoomNum.ThreeA;
                                 }

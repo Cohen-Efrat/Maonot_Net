@@ -6,10 +6,11 @@
     Layout = "~/Views/Shared/Manger.cshtml";
 }
 
-<h2>רשימת שיבוצים</h2>
+<h2>רשימת דיירים</h2>
 
-<a asp-controller="Apartments" asp-action="Assigning" class="btn">הפעלת השיבוץ</a>
-<a asp-controller="Apartments" asp-action="NotAssigning" class="btn">רשימת סטודנטים לא משובצים</a>
+<a asp-controller="Apartments" asp-action="Assigning">הפעלת השיבוץ</a>
+
+<a asp-controller="Apartments" asp-action="NotAssigning">רשימת סטודנטים לא משובצים</a>
 
 <p> תפוסת דיירים @ViewBag.c</p>
 
