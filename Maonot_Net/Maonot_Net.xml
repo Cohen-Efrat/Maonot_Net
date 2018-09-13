@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Maonot_Net</name>
+    </assembly>
+    <members>
+        <member name="T:Maonot_Net.Controllers.UsersController">
+            <summary>
+            
+            </summary>
+            <seealso cref="T:Microsoft.AspNetCore.Mvc.Controller" />
+        </member>
+        <member name="M:Maonot_Net.Controllers.UsersController.#ctor(Maonot_Net.Data.MaonotNetContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Maonot_Net.Controllers.UsersController"/> class.
+            </summary>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Maonot_Net.Controllers.UsersController.Index(System.String,System.String,System.String,System.Nullable{System.Int32})">
+            <summary>
+            Indexes the specified sort order.
+            </summary>
+            <param name="sortOrder">The sort order.</param>
+            <param name="currentFilter">The current filter.</param>
+            <param name="searchString">The search string.</param>
+            <param name="page">The page.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maonot_Net.Controllers.UsersController.Details(System.Nullable{System.Int32})">
+            <summary>
+            Detailses the specified identifier.
+            </summary>
+            <param name="id">The identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maonot_Net.Controllers.UsersController.Create">
+            <summary>
+            Creates this instance.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Maonot_Net.Controllers.UsersController.Create(Maonot_Net.Models.User)">
+            <summary>
+            Creates the specified user.
+            </summary>
+            <param name="user">The user.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maonot_Net.Controllers.UsersController.Edit(System.Nullable{System.Int32})">
+            <summary>
+            Edits the specified identifier.
+            </summary>
+            <param name="id">The identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maonot_Net.Controllers.UsersController.Edit(System.Int32,Maonot_Net.Models.User)">
+            <summary>
+            Edits the specified identifier.
+            </summary>
+            <param name="id">The identifier.</param>
+            <param name="user">The user.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maonot_Net.Controllers.UsersController.Delete(System.Nullable{System.Int32},System.Nullable{System.Boolean})">
+            <summary>
+            Deletes the specified identifier.
+            </summary>
+            <param name="id">The identifier.</param>
+            <param name="saveChangesError">The save changes error.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maonot_Net.Controllers.UsersController.DeleteConfirmed(System.Int32)">
+            <summary>
+            Deletes the confirmed.
+            </summary>
+            <param name="id">The identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maonot_Net.Controllers.UsersController.LogIn(Maonot_Net.Models.User)">
+            <summary>
+            Logs the in.
+            </summary>
+            <param name="_user">The user.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maonot_Net.Controllers.UsersController.LogOut">
+            <summary>
+            Logs the out.
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

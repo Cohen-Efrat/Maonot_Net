@@ -1,0 +1,137 @@
+﻿@model Maonot_Net.Models.Assigning
+@{
+    ViewData["Title"] = "Change";
+    Layout = "~/Views/Shared/Manger.cshtml";
+    ApprovalKit a = ViewBag.app;
+
+}
+
+<section>
+
+    <h3>    פרטי ערכת הקבלה</h3>
+
+    <dl class="dl-horizontal">
+        <dt>
+            שם מלא
+        </dt>
+        <dd>
+            @a.FullName
+        </dd>
+        <dt>
+            סוג חדר
+        </dt>
+        <dd>
+            @a.RoomType
+        </dd>
+        <dt>
+            מגורים עם סטודנט/ית דתי/יה
+        </dt>
+        <dd>
+            @a.LivingWithReligious
+        </dd>
+        <dt>
+            מגורים עם סטודנט/ית מעשנ/ת
+        </dt>
+        <dd>
+            @a.LivingWithSmoker
+        </dd>
+        <dt>
+            דת
+        </dt>
+        <dd>
+            @a.ReligiousType
+        </dd>
+        <dt>
+            מגבלה רפואית
+        </dt>
+        <dd>
+            @a.HealthCondition
+        </dd>
+    </dl>
+
+    <h3> דירות פנויות </h3>
+    <dl class="dl-horizontal">
+
+        @{
+            string s = " | ";
+            foreach (Apartments ap in ViewBag.apartment)
+            {
+                <hr />
+                <dt> מספר דירה</dt>
+                <dd> @ap.ApartmentNum</dd>
+                <dt>חדרים פנויים</dt>
+                <dd>
+                    @{
+
+                        for (int i = 1; i < ap.capacity + 1; i++)
+                        {
+                            @i @s;
+
+                        };
+                    }
+                </dd>
+
+                        };
+        }
+
+    </dl>
+
+
+
+    @{  
+        List<SelectListItem> listItems = new List<SelectListItem>();
+        listItems.Add(new SelectListItem
+        {
+            Text = "1",
+            Value = "1"
+        });
+        listItems.Add(new SelectListItem
+        {
+            Text = "2",
+            Value = "2"
+        });
+        listItems.Add(new SelectListItem
+        {
+            Text = "3",
+            Value = "3"
+        });
+        listItems.Add(new SelectListItem
+        {
+            Text = "4",
+            Value = "4"
+        });
+
+    }
+
+</section>
+                        
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <form asp-action="ChangeA">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <input type="hidden" name="StundetId" id="StundetId" value="@a.StundetId" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="ApartmentNum" class="control-label"></label>
+                                        <select asp-for="ApartmentNum" class="form-control" asp-items="ViewBag.room"></select>
+                                        <span asp-validation-for="ApartmentNum" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Room" class="control-label"></label>
+                                        @Html.DropDownListFor(model => model.Room, listItems, "-- Select Status --")
+                                        <span asp-validation-for="Room" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="שמירה" class="btn btn-default" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div>
+                            <a asp-action="Index">בחזרה לרשימה</a>
+                        </div>
+
+

@@ -14,16 +14,32 @@ using Microsoft.AspNetCore.Http;
 
 namespace Maonot_Net.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.Controller" />
     public class UsersController : Controller
     {
         private readonly MaonotNetContext _context;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UsersController"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
         public UsersController(MaonotNetContext context)
         {
             _context = context;
         }
 
         // GET: Users
+        /// <summary>
+        /// Indexes the specified sort order.
+        /// </summary>
+        /// <param name="sortOrder">The sort order.</param>
+        /// <param name="currentFilter">The current filter.</param>
+        /// <param name="searchString">The search string.</param>
+        /// <param name="page">The page.</param>
+        /// <returns></returns>
         public async Task<IActionResult> Index(
             string sortOrder,
             string currentFilter,
@@ -85,6 +101,11 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Users/Details/5
+        /// <summary>
+        /// Detailses the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(int? id)
         {
             string s = HttpContext.Session.GetString("User");
@@ -132,6 +153,10 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Users/Create
+        /// <summary>
+        /// Creates this instance.
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
             ViewData["Authorization"] = new SelectList(_context.Authorizations, "Id", "AutName");
@@ -153,6 +178,11 @@ namespace Maonot_Net.Controllers
         // POST: Users/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Creates the specified user.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("StundetId,FirstName,LastName,Password,Email,ApartmentNum,Room, Authorization")] User user)
@@ -211,6 +241,11 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Users/Edit/5
+        /// <summary>
+        /// Edits the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(int? id)
         {
             ViewData["Authorization"] = new SelectList(_context.Authorizations, "Id", "AutName");
@@ -246,6 +281,12 @@ namespace Maonot_Net.Controllers
         // POST: Users/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Edits the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="user">The user.</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,StundetId,FirstName,LastName,Password,Email,ApartmentNum,Room,Authorization")] User user)
@@ -280,6 +321,12 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Users/Delete/5
+        /// <summary>
+        /// Deletes the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="saveChangesError">The save changes error.</param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             string Aut = HttpContext.Session.GetString("Aut");
@@ -310,6 +357,11 @@ namespace Maonot_Net.Controllers
         }
 
         // POST: Users/Delete/5
+        /// <summary>
+        /// Deletes the confirmed.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -344,7 +396,12 @@ namespace Maonot_Net.Controllers
 
             return View();
         }
-     
+
+        /// <summary>
+        /// Logs the in.
+        /// </summary>
+        /// <param name="_user">The user.</param>
+        /// <returns></returns>
         [HttpPost, ActionName("LogIn")]
         public IActionResult LogIn(User _user)
         {
@@ -379,7 +436,11 @@ namespace Maonot_Net.Controllers
            
           
         }
-        
+
+        /// <summary>
+        /// Logs the out.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult LogOut()
         {
             HttpContext.Session.Remove("User");

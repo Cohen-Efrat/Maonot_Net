@@ -220,18 +220,24 @@ namespace Maonot_Net.Controllers
                                 {
                                     StundetId = a.StundetId.Value,
                                     ApartmentNum = apartment.ApartmentNum,
-                                    User = u1,// if not workig need to update the user also
+                                    Room = 1
+                                    
                                 };
-                                //var item1 = Couples.Single(x => x.StundetId == a.StundetId);
-                                // Couples.Remove(item1);
+                                u1.ApartmentNum = apartment.ApartmentNum;
+                                u1.Room = RoomNum.OneA;
+
+                                _context.Update(u1);
                                 Assigning p2 = new Assigning
                                 {
                                     StundetId = c.StundetId.Value,
                                     ApartmentNum = apartment.ApartmentNum,
-                                    User = u2,
+                                    Room=2
+                                    
                                 };
-                                // var item2 = Couples.Single(x => x.StundetId == c.StundetId);
-                                // Couples.Remove(item2);
+                                u2.ApartmentNum = apartment.ApartmentNum;
+                                u2.Room = RoomNum.TwoA;
+                                _context.Update(u2);
+
                                 _context.Add(p1);
                                 _context.Add(p2);
                                 await _context.SaveChangesAsync();
@@ -309,8 +315,26 @@ namespace Maonot_Net.Controllers
                                     StundetId = u.StundetId.Value,
                                     ApartmentNum = apartment.ApartmentNum,
                                     Room = c,
-                                    User = user
+                                    
                                 };
+                                user.ApartmentNum = apartment.ApartmentNum;
+                                if (r.Room == 0)
+                                {
+                                    user.Room = RoomNum.OneA;
+                                }
+                                else if (r.Room == 1)
+                                {
+                                    user.Room = RoomNum.TwoA;
+                                }
+                                else if (r.Room == 2)
+                                {
+                                    user.Room = RoomNum.ThreeA;
+                                }
+                                else
+                                {
+                                    user.Room = RoomNum.FourA;
+                                }
+                                _context.Update(user);
 
                                 _context.Add(r);
                                 await _context.SaveChangesAsync();
@@ -418,7 +442,26 @@ namespace Maonot_Net.Controllers
                                     Room = c,
 
                                 };
+                                user.ApartmentNum = apartment.ApartmentNum;
+                                if (r.Room == 0)
+                                {
+                                    user.Room = RoomNum.OneA;
+                                }
+                                else if (r.Room == 1)
+                                {
+                                    user.Room = RoomNum.TwoA;
+                                }
+                                else if (r.Room == 2)
+                                {
+                                    user.Room = RoomNum.ThreeA;
+                                }
+                                else
+                                {
+                                    user.Room = RoomNum.FourA;
+                                }
+                                _context.Update(user);
                                 _context.Add(r);
+                                
                                 await _context.SaveChangesAsync();
                                 c--;
                             };//end if u!=null

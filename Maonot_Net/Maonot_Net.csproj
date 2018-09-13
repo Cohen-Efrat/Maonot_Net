@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\User\source\repos\Maonot_Net\Maonot_Net\Maonot_Net.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="AWSSDK.Core" Version="3.3.24.4" />
     <PackageReference Include="BCrypt.Net-Next" Version="3.1.0" />

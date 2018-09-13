@@ -41,7 +41,7 @@ namespace Maonot_Net.Controllers
                     select s;
             if (!String.IsNullOrEmpty(searchString))
             {
-                a = a.Where(s=> s.User.FullName.ToString().Contains(searchString));
+                a = a.Where(s=> s.User.StundetId.ToString().Contains(searchString));
                                    
             }
             switch (sortOrder)
@@ -85,42 +85,9 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Assignings/Create
-        public async Task<IActionResult> Create(int id)
+        public async Task<IActionResult> Create()
         {
-            
-            var approvalKit = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.ID == id);
-            ViewBag.app = approvalKit;
-            List<Apartments> apartment = new List<Apartments> { };
-            if (approvalKit.RoomType.Equals(RoomType.חדר_ליחיד))
-            {
-                  var apartments = from s in _context.Apartments
-                                 where (s.Gender.Equals(approvalKit.Gender) && (s.Type.Equals("Single") || s.Type.Equals("Accessible"))
-                                 && s.LivingWithSmoker.Equals(approvalKit.LivingWithSmoker) && s.LivingWithReligious.Equals(approvalKit.LivingWithSmoker)
-                                 && s.ReligiousType.Equals(approvalKit.ReligiousType) && s.capacity>0) || s.capacity==4
-                                 select s;
-                foreach (Apartments a in apartments)
-                {
-                    apartment.Add(a);
 
-                }
-                ViewBag.apartment = apartment;
-            }
-            else
-            {
-                var apartments = from s in _context.Apartments
-                                 where s.capacity>0 && s.Type.Equals("Couples")
-                                 select s;
-                foreach (Apartments a in apartments)
-                {
-                    apartment.Add(a);
-                }
-                ViewBag.apartment = apartment;
-            }
-
-        
-
-            
-            ViewData["ap"] = new SelectList(apartment, "ApartmentNum");
             return View();
         }
 
@@ -215,6 +182,11 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var assigning = await _context.Assigning.SingleOrDefaultAsync(m => m.ID == id);
+            User user = await _context.Users.SingleOrDefaultAsync(u => u.StundetId == assigning.StundetId.Value);
+            user.ApartmentNum = null;
+            user.Room = null;
+
+            _context.Update(user);
             _context.Assigning.Remove(assigning);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -224,5 +196,80 @@ namespace Maonot_Net.Controllers
         {
             return _context.Assigning.Any(e => e.ID == id);
         }
+
+        public async Task<IActionResult> Change(int id)
+        {
+
+            var approvalKit = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.ID == id);
+            ViewBag.app = approvalKit;
+            List<Apartments> apartment = new List<Apartments> { };
+            if (approvalKit.RoomType.Equals(RoomType.חדר_ליחיד))
+            {
+                var apartments = from s in _context.Apartments
+                                 where (s.Gender.Equals(approvalKit.Gender) && (s.Type.Equals("Single") || s.Type.Equals("Accessible"))
+                                 && s.LivingWithSmoker.Equals(approvalKit.LivingWithSmoker) && s.LivingWithReligious.Equals(approvalKit.LivingWithSmoker)
+                                 && s.ReligiousType.Equals(approvalKit.ReligiousType) && s.capacity > 0) || s.capacity == 4
+                                 select s;
+                foreach (Apartments a in apartments)
+                {
+                    apartment.Add(a);
+
+                };
+                ViewBag.apartment = apartment;
+            }
+            else
+            {
+                var apartments = from s in _context.Apartments
+                                 where s.capacity > 0 && s.Type.Equals("Couples")
+                                 select s;
+                foreach (Apartments a in apartments)
+                {
+                    apartment.Add(a);
+                };
+                ViewBag.apartment = apartment;
+            };
+
+            ViewData["room"]= new SelectList(apartment, "ApartmentNum", "ApartmentNum");
+
+            return View();
+        }
+
+        public async Task<IActionResult> ChangeA(Assigning assigning)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.StundetId == assigning.StundetId.Value);
+            if (ModelState.IsValid)
+            {
+                _context.Add(assigning);
+                user.ApartmentNum = assigning.ApartmentNum.Value;
+                if (assigning.Room==0)
+                {
+                    user.Room = RoomNum.OneA;
+                }
+                else if (assigning.Room == 1)
+                {
+                    user.Room = RoomNum.TwoA;
+                }
+                else if (assigning.Room == 2)
+                {
+                    user.Room = RoomNum.ThreeA;
+                }
+                else
+                {
+                    user.Room = RoomNum.FourA;
+                }
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+               
+            }
+            var temp = Globals.NotAssigning.Find(x => x.StundetId == user.StundetId);
+            if (temp != null)
+            {
+                Globals.NotAssigning.Remove(temp);
+            }
+
+
+            return RedirectToAction("NotAssigning", "Apartments");
+        } 
+
     }
 }

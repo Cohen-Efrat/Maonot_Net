@@ -1,98 +1,10 @@
-﻿@model Maonot_Net.Models.Assigning
-
+﻿
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/Manger.cshtml";
     ApprovalKit a = ViewBag.app;
+    @model Maonot_Net.Models.Assigning
 }
-
-<section>
-    <table>
-        <thead>
-            <tr>
-                <th>פרטי ערכת הקבלה</th>
-                <th>דירות פנויות</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    <dl class="dl-horizontal">
-                        <dt>
-                            שם מלא
-                        </dt>
-                        <dd>
-                           @a.FullName
-                        </dd>
-                        <dt>
-                           סוג חדר
-                        </dt>
-                        <dd>
-                            @a.RoomType
-                        </dd>
-                        <dt>
-                           מגורים עם סטודנט/ית דתי/יה
-                        </dt>
-                        <dd>
-                            @a.LivingWithReligious
-                        </dd>
-                        <dt>
-                           מגורים עם סטודנט/ית מעשנ/ת
-                        </dt>
-                        <dd>
-                            @a.LivingWithSmoker
-                        </dd>
-                        <dt>
-                           דת
-                        </dt>
-                        <dd>
-                            @a.ReligiousType
-                        </dd>
-                        <dt>
-                           מגבלה רפואית
-                        </dt>
-                        <dd>
-                            @a.HealthCondition
-                        </dd>
-                    </dl>
-                </td>
-                <td>
-
-                   
-                    <dl class="dl-horizontal">
-                        @{foreach (Apartments ap in ViewBag.apartment)
-                            {
-                                <dt>
-                                    מספר דירה
-                                </dt>
-                                <dd>
-                                    @ap.ApartmentNum
-                                </dd>
-                                <dt>
-                                    חדרים פנויים
-                                </dt>
-                                <dd>
-                                    @{ 
-                                        for( int i=1; i< @ap.capacity+1; i++)
-                                        {
-                                            @i,
-                                        }
-                                    }
-                                    
-                                </dd>
-                            }
-                        }
-
-                    </dl>
-                    </td>
-
-            </tr>
-
-        </tbody>
-    </table>
-
-</section>
-
 <h4>Assigning</h4>
 <hr />
 <div class="row">

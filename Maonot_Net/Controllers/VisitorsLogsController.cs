@@ -123,7 +123,7 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("EnteryDate,VistorName,VisitorID,StudentFullName,ExitDate,ApartmentNum,Room,Signature")] VisitorsLog visitorsLog)
         {
-            VisitorsLog v = await _context.VisitorsLogs.AsNoTracking().SingleOrDefaultAsync(m => m.ApartmentNum == visitorsLog.ApartmentNum && m.Room == visitorsLog.Room);
+            User u = await _context.Users.AsNoTracking().SingleOrDefaultAsync(m => m.ApartmentNum == visitorsLog.ApartmentNum && m.Room == visitorsLog.Room);
 
             string Aut = HttpContext.Session.GetString("Aut");
             ViewBag.Aut = Aut;
@@ -132,7 +132,7 @@ namespace Maonot_Net.Controllers
             {
                 visitorsLog.EnteryDate = DateTime.Now;
                 //visitorsLog.EnteryDate = DateTime.Parse("2018-02-14");
-                    visitorsLog.StudentId = v.StudentId;
+                visitorsLog.StudentId = u.StundetId;
                     if (ModelState.IsValid)
                     {
                         _context.Add(visitorsLog);
