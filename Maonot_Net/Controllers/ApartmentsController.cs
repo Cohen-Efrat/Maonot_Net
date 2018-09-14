@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Maonot_Net.Data;
 using Maonot_Net.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Maonot_Net.Controllers
 {
@@ -195,67 +196,47 @@ namespace Maonot_Net.Controllers
                             {
                                 //get empty apartment
                                 var apartment = await _context.Apartments.FirstOrDefaultAsync(m => m.Type.Equals("Couples") && m.capacity == 2);
-                                apartment.capacity = 0;
-                                _context.Update(apartment);
-                                //if there is no empty apartment
-                                if (apartment == null)
+                                if (apartment != null)
                                 {
-                                    var temp = Globals.NotAssigning.Find(x => x.ID == c.ID);
-                                    if (temp == null)
+                                    apartment.capacity = 0;
+                                    _context.Update(apartment);
+                                    // the user obj of a 
+                                    var u1 = await _context.Users.SingleOrDefaultAsync(m => m.StundetId == a.StundetId);
+                                    //the user obj of c
+                                    var u2 = await _context.Users.SingleOrDefaultAsync(m => m.StundetId == c.StundetId);
+
+                                    Assigning p1 = new Assigning
                                     {
-                                        Globals.NotAssigning.Add(c);
-                                    }
-                                    temp = Globals.NotAssigning.Find(x => x.ID == a.ID);
-                                    if (temp == null)
+                                        StundetId = a.StundetId.Value,
+                                        ApartmentNum = apartment.ApartmentNum,
+                                        Room = 1
+
+                                    };
+                                    u1.ApartmentNum = apartment.ApartmentNum;
+                                    u1.Room = RoomNum.OneA;
+
+                                    _context.Update(u1);
+                                    Assigning p2 = new Assigning
                                     {
-                                        Globals.NotAssigning.Add(a);
-                                    }
+                                        StundetId = c.StundetId.Value,
+                                        ApartmentNum = apartment.ApartmentNum,
+                                        Room = 2
+
+                                    };
+                                    u2.ApartmentNum = apartment.ApartmentNum;
+                                    u2.Room = RoomNum.TwoA;
+                                    _context.Update(u2);
+
+                                    _context.Add(p1);
+                                    _context.Add(p2);
+                                    await _context.SaveChangesAsync();
                                 }
-                                // the user obj of a 
-                                var u1 = await _context.Users.SingleOrDefaultAsync(m => m.StundetId == a.StundetId);
-                                //the user obj of c
-                                var u2 = await _context.Users.SingleOrDefaultAsync(m => m.StundetId == c.StundetId);
-
-                                Assigning p1 = new Assigning
-                                {
-                                    StundetId = a.StundetId.Value,
-                                    ApartmentNum = apartment.ApartmentNum,
-                                    Room = 1
-                                    
-                                };
-                                u1.ApartmentNum = apartment.ApartmentNum;
-                                u1.Room = RoomNum.OneA;
-
-                                _context.Update(u1);
-                                Assigning p2 = new Assigning
-                                {
-                                    StundetId = c.StundetId.Value,
-                                    ApartmentNum = apartment.ApartmentNum,
-                                    Room=2
-                                    
-                                };
-                                u2.ApartmentNum = apartment.ApartmentNum;
-                                u2.Room = RoomNum.TwoA;
-                                _context.Update(u2);
-
-                                _context.Add(p1);
-                                _context.Add(p2);
-                                await _context.SaveChangesAsync();
                             };
                         };
                         //if there is no partner
 
 
                     }
-                    else
-                    {
-                        var temp = Globals.NotAssigning.Find(x => x.ID == a.ID);
-                        if (temp == null)
-                        {
-                            Globals.NotAssigning.Add(a);
-                        };
-
-                    };
                 };
             };
             //Accessible
@@ -344,20 +325,6 @@ namespace Maonot_Net.Controllers
                         };
 
                     }
-                    else
-                    {
-                        foreach (ApprovalKit u in roomies)
-                        {
-                            if (u != null)
-                            {
-                                var temp = Globals.NotAssigning.Find(x => x.ID == u.ID);
-                                if (temp == null)
-                                {
-                                    Globals.NotAssigning.Add(u);
-                                };
-                            };
-                        };
-                    };
                 };
 
 
@@ -470,49 +437,38 @@ namespace Maonot_Net.Controllers
                         };//end foreach roomies
 
                     }// apartment!=null
-                    else
-                    {
-                        foreach (ApprovalKit u in roomies)
-                        {
-                            if (u != null)
-                            {
-                                var temp = Globals.NotAssigning.Find(x => x.ID == u.ID);
-                                if (temp == null)
-                                {
-                                    Globals.NotAssigning.Add(u);
-                                };
-                            };
-                        };
-
-                    };
 
                 }; //assing==null
 
             };//foreach approval kit
 
             //await _context.SaveChangesAsync();
-            ViewBag.NotAssigning = Globals.NotAssigning;
+            //ViewBag.NotAssigning = Globals.NotAssigning;
 
             return RedirectToAction("NotAssigning", "Apartments");
         }
         public IActionResult NotAssigning()
         {
-            List<User> users = _context.Users.Where(r => r.ApartmentNum == null && r.Authorization == 9).ToList();
+            string Aut = HttpContext.Session.GetString("Aut");
+
+            if (!Aut.Equals("2"))
+            {
+                return RedirectToAction("NotAut", "Home");
+            }
+            List<ApprovalKit> NotAssigning = new List<ApprovalKit> { };
+             List<User> users = _context.Users.Where(r => r.ApartmentNum == null && r.Authorization == 9).ToList();
             foreach (User u in users)
             {
                 var item = _context.ApprovalKits.SingleOrDefault(a => a.StundetId.Value == u.StundetId);
-                var temp = Globals.NotAssigning.Find(x => x.StundetId == u.StundetId);
-                if (temp == null)
-                {
-                    Globals.NotAssigning.Add(item);
-                }
+                    NotAssigning.Add(item);
+
             }
 
-            ViewBag.NotAssigning = Globals.NotAssigning;
+            ViewBag.NotAssigning = NotAssigning;
             return View();
         }
 
- 
+
     }// close controller
 }// close name space
 

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Maonot_Net.Data;
 using Maonot_Net.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Maonot_Net.Controllers
 {
@@ -22,6 +23,12 @@ namespace Maonot_Net.Controllers
         // GET: Assignings
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            string Aut = HttpContext.Session.GetString("Aut");
+
+            if (!Aut.Equals("2"))
+            {
+                return RedirectToAction("NotAut", "Home");
+            }
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
@@ -161,6 +168,12 @@ namespace Maonot_Net.Controllers
         // GET: Assignings/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            string Aut = HttpContext.Session.GetString("Aut");
+
+            if (!Aut.Equals("2"))
+            {
+                return RedirectToAction("NotAut", "Home");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -181,6 +194,12 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            string Aut = HttpContext.Session.GetString("Aut");
+
+            if (!Aut.Equals("2"))
+            {
+                return RedirectToAction("NotAut", "Home");
+            }
             var assigning = await _context.Assigning.SingleOrDefaultAsync(m => m.ID == id);
             User user = await _context.Users.SingleOrDefaultAsync(u => u.StundetId == assigning.StundetId.Value);
             var apartment = await _context.Apartments.SingleOrDefaultAsync(a => a.ApartmentNum == assigning.ApartmentNum.Value);
@@ -203,6 +222,12 @@ namespace Maonot_Net.Controllers
 
         public async Task<IActionResult> Change(int id)
         {
+            string Aut = HttpContext.Session.GetString("Aut");
+
+            if (!Aut.Equals("2"))
+            {
+                return RedirectToAction("NotAut", "Home");
+            }
 
             var approvalKit = await _context.ApprovalKits.SingleOrDefaultAsync(m => m.ID == id);
             ViewBag.app = approvalKit;
@@ -240,6 +265,12 @@ namespace Maonot_Net.Controllers
 
         public async Task<IActionResult> ChangeA(Assigning assigning)
         {
+            string Aut = HttpContext.Session.GetString("Aut");
+
+            if (!Aut.Equals("2"))
+            {
+                return RedirectToAction("NotAut", "Home");
+            }
             var user = await _context.Users.SingleOrDefaultAsync(u => u.StundetId == assigning.StundetId.Value);
             var apartment = await _context.Apartments.SingleOrDefaultAsync(a => a.ApartmentNum == assigning.ApartmentNum.Value);
 
@@ -269,11 +300,11 @@ namespace Maonot_Net.Controllers
                 await _context.SaveChangesAsync();
                
             }
-            var temp = Globals.NotAssigning.Find(x => x.StundetId == user.StundetId);
-            if (temp != null)
-            {
-                Globals.NotAssigning.Remove(temp);
-            }
+            //var temp = Globals.NotAssigning.Find(x => x.StundetId == user.StundetId);
+            //if (temp != null)
+            //{
+               // Globals.NotAssigning.Remove(temp);
+           // }
 
 
             return RedirectToAction("NotAssigning", "Apartments");

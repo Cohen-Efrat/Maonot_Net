@@ -13,6 +13,7 @@
                 <th> סוג דירה</th>
                 <th>מגורים עם סטודנט/ית דתי/יה</th>
                 <th>מגורים עם סטודנט/ית מעשנ/ת</th>
+                <th>מגבלה רפואית</th>
                 <th> דת</th>
             </tr>
         </thead>
@@ -28,6 +29,7 @@
                 <td>@a.RoomType</td>
                 <td>@a.LivingWithReligious</td>
                 <td>@a.LivingWithSmoker</td>
+                <td>@a.HealthCondition</td>
                 <td>@a.ReligiousType</td>
                 <td> <a asp-controller="Assignings" asp-action="Change" asp-route-id="@a.ID">שיבוץ</a></td>
 

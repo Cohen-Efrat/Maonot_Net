@@ -9,7 +9,7 @@ namespace Maonot_Net.Models
     {
         // last date that the visutor log was check
         public static DateTime LastDate { get; set; } = DateTime.Parse("2018-05-22");
-        public static List<ApprovalKit> NotAssigning = new List<ApprovalKit> { };
+        //public static List<ApprovalKit> NotAssigning = new List<ApprovalKit> { };
 
     }
 }
