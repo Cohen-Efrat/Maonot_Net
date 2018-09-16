@@ -20,6 +20,7 @@ namespace Maonot_Net.Controllers
             _context = context;
         }
 
+        //return a list of warinigs
         // GET: Warnings
         public async Task<IActionResult> Index(
             string sortOrder,
@@ -80,6 +81,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Warnings/Details/5
+        //return the details of a record by id
         public async Task<IActionResult> Details(int? id)
         {
 
@@ -108,6 +110,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Warnings/Create
+        //return the warning form
         public IActionResult Create()
         {
 
@@ -121,8 +124,7 @@ namespace Maonot_Net.Controllers
         }
 
         // POST: Warnings/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+// validate the warining form and send a messege to the user how gut the warinig
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("WarningNumber,StudentId,Date,BlaBla")] Warning warning)
@@ -160,7 +162,7 @@ namespace Maonot_Net.Controllers
             }
             return View(warning);
         }
-        //no edit option
+//Delete function
         // GET: Warnings/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -179,8 +181,7 @@ namespace Maonot_Net.Controllers
         }
 
         // POST: Warnings/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //Delete function
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("WarningId,WarningNumber,StudentId,Date,BlaBla")] Warning warning)
@@ -214,6 +215,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Warnings/Delete/5
+        // get the details of the recoerd and ask the user if he is sure
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
 
@@ -244,6 +246,7 @@ namespace Maonot_Net.Controllers
         }
 
         // POST: Warnings/Delete/5
+        // if the user confirem the delete this function start and delete the recore from the DB
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -19,17 +19,22 @@ namespace Maonot_Net.Controllers
         {
             _context = context;
         }
-
         // GET: ApprovalKits
-        public async Task<IActionResult> Index(
-            string sortOrder,
+        //return a list of Approval kits
+        
+        public async Task<IActionResult> Index(string sortOrder,
             string currentFilter,
             string searchString,
             int? page)
         {
             string Aut = HttpContext.Session.GetString("Aut");
             ViewBag.Aut = Aut;
-            if (Aut.Equals("2"))
+            if (!Aut.Equals("2"))
+            {
+                return RedirectToAction("NotAut", "Home");
+
+            }
+            else
             {
                 ViewData["CurrentSort"] = sortOrder;
                 ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -52,7 +57,7 @@ namespace Maonot_Net.Controllers
                 {
                     app = app.Where(s => s.LastName.Contains(searchString)
                                            || s.FirstName.Contains(searchString));
-                }
+                };
                 switch (sortOrder)
                 {
                     case "name_desc":
@@ -74,15 +79,18 @@ namespace Maonot_Net.Controllers
                     default:
                         app = app.OrderBy(s => s.LastName);
                         break;
-                }
+                };
 
                 int pageSize = 3;
                 return View(await PaginatedList<ApprovalKit>.CreateAsync(app.AsNoTracking(), page ?? 1, pageSize));
             }
-            return RedirectToAction("NotAut", "Home");
+
         }
 
+
+
         // GET: ApprovalKits/Details/5
+        //get id of approval kit and return his details
         public async Task<IActionResult> Details(int? id)
         {
             string Aut = HttpContext.Session.GetString("Aut");
@@ -107,6 +115,7 @@ namespace Maonot_Net.Controllers
         }
         
         // GET: ApprovalKits/Create
+        //uplode the view of the form approval kit
         public async Task<IActionResult> Create()
         {
             string Id = HttpContext.Session.GetString("User");
@@ -133,8 +142,8 @@ namespace Maonot_Net.Controllers
         }
 
         // POST: ApprovalKits/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //validate the fields from the approval kit. 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("StundetId,LastName,FirstName,RoomType,LivingWithReligious,LivingWithSmoker,ReligiousType,HealthCondition,PartnerId1,PartnerId2,PartnerId3,PartnerId4")] ApprovalKit approvalKit)
@@ -175,6 +184,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: ApprovalKits/Edit/5
+        //get id of approval kit and reurnt is details to edit form
         public async Task<IActionResult> Edit(int? id)
         {
             var functions = new functions();
@@ -206,8 +216,7 @@ namespace Maonot_Net.Controllers
         }  
 
         // POST: ApprovalKits/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //save the cahnges in the approval kit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,StundetId,LastName,FirstName,RoomType,LivingWithReligious,LivingWithSmoker,ReligiousType,HealthCondition,PartnerId1,PartnerId2,PartnerId3,PartnerId4")] ApprovalKit approvalKit)
@@ -248,6 +257,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: ApprovalKits/Delete/5
+        // get the details of the approval kit and ask the user if he is sure
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             string Aut = HttpContext.Session.GetString("Aut");
@@ -277,6 +287,7 @@ namespace Maonot_Net.Controllers
         }
 
         // POST: ApprovalKits/Delete/5
+        // if the user confirem the delete this function start and delete the record from the DB
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

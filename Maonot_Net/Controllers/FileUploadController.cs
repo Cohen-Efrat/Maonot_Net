@@ -22,12 +22,13 @@ namespace Maonot_Net.Controllers
 
             _context = context;
         }
-
+        //Delete function
         public IActionResult Index()
         {
             return View();
         }
         [HttpPost]
+        //Delete function
         public async Task<IActionResult> UploadFile(IFormFile file)
         {
             if (file == null || file.Length == 0)
@@ -52,7 +53,7 @@ namespace Maonot_Net.Controllers
 
             return RedirectToAction("Files");
         }
-
+        //return the view Index_2 for uplode files
         public IActionResult Index_2()
         {
             string Aut = HttpContext.Session.GetString("Aut");
@@ -63,6 +64,7 @@ namespace Maonot_Net.Controllers
             }
             return RedirectToAction("NotAut", "Home");
         }
+        //get a list of file that the user upload and save them
         public async Task<IActionResult> UploadFiles(List<IFormFile> files)
         {
             foreach (var file in files) {
@@ -89,25 +91,35 @@ namespace Maonot_Net.Controllers
             TempData["msg"] = "<script>alert('ההרשמה הושלמה בהצלחה');</script>";
             return  RedirectToAction("Wellcome", "Home");
         }
-
-        public async Task<IActionResult> SeeFiles()
+        // return a list of fiels that the user uplouad
+        public async Task<IActionResult> SeeFiles(int student)
         {
             string Aut = HttpContext.Session.GetString("Aut");
             ViewBag.Aut = Aut;
             var userId = HttpContext.Session.GetString("User");
+            string studentId = "";
+            if (student == null)
+            {
+                studentId = userId;
+            }
+            else
+            {
+                studentId = student.ToString();
+            }
+             
             var functions = new functions();
-            var u = await _context.Registrations.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(userId));
+            var u = await _context.Registrations.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(studentId));
 
             if (functions.Comper(new DateTime(2019, 7, 30)))
             {
                 if (Aut.Equals("2") || userId.Equals(u.StundetId.ToString()))
                 {
                     if (!Directory.Exists(Path.Combine(
-                                Directory.GetCurrentDirectory(), $"wwwroot/{userId}")))
+                                Directory.GetCurrentDirectory(), $"wwwroot/{studentId}")))
                     {
                         return NotFound();
                     }
-                    string[] filePaths = Directory.GetFiles(@"wwwroot\" + userId);
+                    string[] filePaths = Directory.GetFiles(@"wwwroot\" + studentId);
                     List<string> list = new List<string> { };
                     foreach (var file in filePaths)
                     {
@@ -122,15 +134,16 @@ namespace Maonot_Net.Controllers
             }
             return RedirectToAction("NotAut", "Home");
         }
-
+        //delete a file 
         public IActionResult Delete(string File)
         {
+            var userId = HttpContext.Session.GetString("User");
             string filePath = @"wwwroot\" + File;
             if (System.IO.File.Exists(filePath))
             {
                 System.IO.File.Delete(filePath);
             }
-            return RedirectToAction("SeeFiles");
+            return RedirectToAction("SeeFiles",new { student= userId });
         }
 
     }

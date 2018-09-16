@@ -21,6 +21,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Assignings
+        // return a list of al the assigning 
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             string Aut = HttpContext.Session.GetString("Aut");
@@ -74,6 +75,8 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Assignings/Details/5
+        //Delete function
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -92,6 +95,8 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Assignings/Create
+        //Delete function
+
         public async Task<IActionResult> Create()
         {
 
@@ -101,6 +106,8 @@ namespace Maonot_Net.Controllers
         // POST: Assignings/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //Delete function
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(int id,[Bind("StundetId,ApartmentNum,Room")] Assigning assigning)
@@ -115,6 +122,8 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Assignings/Edit/5
+        //Delete function
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -133,6 +142,8 @@ namespace Maonot_Net.Controllers
         // POST: Assignings/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //Delete function
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,StundetId,ApartmentNum,Room")] Assigning assigning)
@@ -166,6 +177,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Assignings/Delete/5
+        // get the details of the recoerd and ask the user if he is sure
         public async Task<IActionResult> Delete(int? id)
         {
             string Aut = HttpContext.Session.GetString("Aut");
@@ -190,6 +202,7 @@ namespace Maonot_Net.Controllers
         }
 
         // POST: Assignings/Delete/5
+        // if the user confirem the delete this function start and delete the record from the DB
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -219,7 +232,9 @@ namespace Maonot_Net.Controllers
         {
             return _context.Assigning.Any(e => e.ID == id);
         }
-
+        // return the approval kit by id,
+        //return all the apartment that relevant to the approval kit 
+        // return the view with the assigning form 
         public async Task<IActionResult> Change(int id)
         {
             string Aut = HttpContext.Session.GetString("Aut");
@@ -262,7 +277,8 @@ namespace Maonot_Net.Controllers
 
             return View();
         }
-
+        // after submintig the assainging form this function change the user field, 
+        //creating ner record of assinging and chacnge the apartment capacity.
         public async Task<IActionResult> ChangeA(Assigning assigning)
         {
             string Aut = HttpContext.Session.GetString("Aut");
@@ -300,11 +316,6 @@ namespace Maonot_Net.Controllers
                 await _context.SaveChangesAsync();
                
             }
-            //var temp = Globals.NotAssigning.Find(x => x.StundetId == user.StundetId);
-            //if (temp != null)
-            //{
-               // Globals.NotAssigning.Remove(temp);
-           // }
 
 
             return RedirectToAction("NotAssigning", "Apartments");

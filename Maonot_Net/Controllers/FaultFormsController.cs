@@ -21,6 +21,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: FaultForms
+        //return a list of fault form records 
         public async Task<IActionResult> Index(
             string sortOrder,
             string currentFilter,
@@ -30,7 +31,7 @@ namespace Maonot_Net.Controllers
             string Aut = HttpContext.Session.GetString("Aut");
             string Id = HttpContext.Session.GetString("User");
             ViewBag.Aut = Aut;
-            // var faultForm = await _context.FaultForms.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
+           
 
             if (Aut.Equals("3") || Aut.Equals("2") || Aut.Equals("9"))
             {
@@ -84,6 +85,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: FaultForms/Details/5
+        //return the details of a record by id
         public async Task<IActionResult> Details(int? id)
         {
             string Aut = HttpContext.Session.GetString("Aut");
@@ -107,6 +109,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: FaultForms/Create
+        //return the fault form
         public IActionResult Create()
         {
             string Aut = HttpContext.Session.GetString("Aut");
@@ -119,8 +122,8 @@ namespace Maonot_Net.Controllers
         }
 
         // POST: FaultForms/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //validate the fields from the fault form. 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Apartment,RoomNum,FullName,PhoneNumber,Description")] FaultForm faultForm)
@@ -155,6 +158,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: FaultForms/Edit/5
+        //get id of record and reurnt is details to edit form
         public async Task<IActionResult> Edit(int? id)
         {
           
@@ -184,8 +188,7 @@ namespace Maonot_Net.Controllers
         }
 
         // POST: FaultForms/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //save the cahnges of the record
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Apartment,RoomNum,FullName,PhoneNumber,Description")] FaultForm faultForm)
@@ -221,6 +224,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: FaultForms/Delete/5
+        // get the details of the recoerd and ask the user if he is sure
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             string Aut = HttpContext.Session.GetString("Aut");
@@ -251,6 +255,7 @@ namespace Maonot_Net.Controllers
         }
 
         // POST: FaultForms/Delete/5
+        // if the user confirem the delete this function start and delete the recore from the DB
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -278,11 +283,12 @@ namespace Maonot_Net.Controllers
             }
 
         }
-
+        // if the record alrady exist
         private bool FaultFormExists(int id)
         {
             return _context.FaultForms.Any(e => e.ID == id);
         }
+        // open a popup window of the view Fix 
         public async Task<IActionResult> Fix(int? id)
 
         {
@@ -305,7 +311,7 @@ namespace Maonot_Net.Controllers
             return RedirectToAction("NotAut", "Home");
 
         }
-
+        // if the user confiemed the fix it change the record in the DB
         public async Task<ActionResult> Yes(int id)
         {
             string Aut = HttpContext.Session.GetString("Aut");

@@ -53,6 +53,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Authorizations/Create
+        //Delete function
         public IActionResult Create()
         {
             string Aut = HttpContext.Session.GetString("Aut");
@@ -66,6 +67,7 @@ namespace Maonot_Net.Controllers
         // POST: Authorizations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //Delete function
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,AutName")] Authorization authorization)
@@ -85,6 +87,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Authorizations/Edit/5
+        //Delete function
         public async Task<IActionResult> Edit(int? id)
         {
             string Aut = HttpContext.Session.GetString("Aut");
@@ -108,6 +111,7 @@ namespace Maonot_Net.Controllers
         // POST: Authorizations/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //Delete function
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,AutName")] Authorization authorization)
@@ -146,6 +150,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Authorizations/Delete/5
+        //Delete function
         public async Task<IActionResult> Delete(int? id)
         {
             string Aut = HttpContext.Session.GetString("Aut");
@@ -169,6 +174,7 @@ namespace Maonot_Net.Controllers
         }
 
         // POST: Authorizations/Delete/5
+        //Delete function
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

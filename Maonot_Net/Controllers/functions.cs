@@ -7,14 +7,14 @@ namespace Maonot_Net.Controllers
 {
     public class functions
     {
-
+        //check if the password that the user entered is like in the DB
         public bool CheckPassword(string submittedPassword, string hashedPassword)
         {
 
             bool validPassword = BCrypt.Net.BCrypt.Verify(submittedPassword, hashedPassword);
             return validPassword;
         }
-
+        // check if the date is over
         public Boolean Comper(DateTime EndDate)
         {
             //DateTime EndDate = new DateTime(2019, 7, 30);
@@ -28,8 +28,3 @@ namespace Maonot_Net.Controllers
         }
     }
 }
-
-// פונקציה להפעלת view 
-//@{
-   // await Html.RenderPartialAsync("_AuthorPartial");
-//}

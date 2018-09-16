@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Wellcome";
     var a = ViewBag.Aut;
+    
 
     if (a.Equals("1"))
     {
@@ -56,9 +57,15 @@
                 <th>
                     פרטיים אישיים
                 </th>
-                <th>
-                    פרטי השיבוץ
-                </th>
+                @{
+                    if (a.Equals("9"))
+                    {
+                        <th>
+                            פרטי השיבוץ
+                        </th>
+                    }
+                }
+
             </tr>
         </thead>
 
@@ -73,26 +80,32 @@
                     <a asp-controller="Users" asp-action="Edit" asp-route-id="@ViewBag.user.ID">עריכה</a>
 
                 </td>
-                <td>
-                    <ul>
-                        <li>
-                            מספר דירה:@ViewBag.user.ApartmentNum
-                        </li>
-                        <li> מספר חדר:@ViewBag.user.Room</li>
+                @{
+                    if (a.Equals("9"))
+                    {
+                        <td>
+                            <ul>
+                                <li>
+                                    מספר דירה:@ViewBag.user.ApartmentNum
+                                </li>
+                                <li> מספר חדר:@ViewBag.user.Room</li>
 
 
-                    </ul>
-                    <br />
-                    <a asp-controller="Messages" asp-action="Create">שליחת הודעה לשינוי שיבוץ</a>
+                            </ul>
+                            <br />
+                            <a asp-controller="Messages" asp-action="Create">שליחת הודעה לשינוי שיבוץ</a>
 
-                </td>
+                        </td>
+                    }
+                }
+
             </tr>
 
         </tbody>
     </table>
 </section>
 
-@if (a.Equals("8"))
+@if (a.Equals("8")|| a.Equals("7"))
 {
     <h4> עריכת טופס</h4>
     <a asp-controller="Registrations" asp-action="Edit" asp-route-id="@ViewBag.RegID">עריכת טופס הרשמה</a>

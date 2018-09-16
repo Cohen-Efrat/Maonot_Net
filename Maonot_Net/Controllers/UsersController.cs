@@ -14,32 +14,17 @@ using Microsoft.AspNetCore.Http;
 
 namespace Maonot_Net.Controllers
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Mvc.Controller" />
+
     public class UsersController : Controller
     {
         private readonly MaonotNetContext _context;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UsersController"/> class.
-        /// </summary>
-        /// <param name="context">The context.</param>
         public UsersController(MaonotNetContext context)
         {
             _context = context;
         }
 
-        // GET: Users
-        /// <summary>
-        /// Indexes the specified sort order.
-        /// </summary>
-        /// <param name="sortOrder">The sort order.</param>
-        /// <param name="currentFilter">The current filter.</param>
-        /// <param name="searchString">The search string.</param>
-        /// <param name="page">The page.</param>
-        /// <returns></returns>
+        //return a list of users
         public async Task<IActionResult> Index(
             string sortOrder,
             string currentFilter,
@@ -94,18 +79,13 @@ namespace Maonot_Net.Controllers
             }
             else
             {
-                //TempData["msg"] = "<script>alert('אין לך הרשאה לדף זה');</script>";
+               
                 return RedirectToAction("NotAut", "Home");
             }
 
         }
+        //return the details of a record by id
 
-        // GET: Users/Details/5
-        /// <summary>
-        /// Detailses the specified identifier.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns></returns>
         public async Task<IActionResult> Details(int? id)
         {
             string s = HttpContext.Session.GetString("User");
@@ -115,7 +95,7 @@ namespace Maonot_Net.Controllers
             if (s != null)
             {
                 var _user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(s));
-                //int Aut = GetAut().Result;
+                
                 ViewBag.Aut = Aut;
 
                 if (Aut.Equals("1") || _user.ID == id)
@@ -141,7 +121,7 @@ namespace Maonot_Net.Controllers
                 }
                 else
                 {
-                   // TempData["msg"] = "<script>alert('אין לך הרשאה לדף זה');</script>";
+                   
                     return RedirectToAction("NotAut", "Home");
                 }
             }
@@ -151,12 +131,7 @@ namespace Maonot_Net.Controllers
             }
 
         }
-
-        // GET: Users/Create
-        /// <summary>
-        /// Creates this instance.
-        /// </summary>
-        /// <returns></returns>
+        //return the User form
         public IActionResult Create()
         {
             ViewData["Authorization"] = new SelectList(_context.Authorizations, "Id", "AutName");
@@ -176,13 +151,7 @@ namespace Maonot_Net.Controllers
         }
 
         // POST: Users/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        /// <summary>
-        /// Creates the specified user.
-        /// </summary>
-        /// <param name="user">The user.</param>
-        /// <returns></returns>
+        //validate the fields from the user and  open session
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("StundetId,FirstName,LastName,Password,Email,ApartmentNum,Room, Authorization")] User user)
@@ -241,11 +210,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Users/Edit/5
-        /// <summary>
-        /// Edits the specified identifier.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns></returns>
+        //return the details of a record by id to a edit form
         public async Task<IActionResult> Edit(int? id)
         {
             ViewData["Authorization"] = new SelectList(_context.Authorizations, "Id", "AutName");
@@ -279,14 +244,7 @@ namespace Maonot_Net.Controllers
         }
 
         // POST: Users/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        /// <summary>
-        /// Edits the specified identifier.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <param name="user">The user.</param>
-        /// <returns></returns>
+        //save the cahnges of the record
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,StundetId,FirstName,LastName,Password,Email,ApartmentNum,Room,Authorization")] User user)
@@ -321,12 +279,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Users/Delete/5
-        /// <summary>
-        /// Deletes the specified identifier.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <param name="saveChangesError">The save changes error.</param>
-        /// <returns></returns>
+        // get the details of the recoerd and ask the user if he is sure
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             string Aut = HttpContext.Session.GetString("Aut");
@@ -357,11 +310,7 @@ namespace Maonot_Net.Controllers
         }
 
         // POST: Users/Delete/5
-        /// <summary>
-        /// Deletes the confirmed.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns></returns>
+        // if the user confirem the delete this function start and delete the recore from the DB
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -390,18 +339,14 @@ namespace Maonot_Net.Controllers
             return _context.Users.Any(e => e.ID == id);
         }
 
-   
+    //return the LogIn view
         public IActionResult LogIn()
         {
 
             return View();
         }
 
-        /// <summary>
-        /// Logs the in.
-        /// </summary>
-        /// <param name="_user">The user.</param>
-        /// <returns></returns>
+        // //validate the log in form and open session
         [HttpPost, ActionName("LogIn")]
         public IActionResult LogIn(User _user)
         {
@@ -423,24 +368,20 @@ namespace Maonot_Net.Controllers
                   ViewBag.Message = "Thank you!";
                   TempData["msg2"] = "<script>alert('סיסמה שגויה');</script>";
                     
-                   // return View();
+                   
                 }
             }
             else
             {
                 TempData["msg1"] = "<script>alert('ת.ז לא נמצאה במערכת');</script>";
-               // return View();
+               
             }
             return View();
 
            
           
         }
-
-        /// <summary>
-        /// Logs the out.
-        /// </summary>
-        /// <returns></returns>
+// close session and return the main page 
         public ActionResult LogOut()
         {
             HttpContext.Session.Remove("User");

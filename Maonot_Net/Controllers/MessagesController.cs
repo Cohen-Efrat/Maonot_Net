@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,6 +21,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Messages
+        //retuen the messeges that was sent to the user
         public async Task<IActionResult> Index(
             string sortOrder,
             string currentFilter,
@@ -73,7 +74,7 @@ namespace Maonot_Net.Controllers
             }
             return RedirectToAction("NotAut", "Home");
         }
-
+        //return the details of a record by id
         // GET: Messages/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -106,6 +107,7 @@ namespace Maonot_Net.Controllers
 
 
         // GET: Messages/Create
+        //return the message form
         public IActionResult Create()
         {
 
@@ -121,8 +123,7 @@ namespace Maonot_Net.Controllers
         }
 
         // POST: Messages/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //validate the fields from the Message. 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Addressee,Subject,Content")] Message message)
@@ -153,7 +154,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Messages/Edit/5
-        //no edit option
+        //Delete function
         public async Task<IActionResult> Edit(int? id)
         {
             //delete function
@@ -171,8 +172,7 @@ namespace Maonot_Net.Controllers
         }
 
         // POST: Messages/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //get id of record and reurnt is details to edit form
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("MessageID,Addressee,Subject,Content")] Message message)
@@ -205,7 +205,7 @@ namespace Maonot_Net.Controllers
             }
             return View(message);
         }
-        //no Delete option
+        //Delete function
         // GET: Messages/Delete/5
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
@@ -230,6 +230,7 @@ namespace Maonot_Net.Controllers
         }
 
         // POST: Messages/Delete/5
+        //Delete function
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -256,7 +257,7 @@ namespace Maonot_Net.Controllers
         {
             return _context.Messages.Any(e => e.MessageID == id);
         }
-
+        // return the view SendAll
         public IActionResult SendAll()
         {
             string Aut = HttpContext.Session.GetString("Aut");
@@ -267,7 +268,7 @@ namespace Maonot_Net.Controllers
             return RedirectToAction("NotAut", "Home");
 
         }
-
+        // send message to all of the users
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendAll([Bind("Subject,Content")] Message message)

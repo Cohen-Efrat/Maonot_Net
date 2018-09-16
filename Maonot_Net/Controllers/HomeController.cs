@@ -19,6 +19,7 @@ namespace Maonot_Net.Controllers
         {
             _context = context;
         }
+        // retuen the Index view
         public IActionResult Index()
         {
             return View();
@@ -28,12 +29,14 @@ namespace Maonot_Net.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        //return the NotAut view
         public IActionResult NotAut()
         {
             string Aut = HttpContext.Session.GetString("Aut");
             ViewBag.Aut = Aut;
             return View();
         }
+        //return the Wellcome view with the personl info, guset, faults, warning of the user
         public async Task<IActionResult> Wellcome()
         {
             string Aut = HttpContext.Session.GetString("Aut");
@@ -45,7 +48,7 @@ namespace Maonot_Net.Controllers
             ViewBag.user = user;
             //End Personl Info
 
-            if (Aut.Equals("8"))
+            if (Aut.Equals("8")|| Aut.Equals("7"))
             {
                 //edit registration form
                 var u = await _context.Registrations.AsNoTracking().SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(ID));
@@ -123,13 +126,14 @@ namespace Maonot_Net.Controllers
             
             return View();
         }
+        // return the NoMore view
         public IActionResult NoMore()
         {
             string Aut = HttpContext.Session.GetString("Aut");
             ViewBag.Aut = Aut;
             return View();
         }
-
+        // return the NoMore ExistsForm
         public IActionResult ExistsForm()
         {
             string Aut = HttpContext.Session.GetString("Aut");

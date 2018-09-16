@@ -21,12 +21,14 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Apartments
+        //Delete function
         public async Task<IActionResult> Index()
         {
             return View(await _context.Apartments.ToListAsync());
         }
 
         // GET: Apartments/Details/5
+        //Delete function
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,6 +47,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Apartments/Create
+        //Delete function
         public IActionResult Create()
         {
             return View();
@@ -53,6 +56,7 @@ namespace Maonot_Net.Controllers
         // POST: Apartments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //Delete function
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,ApartmentNum,Type,LivingWithReligious,LivingWithSmoker,ReligiousType,Gender,capacity")] Apartments apartments)
@@ -67,6 +71,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Apartments/Edit/5
+        //Delete function
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -85,6 +90,7 @@ namespace Maonot_Net.Controllers
         // POST: Apartments/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //Delete function
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,ApartmentNum,Type,LivingWithReligious,LivingWithSmoker,ReligiousType,Gender,capacity")] Apartments apartments)
@@ -118,6 +124,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Apartments/Delete/5
+        //Delete function
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -136,6 +143,7 @@ namespace Maonot_Net.Controllers
         }
 
         // POST: Apartments/Delete/5
+        //Delete function
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -145,7 +153,7 @@ namespace Maonot_Net.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        //Delete function
         private bool ApartmentsExists(int id)
         {
             return _context.Apartments.Any(e => e.ID == id);
@@ -153,6 +161,7 @@ namespace Maonot_Net.Controllers
 
 
         //capacity כמה מקום פנוי יש
+        //The function goes through all the Approval kits and assigning the students to the apartments
         public async Task<IActionResult> Assigning()
         {
             //Couples ApprovalKit
@@ -447,6 +456,8 @@ namespace Maonot_Net.Controllers
 
             return RedirectToAction("NotAssigning", "Apartments");
         }
+
+        // return a list of un assining student
         public IActionResult NotAssigning()
         {
             string Aut = HttpContext.Session.GetString("Aut");

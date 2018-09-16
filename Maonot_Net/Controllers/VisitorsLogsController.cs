@@ -21,6 +21,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: VisitorsLogs
+        // return the visitor log list
         public async Task<IActionResult> Index(
             string sortOrder,
             string currentFilter,
@@ -30,7 +31,7 @@ namespace Maonot_Net.Controllers
             ViewBag.LastDate = Globals.LastDate;
             string Aut = HttpContext.Session.GetString("Aut");
             ViewBag.Aut = Aut;
-            if (Aut.Equals("2") || Aut.Equals("9") || Aut.Equals("4"))
+            if (Aut.Equals("2") || Aut.Equals("6") || Aut.Equals("4"))
             {
                 ViewData["CurrentSort"] = sortOrder;
                 ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -77,13 +78,13 @@ namespace Maonot_Net.Controllers
             }
             return RedirectToAction("NotAut", "Home");
         }
-
+        //return the details of a record by id
         // GET: VisitorsLogs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             string Aut = HttpContext.Session.GetString("Aut");
             ViewBag.Aut = Aut;
-            if (Aut.Equals("2") || Aut.Equals("9") || Aut.Equals("4"))
+            if (Aut.Equals("2") || Aut.Equals("6") || Aut.Equals("4"))
             {
                 if (id == null)
                 {
@@ -103,35 +104,36 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: VisitorsLogs/Create
+        //retuen entring a guset form 
         public IActionResult Create()
         {
             string Aut = HttpContext.Session.GetString("Aut");
             ViewBag.Aut = Aut;
-            if ( Aut.Equals("9"))
+            if ( Aut.Equals("6"))
             {
                 ViewData["FullName"] = new SelectList(_context.ApprovalKits, "ID", "FullName");
-                //make a list of appartments
+                ViewData["Apartments"] = new SelectList(_context.Apartments, "ApartmentNum", "ApartmentNum");
                 return View();
             }
             return RedirectToAction("NotAut", "Home");
         }
 
         // POST: VisitorsLogs/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //validate the fields from the visitor log. 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("EnteryDate,VistorName,VisitorID,StudentFullName,ExitDate,ApartmentNum,Room,Signature")] VisitorsLog visitorsLog)
         {
             User u = await _context.Users.AsNoTracking().SingleOrDefaultAsync(m => m.ApartmentNum == visitorsLog.ApartmentNum && m.Room == visitorsLog.Room);
-
+            ViewData["FullName"] = new SelectList(_context.ApprovalKits, "ID", "FullName");
+            ViewData["Apartments"] = new SelectList(_context.Apartments, "ApartmentNum", "ApartmentNum");
             string Aut = HttpContext.Session.GetString("Aut");
             ViewBag.Aut = Aut;
 
             try
             {
                 visitorsLog.EnteryDate = DateTime.Now;
-                //visitorsLog.EnteryDate = DateTime.Parse("2018-02-14");
+                
                 visitorsLog.StudentId = u.StundetId;
                     if (ModelState.IsValid)
                     {
@@ -150,11 +152,12 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: VisitorsLogs/Edit/5
+        // reporet on a exit with the option to change details 
         public async Task<IActionResult> Edit(int? id)
         {
             string Aut = HttpContext.Session.GetString("Aut");
             ViewBag.Aut = Aut;
-            if (Aut.Equals("9"))
+            if (Aut.Equals("6"))
             {
                 ViewData["FullName"] = new SelectList(_context.ApprovalKits, "ID", "FullName");
                 if (id == null)
@@ -173,8 +176,7 @@ namespace Maonot_Net.Controllers
         }
 
         // POST: VisitorsLogs/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //save the cahnges of the record
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,EnteryDate,VistorName,VisitorID,StudentFullName,ExitDate,ApartmentNum,Room,Signature")] VisitorsLog visitorsLog)
@@ -214,7 +216,7 @@ namespace Maonot_Net.Controllers
             }
             return View(visitorsLog);
         }
-
+        //send a msg if the guest
         private void SendMsg(int? studentId, DateTime enteryDate, string vistorName)
         {
             Message msg = new Message
@@ -234,7 +236,7 @@ namespace Maonot_Net.Controllers
             _context.SaveChanges();
 
         }
-
+        // get the details of the recoerd and ask the user if he is sure
         // GET: VisitorsLogs/Delete/5
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
@@ -263,8 +265,8 @@ namespace Maonot_Net.Controllers
             }
             return RedirectToAction("NotAut", "Home");
         }
-            
 
+        // if the user confirem the delete this function start and delete the recore from the DB
         // POST: VisitorsLogs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -294,7 +296,7 @@ namespace Maonot_Net.Controllers
         {
             return _context.VisitorsLogs.Any(e => e.Id == id);
         }
-
+        // signture form
         public async Task<IActionResult> Signature(int? id)
         {
             string Id = HttpContext.Session.GetString("User");
@@ -321,7 +323,7 @@ namespace Maonot_Net.Controllers
             }
 
         }
-        
+        // confirm the user idntitiy and change the record
         public async Task<ActionResult> ConifiremSigniture(int id, int StudentId , string password)
         {
             string Aut = HttpContext.Session.GetString("Aut");
@@ -363,6 +365,7 @@ namespace Maonot_Net.Controllers
 
 
         }
+        //check the visitor log if the guest stsed after 00:00 is send a message to the student that he need to sing on the guest
         public async Task<ActionResult> CheckVistorLog()
         {
 

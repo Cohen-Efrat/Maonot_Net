@@ -8,9 +8,7 @@
 
 <h2>ערכות קבלה</h2>
 
-<p>
-    <a asp-action="Create">יצירת ערכה חדש</a>
-</p>
+
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
@@ -20,7 +18,7 @@
         </p>
     </div>
 </form>
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -37,7 +35,7 @@
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"> סוג חדר</a>
 
             </th>
-            
+
         </tr>
     </thead>
     <tbody>
@@ -57,9 +55,9 @@
                     @Html.DisplayFor(modelItem => item.RoomType)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">עריכה</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">מידע</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">מחיקה</a>
+                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-default">עריכה</a> 
+                    <a asp-action="Details" asp-route-id="@item.ID"  class="btn btn-info">מידע</a> 
+                    <a asp-action="Delete" asp-route-id="@item.ID"class="btn btn-danger">מחיקה</a>
                 </td>
             </tr>
         }

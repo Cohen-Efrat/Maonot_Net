@@ -23,6 +23,7 @@ namespace Maonot_Net.Controllers
 
             _context = context;
         }
+        //return view Index 
 
         // GET: Registrations
         public IActionResult Index()
@@ -44,6 +45,7 @@ namespace Maonot_Net.Controllers
                 return RedirectToAction("NotAut", "Home");
             }
         }
+        //return a list of registrations of couples
 
         public async Task<IActionResult> Index_Couples(
     string currentFilter,
@@ -84,7 +86,7 @@ namespace Maonot_Net.Controllers
                 return RedirectToAction("NotAut", "Home");
             }
         }
-
+        //return a list of registrations of single female
         public async Task<IActionResult> Index_Single_Female(
 
             string currentFilter,
@@ -126,7 +128,7 @@ namespace Maonot_Net.Controllers
             }
 
         }
-
+        //return a list of registrations of single male
         public async Task<IActionResult> Index_Single_Male(
             string currentFilter,
             string searchString,
@@ -170,6 +172,8 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Registrations/Details/5
+        //return the details of a record by id
+
         public async Task<IActionResult> Details(int? id)
         {
             string Aut = HttpContext.Session.GetString("Aut");
@@ -198,17 +202,13 @@ namespace Maonot_Net.Controllers
 
 
         }
-
+        //return create view
         // GET: Registrations/Create
         public async Task<IActionResult> Create()
         {
             string Id = HttpContext.Session.GetString("User");
             string Aut = HttpContext.Session.GetString("Aut");
             ViewBag.Aut = Aut;
-            //if (Aut == null)
-          //  {
-             //   Aut = "0";
-           // }
 
             if (!Aut.Equals("7"))
             {
@@ -223,11 +223,10 @@ namespace Maonot_Net.Controllers
 
             return View();
 
-        } 
+        }
 
         // POST: Registrations/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //return the registration form
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID1,ParentFullName1,ParentAge1,ParentID2,ParentFullName2,ParentAge2," +
@@ -265,8 +264,8 @@ namespace Maonot_Net.Controllers
             return View();
         }
 
-       
 
+        //return the details of a record by id to a form
         // GET: Registrations/Edit/5
         public async Task<IActionResult> Edit(int? id)
 
@@ -278,13 +277,14 @@ namespace Maonot_Net.Controllers
                 string Aut = HttpContext.Session.GetString("Aut");
                 ViewBag.Aut = Aut;
                 string Id = HttpContext.Session.GetString("User");
+                
                 if (id == null)
                 {
                     return NotFound();
                 }
                 var registration = await _context.Registrations.SingleOrDefaultAsync(m => m.ID == id);
-
-                if(Aut.Equals("2") || registration.StundetId.ToString().Equals(Id))
+                ViewBag.studentId = registration.StundetId;
+                if (Aut.Equals("2") || registration.StundetId.ToString().Equals(Id))
                
                 {
                    // var registration = await _context.Registrations.SingleOrDefaultAsync(m => m.ID == id);
@@ -304,11 +304,10 @@ namespace Maonot_Net.Controllers
         }
 
         // POST: Registrations/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //save the changes of the edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,StundetId,LastName,FirstName,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID1,ParentfullName1,ParentAge1,ParentID2,ParentfullName2,ParentAge2," +
+        public async Task<IActionResult> Edit(int id, [Bind("StundetId,LastName,FirstName,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID1,ParentfullName1,ParentAge1,ParentID2,ParentfullName2,ParentAge2," +
             "Familym1_name,Familym1_Age,Familym2_name,Familym2_Age,Familym3_name,Familym3_Age,Familym4_name,Familym4_Age,Familym5_name,Familym5_Age,Familym6_name,Familym6_Age,Familym7_name,Familym7_Age,Familym8_name,Familym8_Age," +
             "Total,Approved")] Registration registration)
                     //public async Task<IActionResult> Edit(int id, Registration registration)
@@ -346,6 +345,7 @@ namespace Maonot_Net.Controllers
         }
 
         // GET: Registrations/Delete/5
+        // get the details of the recoerd and ask the user if he is sure
         public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             string Aut = HttpContext.Session.GetString("Aut");
@@ -376,6 +376,7 @@ namespace Maonot_Net.Controllers
         }
 
         // POST: Registrations/Delete/5
+        // if the user confirem the delete this function start and delete the recore from the DB
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -399,7 +400,7 @@ namespace Maonot_Net.Controllers
             }
 
         }
-
+        //open a popup window that ask the manger if he approved the request
         public async Task<IActionResult> App(int? id)
 
         {
@@ -422,7 +423,7 @@ namespace Maonot_Net.Controllers
             return RedirectToAction("NotAut", "Home");
 
         }
-        
+        //if the manger aprooved the request it change the record and send a messege to the student
         public async Task<ActionResult> Yes(int id)
         {
 
@@ -464,7 +465,7 @@ namespace Maonot_Net.Controllers
         {
             return _context.Registrations.Any(e => e.ID == id);
         }
-
+        // sql query of the  single female reuest
         public System.Linq.IQueryable<Maonot_Net.Models.Registration> queryFemale()
         {
             var reg = from s in _context.Registrations
@@ -473,6 +474,7 @@ namespace Maonot_Net.Controllers
                       select s;
             return reg;
         }
+        // sql query of the  single male reuest
         public System.Linq.IQueryable<Maonot_Net.Models.Registration> queryMale()
         {
             var reg = from s in _context.Registrations
@@ -481,6 +483,7 @@ namespace Maonot_Net.Controllers
                       select s;
             return reg;
         }
+        // sql query of the  copules reuest
         public System.Linq.IQueryable<Maonot_Net.Models.Registration> queryCouples()
         {
             var reg = from s in _context.Registrations
