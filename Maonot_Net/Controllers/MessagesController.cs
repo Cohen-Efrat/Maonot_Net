@@ -153,105 +153,8 @@ namespace Maonot_Net.Controllers
             return View(message);
         }
 
-        // GET: Messages/Edit/5
-        //Delete function
-        public async Task<IActionResult> Edit(int? id)
-        {
-            //delete function
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var message = await _context.Messages.SingleOrDefaultAsync(m => m.MessageID == id);
-            if (message == null)
-            {
-                return NotFound();
-            }
-            return View(message);
-        }
 
-        // POST: Messages/Edit/5
-        //get id of record and reurnt is details to edit form
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MessageID,Addressee,Subject,Content")] Message message)
-        {
-            //delete function
-            if (id != message.MessageID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(message);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MessageExists(message.MessageID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(message);
-        }
-        //Delete function
-        // GET: Messages/Delete/5
-        public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
-        {
-            //delete function
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var message = await _context.Messages.AsNoTracking()
-                .SingleOrDefaultAsync(m => m.MessageID == id);
-            if (message == null)
-            {
-                return NotFound();
-            }
-            if (saveChangesError.GetValueOrDefault())
-            {
-                ViewData["EErrorMessage"] = "המחיקה נכשלה, נא נסה שנית במועד מאוחד יותר";
-            }
-
-            return View(message);
-        }
-
-        // POST: Messages/Delete/5
-        //Delete function
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            //delete function
-            var message = await _context.Messages.AsNoTracking().SingleOrDefaultAsync(m => m.MessageID == id);
-            if (message == null)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            try
-            {
-                _context.Messages.Remove(message);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            catch (DbUpdateException)
-            {
-                return RedirectToAction(nameof(Index), new { id = id, saveCahngeError = true });
-            }
-        }
 
         private bool MessageExists(int id)
         {
@@ -261,6 +164,7 @@ namespace Maonot_Net.Controllers
         public IActionResult SendAll()
         {
             string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (Aut.Equals("1")|| Aut.Equals("2") || Aut.Equals("3") || Aut.Equals("4") || Aut.Equals("5") )
             {
                 return View();

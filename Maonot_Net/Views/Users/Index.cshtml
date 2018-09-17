@@ -8,10 +8,9 @@
 <h2>רשימת משתמשים</h2>
 
 <p>
-    <a asp-action="Create">יצירת משתמש חדש</a>
+    <a asp-action="Create"class="btn btn-primary">יצירת משתמש חדש</a>
 </p>
-<p>תעודת זהות משתמש:</p>@ViewBag.session
-@ViewBag.bbb
+
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
@@ -23,11 +22,11 @@
 </form>
 
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
-                @*   @Html.DisplayNameFor(model => model.StundetId)*@תעודת זהות
+              תעודת זהות
             </th>
             <th>
                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"> שם פרטי</a>
@@ -38,7 +37,7 @@
             </th>
 
             <th>
-                @*   @Html.DisplayNameFor(model => model.Email)*@ דוא"ל
+               דוא"ל
             </th>
             <th>הרשאה</th>
 
@@ -65,9 +64,9 @@
                         @Html.DisplayFor(modelItem => item.Authorization)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.ID">עריכה</a> |
-                        <a asp-action="Details" asp-route-id="@item.ID">פרטים</a> |
-                        <a asp-action="Delete" asp-route-id="@item.ID">מחיקה</a>
+                        <a asp-action="Edit" asp-route-id="@item.ID"class="btn btn-default">עריכה</a> |
+                        <a asp-action="Details" asp-route-id="@item.ID"class="btn btn-info">פרטים</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ID"class="btn btn-danger">מחיקה</a>
                     </td>
                 </tr>
                 }

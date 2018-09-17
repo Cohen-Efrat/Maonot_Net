@@ -77,7 +77,7 @@
                         <li> תעודת זהות: @ViewBag.user.StundetId</li>
                         <li> כתובת דוא"ל:@ViewBag.user.Email</li>
                     </ul>
-                    <a asp-controller="Users" asp-action="Edit" asp-route-id="@ViewBag.user.ID">עריכה</a>
+                    <a asp-controller="Users" asp-action="Edit" asp-route-id="@ViewBag.user.ID"class="btn btn-default">עריכה</a>
 
                 </td>
                 @{
@@ -93,7 +93,7 @@
 
                             </ul>
                             <br />
-                            <a asp-controller="Messages" asp-action="Create">שליחת הודעה לשינוי שיבוץ</a>
+                            <a asp-controller="Messages" asp-action="Create" class="btn btn-primary">שליחת הודעה לשינוי שיבוץ</a>
 
                         </td>
                     }
@@ -104,11 +104,11 @@
         </tbody>
     </table>
 </section>
-
+<hr />
 @if (a.Equals("8")|| a.Equals("7"))
 {
     <h4> עריכת טופס</h4>
-    <a asp-controller="Registrations" asp-action="Edit" asp-route-id="@ViewBag.RegID">עריכת טופס הרשמה</a>
+    <a asp-controller="Registrations" asp-action="Edit" asp-route-id="@ViewBag.RegID"class="btn btn-default">עריכת טופס הרשמה</a>
 }
 
 
@@ -118,11 +118,11 @@
     {
         <h4> עריכת טופס</h4>
         <div>
-            <a asp-controller="ApprovalKits" asp-action="Edit" asp-route-id="@ViewBag.AppID">עריכת ערכת הקבלה</a>
+            <a asp-controller="ApprovalKits" asp-action="Edit" asp-route-id="@ViewBag.AppID"class="btn btn-default">עריכת ערכת הקבלה</a>
         </div>
     }
 
-
+    <hr />
     <section id="listFaults">
         <h4>תקלות</h4>
         <table class="table" width="40">
@@ -168,7 +168,7 @@
             </tbody>
         </table>
     </section>
-
+    <hr />
     <section id="Warninglist">
         <h4>אזהרות</h4>
         <table class="table" width="40">
@@ -201,7 +201,7 @@
             </tbody>
         </table>
     </section>
-
+    <hr />
     <section id="Visitorslist">
         <h4>ביקורי אורחים</h4>
         <table class="table" width="40">
@@ -252,7 +252,7 @@
                         if (!@v.Signature)
                         {
                             <td>
-                                <a asp-controller="VisitorsLogs" asp-action="Signature" asp-route-id="@v.Id">חתימה</a>
+                                <a asp-controller="VisitorsLogs" asp-action="Signature" asp-route-id="@v.Id"class="btn btn-success">חתימה</a>
                             </td>
                         }
                     }

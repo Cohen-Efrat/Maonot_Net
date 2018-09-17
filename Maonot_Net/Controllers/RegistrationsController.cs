@@ -180,7 +180,7 @@ namespace Maonot_Net.Controllers
             ViewBag.Aut = Aut;
             string Id = HttpContext.Session.GetString("User");
             var registration = await _context.Registrations.SingleOrDefaultAsync(m => m.ID == id);
-
+            ViewBag.studentId = registration.StundetId;
             if (Aut.Equals("2") || Id.Equals(registration.StundetId.ToString()))
             {
                 if (id == null)

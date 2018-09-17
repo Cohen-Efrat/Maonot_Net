@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/Admin.cshtml";
 }
 
-<h2>Details</h2>
+<h2>פרטים</h2>
 
 <div>
-    <h4>User</h4>
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -50,6 +50,5 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">עריכה</a> | 
-    <a asp-action="Index">בחזרה לרשימה</a>
+    <a asp-action="Index" class="btn btn-default">בחזרה לרשימה</a>
 </div>

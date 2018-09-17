@@ -50,14 +50,13 @@
 <h2>דואר נכנס</h2>
 
 <p>
-    <a asp-action="Create">שליחת הודעה</a>
+    <a asp-action="Create" class="btn btn-primary">שליחת הודעה</a>
+    @if (a.Equals("1") || a.Equals("2") || a.Equals("3") || a.Equals("4") || a.Equals("5"))
+    {
+        <a asp-action="SendAll" class="btn btn-primary">שליחת הודעה לכולם</a>
+    }
 </p>
-@if (a.Equals("1") || a.Equals("2") || a.Equals("3") || a.Equals("4") || a.Equals("5"))
-{
-    <p>
-        <a asp-action="SendAll">שליחת הודעה לכולם</a>
-    </p>
-}
+
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
@@ -67,11 +66,11 @@
         </p>
     </div>
 </form>
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
-                נמען
+                מאת
             </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">נושא</a>
@@ -97,8 +96,7 @@
                 </td>
                 <td>
 
-                    <a asp-action="Details" asp-route-id="@item.MessageID">צפייה בהודעה</a> |
-                    <a asp-action="Delete" asp-route-id="@item.MessageID">מחיקה</a>
+                    <a asp-action="Details" asp-route-id="@item.MessageID"class="btn btn-info">צפייה בהודעה</a> 
                 </td>
             </tr>
         }

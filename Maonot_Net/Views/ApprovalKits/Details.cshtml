@@ -88,10 +88,10 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">עריכה</a> |
+    <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-default">עריכה</a> 
     @{ if (a.Equals("2"))
         {
-        <a asp-action="Index">חזרה לרשימה</a>
+        <a asp-action="Index" class="btn btn-default">חזרה לרשימה</a>
         }
     }
 </div>

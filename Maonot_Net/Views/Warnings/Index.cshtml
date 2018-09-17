@@ -20,9 +20,9 @@
 <h2>רשימת אזהרות</h2>
 
 <p>
-    <a asp-action="Create">הכנס אורח חדש</a>
+    <a asp-action="Create" class="btn btn-primary">אזהרה חדשה</a>
 </p>
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -51,11 +51,11 @@
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.WarningId">עריכה</a> |
-                    <a asp-action="Details" asp-route-id="@item.WarningId">פרטים</a> |
+                   
+                    <a asp-action="Details" asp-route-id="@item.WarningId" class="btn btn-default">פרטים</a> 
                     @if (a.Equals("2"))
                     {
-                     <a asp-action="Delete" asp-route-id="@item.WarningId">מחיקה</a>
+                     <a asp-action="Delete" asp-route-id="@item.WarningId"class="btn btn-danger">מחיקה</a>
                     }
                     
                 </td>

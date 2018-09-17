@@ -20,15 +20,8 @@
 <h2>פרטי התקלה</h2>
 
 <div>
-    <h4>FaultForm</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ID)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ID)
-        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.StundetId)
         </dt>
@@ -74,9 +67,13 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    @{ 
+        if (a.Equals("9")) {
+        }
+    <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-default">עריכה </a> }
+
 
     @if (a.Equals("2")|| a.Equals("3")) {
-    <a asp-action="Index">בחזרה לרשימה</a>
+    <a asp-action="Index" class="btn btn-default">בחזרה לרשימה</a>
     }
 </div>

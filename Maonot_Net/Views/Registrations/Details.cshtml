@@ -109,122 +109,132 @@
             @Html.DisplayFor(model => model.ApertmantType)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ParentID1)
+            ת.ז הורה
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ParentID1)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ParentFullName1)
+            שם מלא הורה
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ParentFullName1)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ParentAge1)
+            גיל הורה
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ParentAge1)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ParentID2)
+            ת.ז הורה
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ParentID2)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ParentFullName2)
+            שם מלא הורה
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ParentFullName2)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ParentAge2)
+            גיל הורה
         </dt>
         <dd>
-            
+            @Html.DisplayFor(model => model.ParentAge2)
         </dd>
-        <div class="form-group">
-            <table>
-                <thead>
-                <th> שם מלא</th>
-                <th>גיל </th>
-                </thead>
-                <tbody>
+
+    </dl>
+
+    <div class="form-group">
+        <table>
+            <thead>
+                <tr>
+                    <th>שם מלא</th>
+
+                    <th>גיל </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.Familym1_name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Familym1_Age)
+                    </td>
+                </tr>
+            <tr>
                 <td>
-                    @Html.DisplayFor(model => model.Familym1_name)
+                    @Html.DisplayFor(model => model.Familym2_name)
                 </td>
                 <td>
-                    @Html.DisplayFor(model => model.Familym1_Age)
+                    @Html.DisplayFor(model => model.Familym2_Age)
                 </td>
-                <tr>
-                    <td>
-                        @Html.DisplayFor(model => model.Familym2_name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.Familym2_Age)
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.DisplayFor(model => model.Familym3_name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.Familym3_Age)
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.DisplayFor(model => model.Familym4_name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.Familym4_Age)
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.DisplayFor(model => model.Familym5_name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.Familym5_Age)
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.DisplayFor(model => model.Familym6_name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.Familym6_Age)
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.DisplayFor(model => model.Familym7_name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.Familym7_Age)
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        @Html.DisplayFor(model => model.Familym8_name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.Familym8_Age)
-                    </td>
-                </tr>
-                <tr>
-                    </tbody>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Familym3_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Familym3_Age)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Familym4_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Familym4_Age)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Familym5_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Familym5_Age)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Familym6_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Familym6_Age)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Familym7_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Familym7_Age)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Familym8_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Familym8_Age)
+                </td>
+            </tr>
+           
+                </tbody>
 
 
-            </table>
-</dl>
-</div>
+        </table>
+    </div>
 
-<a href="@Url.Action("SeeFiles", "FileUpload")" target="_blank"> מעבר לקבצים</a>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">עריכה</a> |
-    @if (a.Equals("2")){ 
-    <a asp-action="Index">חזרה לרשומות</a>
-    }
-</div>
+    <a href="@Url.Action("SeeFiles", "FileUpload",new { student = @ViewBag.studentId })" target="_blank" class="btn btn-primary"> מעבר לקבצים</a>
+    <br /> <br />
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-default">עריכה</a> 
+        @if (a.Equals("2"))
+        {
+            <a asp-action="Index" class="btn btn-default">חזרה לרשימה</a>
+        }
+    </div>

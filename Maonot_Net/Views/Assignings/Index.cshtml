@@ -8,24 +8,21 @@
 
 <h2>רשימת דיירים</h2>
 
-<a asp-controller="Apartments" asp-action="Assigning">הפעלת השיבוץ</a>
+<a asp-controller="Apartments" asp-action="Assigning" class="btn btn-primary" >הפעלת השיבוץ</a>
 
-<a asp-controller="Apartments" asp-action="NotAssigning">רשימת סטודנטים לא משובצים</a>
+<a asp-controller="Apartments" asp-action="NotAssigning" class="btn btn-primary">רשימת סטודנטים לא משובצים</a>
 
 <p> תפוסת דיירים @ViewBag.c</p>
 
-<p>
-    חיפוש לפי שם: @Html.TextBox("SearchString")
-    <input type="submit" value="חיפוש" />
-</p>
-<table class="table">
+
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
-                @Html.ActionLink("ת.ז", "Index", new { sortOrder = ViewBag.NameSortParm })
+               ת.ז
             </th>
             <th>
-                @Html.ActionLink("מספר דירה", "Index", new { sortOrder = ViewBag.NameSortParm })
+                מספר דירה
             </th>
             <th>
                מספר חדר
@@ -45,11 +42,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Room)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">עריכה</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">פרטים</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">מחיקה</a>
                 </td>
             </tr>
         }

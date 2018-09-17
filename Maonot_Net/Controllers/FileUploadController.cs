@@ -22,37 +22,6 @@ namespace Maonot_Net.Controllers
 
             _context = context;
         }
-        //Delete function
-        public IActionResult Index()
-        {
-            return View();
-        }
-        [HttpPost]
-        //Delete function
-        public async Task<IActionResult> UploadFile(IFormFile file)
-        {
-            if (file == null || file.Length == 0)
-                return Content("file not selected");
-
-            var userId = "308242122";
-
-            if (!Directory.Exists(Path.Combine(
-                        Directory.GetCurrentDirectory(), $"wwwroot/{userId}")))
-            {
-                Directory.CreateDirectory(Path.Combine(
-                        Directory.GetCurrentDirectory(), $"wwwroot/{userId}"));
-            }
-            var path = Path.Combine(
-                        Directory.GetCurrentDirectory(), $"wwwroot/{userId}",
-                        file.FileName);
-
-            using (var stream = new FileStream(path, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-            return RedirectToAction("Files");
-        }
         //return the view Index_2 for uplode files
         public IActionResult Index_2()
         {

@@ -6,7 +6,7 @@
 
 <h2>רשימת סטודנטים לא משובצים</h2>
 
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th> שם מלא</th>
@@ -31,7 +31,7 @@
                 <td>@a.LivingWithSmoker</td>
                 <td>@a.HealthCondition</td>
                 <td>@a.ReligiousType</td>
-                <td> <a asp-controller="Assignings" asp-action="Change" asp-route-id="@a.ID">שיבוץ</a></td>
+                <td> <a asp-controller="Assignings" asp-action="Change" asp-route-id="@a.ID" class="btn btn-success">שיבוץ</a></td>
 
             </tr>}
                 }

@@ -88,7 +88,6 @@ namespace Maonot_Net.Controllers
             string Aut = HttpContext.Session.GetString("Aut");
             ViewBag.Aut = Aut;
             string Id = HttpContext.Session.GetString("User");
-           // var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
 
             if (id == null)
             {
@@ -114,6 +113,7 @@ namespace Maonot_Net.Controllers
         public IActionResult Create()
         {
 
+            ViewData["StudentId"] = new SelectList(_context.ApprovalKits, "StudentId", "FullName");
             string Aut = HttpContext.Session.GetString("Aut");
             ViewBag.Aut = Aut;
             if (Aut.Equals("2") || Aut.Equals("4"))
@@ -159,57 +159,6 @@ namespace Maonot_Net.Controllers
             {
                 ModelState.AddModelError("", "לא היה ניתן לשמור את השינויים, נא נסה שנית במועד מאוחר יותר");
 
-            }
-            return View(warning);
-        }
-//Delete function
-        // GET: Warnings/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            //delete function
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var warning = await _context.Warnings.SingleOrDefaultAsync(m => m.WarningId == id);
-            if (warning == null)
-            {
-                return NotFound();
-            }
-            return View(warning);
-        }
-
-        // POST: Warnings/Edit/5
-        //Delete function
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("WarningId,WarningNumber,StudentId,Date,BlaBla")] Warning warning)
-        {
-            if (id != warning.WarningId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(warning);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!WarningExists(warning.WarningId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
             }
             return View(warning);
         }

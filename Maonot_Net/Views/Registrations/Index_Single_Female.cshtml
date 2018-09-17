@@ -5,24 +5,21 @@
     Layout = "~/Views/Shared/Manger.cshtml";
 }
 
-<h2>רשומות</h2>
+<h2>טפסי הרשמה נשים - יחיד</h2>
 <h3> מספר בקשות: @ViewBag.c </h3>
 
-<p>
-    <a asp-action="Create">יצירת חדש</a>
-</p>
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
-            Find by name: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
-            <input type="submit" value="Search" class="btn btn-default" /> |
-            <a asp-action="Index">בחזרה לרשימה</a>
+            חיפוש לפי שם: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+            <input type="submit" value="חיפוש" class="btn btn-default" /> |
+            <a asp-action="Index_Single_Female">בחזרה לרשימה</a>
         </p>
     </div>
 </form>
 
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -64,17 +61,16 @@
                     @Html.DisplayFor(modelItem => item.Total)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">בחינת בקשה</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">פרטים</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">מחיקה</a>
-                    <a asp-controller="Registrations" asp-action="App" asp-route-id="@item.ID">אישור</a>
-
-
+                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary">בחינת בקשה</a> 
+                    <a asp-action="Details" asp-route-id="@item.ID"class="btn btn-info">פרטים</a> 
+                    <a asp-action="Delete" asp-route-id="@item.ID"class="btn btn-danger">מחיקה</a>
                             <div>
                                 <div>
-                                    <button id="btnclick" type="button">
+                                    <td>
+                                    <button id="btnclick" type="button" class="btn btn-success">
                                         אישור הרשמה
                                     </button>
+                                        </td>
                                     <div class="modal fade" id="app">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
@@ -137,7 +133,7 @@
    class="btn btn-default @nextDisabled">
     הבא
 </a>
-
+<a asp-action="Index" class="btn btn-block ">בחזרה למסך הרשמות</a>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">

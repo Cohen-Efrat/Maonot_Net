@@ -7,8 +7,6 @@
 }
 
 <h2>דיווח על יציאת אורח/ת</h2>
-
-<h4>VisitorsLog</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -58,14 +56,11 @@
                 </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="שמירה" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-default">בחזרה ליומן המבקרים</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
