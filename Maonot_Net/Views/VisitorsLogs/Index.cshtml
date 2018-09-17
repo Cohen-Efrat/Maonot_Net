@@ -1,6 +1,6 @@
 ﻿@model PaginatedList<Maonot_Net.Models.VisitorsLog>
 
-
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 @{
     ViewData["Title"] = "Index";
     var a = ViewBag.Aut;
@@ -21,7 +21,9 @@
 }
 
 <h2>יומן מבקרים</h2>
-
+<p>
+    <a asp-action="ExportToExcel">ExportToExcel</a>
+</p>
 @if (a.Equals("2") || a.Equals("4"))
 {
     <p>
@@ -105,17 +107,23 @@
                     @Html.DisplayFor(modelItem => item.Signature)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id"class="btn btn-primary">דיווח יציאה</a> 
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">פרטים</a> 
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">דיווח יציאה</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">פרטים</a>
                     @if (a.Equals("2"))
                     {
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">מחיקה</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">מחיקה</a>
                     }
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<div class="ExportSection">
+    @Html.ActionLink("Export to Csv", "ExportToCSV")
+    @Html.ActionLink("Export to Excel", "ExportToExcel")
+
+</div>
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
