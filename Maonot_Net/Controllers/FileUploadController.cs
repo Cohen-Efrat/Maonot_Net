@@ -86,7 +86,7 @@ namespace Maonot_Net.Controllers
                     if (!Directory.Exists(Path.Combine(
                                 Directory.GetCurrentDirectory(), $"wwwroot/{studentId}")))
                     {
-                        return NotFound();
+                        return RedirectToAction("NoFiles", "Home");
                     }
                     string[] filePaths = Directory.GetFiles(@"wwwroot\" + studentId);
                     List<string> list = new List<string> { };

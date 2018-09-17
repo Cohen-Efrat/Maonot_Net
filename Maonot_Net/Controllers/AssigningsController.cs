@@ -9,6 +9,7 @@ using Maonot_Net.Data;
 using Maonot_Net.Models;
 using Microsoft.AspNetCore.Http;
 
+
 namespace Maonot_Net.Controllers
 {
     public class AssigningsController : Controller
@@ -217,7 +218,7 @@ namespace Maonot_Net.Controllers
 
 
             return RedirectToAction("NotAssigning", "Apartments");
-        } 
+        }
 
     }
 }

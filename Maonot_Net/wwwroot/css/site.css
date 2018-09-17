@@ -12,7 +12,9 @@ body {
     padding-right: 15px;
     font-family: Lucida Sans Unicode;
 }
-
+#navbar{
+    color:green
+}
 /* Carousel */
 .carousel-caption p {
     font-size: 20px;

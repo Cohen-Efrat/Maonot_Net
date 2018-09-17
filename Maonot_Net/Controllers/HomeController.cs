@@ -9,15 +9,18 @@ using Microsoft.AspNetCore.Http;
 using Maonot_Net.Data;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace Maonot_Net.Controllers
 {
     public class HomeController : Controller
     {
+        
         private readonly MaonotNetContext _context;
 
         public HomeController(MaonotNetContext context)
         {
             _context = context;
+
         }
         // retuen the Index view
         public IActionResult Index()
@@ -140,6 +143,20 @@ namespace Maonot_Net.Controllers
             ViewBag.Aut = Aut;
             return View();
         }
+
+        public IActionResult NoFiles()
+        {
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
+            return View();
+        }
+
+        public IActionResult ImportExport()
+        {
+            return View();
+        }
+
+
 
     }
 }
