@@ -70,7 +70,7 @@ namespace Maonot_Net.Controllers
             }
 
             ViewBag.c = a.Count();
-            int pageSize = 20;
+            int pageSize = 10;
 
             return View(await PaginatedList<Assigning>.CreateAsync(a.AsNoTracking(), page ?? 1, pageSize));
         }

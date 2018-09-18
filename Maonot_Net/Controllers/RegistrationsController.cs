@@ -78,7 +78,7 @@ namespace Maonot_Net.Controllers
                                            || s.FirstName.Contains(searchString));
                 }
 
-                int pageSize = 3;
+                int pageSize = 10;
                 return View(await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
             }
             else
@@ -119,7 +119,7 @@ namespace Maonot_Net.Controllers
                                            || s.FirstName.Contains(searchString));
                 }
 
-                int pageSize = 3;
+                int pageSize = 10;
                 return View( await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
             }
             else
@@ -161,7 +161,7 @@ namespace Maonot_Net.Controllers
                                            || s.FirstName.Contains(searchString));
                 }
 
-                int pageSize = 1;
+                int pageSize = 10;
                 return View( await PaginatedList<Registration>.CreateAsync(reg.AsNoTracking(), page ?? 1, pageSize));
             }
             else
@@ -247,7 +247,7 @@ namespace Maonot_Net.Controllers
                 if (ModelState.IsValid)
                 {
                     u.Authorization = 8;
-
+                    HttpContext.Session.SetString("Aut", "8");
                     _context.Add(registration);
                     _context.Update(u);
                     await _context.SaveChangesAsync();

@@ -2,7 +2,12 @@
 
 @{
     ViewData["Title"] = "Create";
+
     var a = @ViewBag.Aut;
+    if (a == null)
+    {
+        a = 0;
+    }
 
     if (a.Equals("1")) {
 
@@ -54,19 +59,21 @@ else
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
-            @*   @if (a.Equals("1"))
-        {*@
+            @{
+                if (a.Equals("1"))
+                {
+                    <div class="form-group">
+                        <label asp-for="Authorization" class="control-label"></label>
+                        <select asp-for="Authorization" class="form-control" asp-items="ViewBag.Authorization"></select>
+                        <span asp-validation-for="Authorization" class="text-danger"></span>
+                        }
+                    </div>
+                }
+            }
 
-            <div class="form-group">
-                <label asp-for="Authorization" class="control-label"></label>
-                <select asp-for="Authorization" class="form-control" asp-items="ViewBag.Authorization"></select>
-                <span asp-validation-for="Authorization" class="text-danger"></span>
 
-                @* <label asp-for="Authorization" class="control-label"></label>
-            <select asp-for="Authorization" class="form-control" asp-items="ViewBag.Authorization"></select>
-                *@
 
-            </div>
+
             @Html.Raw(TempData["msg"])
 
             <div class="form-group">

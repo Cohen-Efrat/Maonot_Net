@@ -114,13 +114,13 @@
                                         <input type="hidden" name="StundetId" id="StundetId" value="@a.StundetId" />
                                     </div>
                                     <div class="form-group">
-                                        <label asp-for="ApartmentNum" class="control-label"></label>
+                                        <label class="control-label"> מספר דירה</label>
                                         <select asp-for="ApartmentNum" class="form-control" asp-items="ViewBag.room"></select>
                                         <span asp-validation-for="ApartmentNum" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label asp-for="Room" class="control-label"></label>
-                                        @Html.DropDownListFor(model => model.Room, listItems, "-- Select Status --")
+                                        <label class="control-label"> מספר חדר</label>
+                                        @Html.DropDownListFor(model => model.Room, listItems, "בחר/י חדר")
                                         <span asp-validation-for="Room" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">

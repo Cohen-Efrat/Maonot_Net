@@ -55,7 +55,15 @@ namespace Maonot_Net.Controllers
             {
                 //edit registration form
                 var u = await _context.Registrations.AsNoTracking().SingleOrDefaultAsync(m => m.StundetId.ToString().Equals(ID));
-                ViewBag.RegID = u.ID;
+                if (u == null)
+                {
+                    ViewBag.RegID = 0;
+                }
+                else
+                {
+                    ViewBag.RegID = u.ID;
+                }
+                
             }
             if (Aut.Equals("9"))
             {

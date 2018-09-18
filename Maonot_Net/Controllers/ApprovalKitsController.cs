@@ -81,7 +81,7 @@ namespace Maonot_Net.Controllers
                         break;
                 };
 
-                int pageSize = 3;
+                int pageSize = 10;
                 return View(await PaginatedList<ApprovalKit>.CreateAsync(app.AsNoTracking(), page ?? 1, pageSize));
             }
 

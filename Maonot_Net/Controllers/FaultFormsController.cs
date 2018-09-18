@@ -78,7 +78,7 @@ namespace Maonot_Net.Controllers
                         break;
                 }
 
-                int pageSize = 3;
+                int pageSize = 10;
                 return View(await PaginatedList<FaultForm>.CreateAsync(faults.AsNoTracking(), page ?? 1, pageSize));
             }
            return RedirectToAction("NotAut", "Home");
@@ -146,7 +146,7 @@ namespace Maonot_Net.Controllers
 
                     _context.Add(faultForm);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Wellcome", "Home");
                 }
             }
             catch (DbUpdateException)

@@ -73,7 +73,7 @@ namespace Maonot_Net.Controllers
                         users = users.OrderBy(U => U.LastName);
                         break;
                 }
-                int pageSize = 3;
+                int pageSize = 10;
 
                 return View(await PaginatedList<User>.CreateAsync(users.AsNoTracking(), page ?? 1, pageSize));
             }
@@ -216,7 +216,7 @@ namespace Maonot_Net.Controllers
             ViewData["Authorization"] = new SelectList(_context.Authorizations, "Id", "AutName");
             string ID = HttpContext.Session.GetString("User");
             string Aut = HttpContext.Session.GetString("Aut");
-            
+            ViewBag.Aut = Aut;
             ViewBag.Aut = Aut;
             if (!Aut.Equals("0"))
             {
@@ -249,6 +249,8 @@ namespace Maonot_Net.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,StundetId,FirstName,LastName,Password,Email,ApartmentNum,Room,Authorization")] User user)
         {
+            string Aut = HttpContext.Session.GetString("Aut");
+            ViewBag.Aut = Aut;
             if (id != user.ID)
             {
                 return NotFound();

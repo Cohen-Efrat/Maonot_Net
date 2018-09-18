@@ -73,7 +73,7 @@ namespace Maonot_Net.Controllers
                         break;
                 }
 
-                int pageSize = 3;
+                int pageSize = 10;
                 return View(await PaginatedList<VisitorsLog>.CreateAsync(vistor.AsNoTracking(), page ?? 1, pageSize));
             }
             return RedirectToAction("NotAut", "Home");
@@ -380,37 +380,40 @@ namespace Maonot_Net.Controllers
             List<VisitorsLog> warningList = new List<VisitorsLog>();
             foreach (var v in vistor)
             {
-                if (!(v.EnteryDate.Date == v.ExitDate.Value.Date))
+                if (v.ExitDate!=null)
                 {
-                    var w = await _context.Warnings.SingleOrDefaultAsync(m => m.StudentId == v.StudentId);
-                    Warning warning = new Warning();
-                    warning.StudentId = v.StudentId;
-                    warning.Date = v.EnteryDate;
-                    if (w == null)
+                    if (!(v.EnteryDate.Date == v.ExitDate.Value.Date))
                     {
-                        warning.WarningNumber = WarningNumber.ראשונה;
-                    }
+                        var w = await _context.Warnings.SingleOrDefaultAsync(m => m.StudentId == v.StudentId);
+                        Warning warning = new Warning();
+                        warning.StudentId = v.StudentId;
+                        warning.Date = v.EnteryDate;
+                        if (w == null)
+                        {
+                            warning.WarningNumber = WarningNumber.ראשונה;
+                        }
 
-                    // 2 warinigs
+                        // 2 warinigs
 
-                    else if (w.WarningNumber.Equals("שנייה"))
-                    {
-                        warning.WarningNumber = WarningNumber.שלישית;
-                    }
+                        else if (w.WarningNumber.Equals("שנייה"))
+                        {
+                            warning.WarningNumber = WarningNumber.שלישית;
+                        }
 
-                    // 1 waring 
-                    else if (w.WarningNumber.Equals("ראשונה"))
-                    {
-                        warning.WarningNumber = WarningNumber.שנייה;
-                    }
+                        // 1 waring 
+                        else if (w.WarningNumber.Equals("ראשונה"))
+                        {
+                            warning.WarningNumber = WarningNumber.שנייה;
+                        }
 
-                    //  3 warnings
-                    else
-                    {
-                        warning.WarningNumber = WarningNumber.ראשונה;
+                        //  3 warnings
+                        else
+                        {
+                            warning.WarningNumber = WarningNumber.ראשונה;
+                        }
+                        warningList.Add(v);
+                        _context.Warnings.Add(warning);
                     }
-                    warningList.Add(v);
-                    _context.Warnings.Add(warning);
                 }
             }
             _context.SaveChanges();

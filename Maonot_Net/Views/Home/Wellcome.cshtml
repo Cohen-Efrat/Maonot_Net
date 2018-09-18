@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Wellcome";
     var a = ViewBag.Aut;
-    
+
 
     if (a.Equals("1"))
     {
@@ -77,7 +77,7 @@
                         <li> תעודת זהות: @ViewBag.user.StundetId</li>
                         <li> כתובת דוא"ל:@ViewBag.user.Email</li>
                     </ul>
-                    <a asp-controller="Users" asp-action="Edit" asp-route-id="@ViewBag.user.ID"class="btn btn-default">עריכה</a>
+                    <a asp-controller="Users" asp-action="Edit" asp-route-id="@ViewBag.user.ID" class="btn btn-default">עריכה</a>
 
                 </td>
                 @{
@@ -105,10 +105,14 @@
     </table>
 </section>
 <hr />
-@if (a.Equals("8")|| a.Equals("7"))
+@if (a.Equals("8") || a.Equals("7"))
 {
-    <h4> עריכת טופס</h4>
-    <a asp-controller="Registrations" asp-action="Edit" asp-route-id="@ViewBag.RegID"class="btn btn-default">עריכת טופס הרשמה</a>
+    if (@ViewBag.RegID != 0)
+    {
+        <h4> עריכת טופס</h4>
+        <a asp-controller="Registrations" asp-action="Edit" asp-route-id="@ViewBag.RegID" class="btn btn-default">עריכת טופס הרשמה</a>
+    }
+
 }
 
 
@@ -118,7 +122,7 @@
     {
         <h4> עריכת טופס</h4>
         <div>
-            <a asp-controller="ApprovalKits" asp-action="Edit" asp-route-id="@ViewBag.AppID"class="btn btn-default">עריכת ערכת הקבלה</a>
+            <a asp-controller="ApprovalKits" asp-action="Edit" asp-route-id="@ViewBag.AppID" class="btn btn-default">עריכת ערכת הקבלה</a>
         </div>
     }
 
@@ -200,6 +204,9 @@
                 }
             </tbody>
         </table>
+        <div class="col-md-4">
+            <img src="~/images/warning.png" width="50%" />
+        </div>
     </section>
     <hr />
     <section id="Visitorslist">
@@ -221,43 +228,43 @@
                 @{
                     foreach (VisitorsLog v in ViewBag.Visitorslist)
                     {
-                <tr>
-                    <td>
-                        @v.EnteryDate
-                    </td>
-                    <td>
-                        @v.VistorName
-                    </td>
-                    <td>@v.ExitDate</td>
-                    <td>
-
-                        @{
-                            var tmp = @v.Signature;
-                            string str = "";
-                            if (tmp)
-                            {
-                                str = "כן";
-                            }
-                            else
-                            {
-                                str = "לא ";
-                            }
-                        }
-                        @str
-
-                    </td>
-
-
-                    @{
-                        if (!@v.Signature)
-                        {
+                        <tr>
                             <td>
-                                <a asp-controller="VisitorsLogs" asp-action="Signature" asp-route-id="@v.Id"class="btn btn-success">חתימה</a>
+                                @v.EnteryDate
                             </td>
-                        }
-                    }
+                            <td>
+                                @v.VistorName
+                            </td>
+                            <td>@v.ExitDate</td>
+                            <td>
 
-                </tr>
+                                @{
+                                    var tmp = @v.Signature;
+                                    string str = "";
+                                    if (tmp)
+                                    {
+                                        str = "כן";
+                                    }
+                                    else
+                                    {
+                                        str = "לא ";
+                                    }
+                                }
+                                @str
+
+                            </td>
+
+
+                            @{
+                                if (!@v.Signature)
+                                {
+                                    <td>
+                                        <a asp-controller="VisitorsLogs" asp-action="Signature" asp-route-id="@v.Id" class="btn btn-success">חתימה</a>
+                                    </td>
+                                }
+                            }
+
+                        </tr>
                     }
                 }
             </tbody>

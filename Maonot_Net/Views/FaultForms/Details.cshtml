@@ -67,13 +67,18 @@
     </dl>
 </div>
 <div>
-    @{ 
-        if (a.Equals("9")) {
+    @{
+        if (a.Equals("9"))
+        {
+
+            <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-default">עריכה </a>
         }
-    <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-default">עריכה </a> }
 
 
-    @if (a.Equals("2")|| a.Equals("3")) {
-    <a asp-action="Index" class="btn btn-default">בחזרה לרשימה</a>
+
+    @if (a.Equals("2") || a.Equals("3"))
+    {
+        <a asp-action="Index" class="btn btn-default">בחזרה לרשימה</a>
     }
+        }
 </div>

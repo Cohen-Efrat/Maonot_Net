@@ -74,7 +74,7 @@ namespace Maonot_Net.Controllers
                         break;
                 }
 
-                int pageSize = 3;
+                int pageSize = 10;
                 return View(await PaginatedList<Warning>.CreateAsync(warning.AsNoTracking(), page ?? 1, pageSize));
             }
             return RedirectToAction("NotAut", "Home");

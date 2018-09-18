@@ -266,11 +266,11 @@
     </div>
 </div>
 
-<p> @Html.ActionLink("צפייה בקבצים ", "SeeFiles", "FileUpload", new { student = @ViewBag.studentId })</p>
+<p > @Html.ActionLink("צפייה בקבצים ", "SeeFiles", "FileUpload", new { student = @ViewBag.studentId })</p>
 @{
     if (!a.Equals("2"))
     {
-        <a href="@Url.Action("Index_2", "FileUpload")" target="_blank"> הוספת קבצים נוספים</a>
+        <a href="@Url.Action("Index_2", "FileUpload")" target="_blank" > הוספת קבצים נוספים</a>
     }
 }
 
@@ -281,7 +281,7 @@
 @if (a.Equals("2"))
 {
     <div>
-        <a asp-action="Index">חזרה לרשימה</a>
+        <a class="btn btn-default" asp-action="Index">חזרה לרשימה</a>
     </div>
 }
 

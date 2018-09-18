@@ -21,15 +21,13 @@
 }
 
 <h2>יומן מבקרים</h2>
-<p>
-    <a asp-action="ExportToExcel">ExportToExcel</a>
-</p>
+
 @if (a.Equals("2") || a.Equals("4"))
 {
-    <p>
-        <a asp-action="CheckVistorLog">מעבר על היומן</a>
-        @ViewBag.LastDate תאריך בדיקה אחרון
-    </p>
+<p>
+    <a asp-action="CheckVistorLog" class="btn btn-primary">מעבר על היומן</a>
+    תאריך בדיקה אחרון: @ViewBag.LastDate
+</p>
 }
 
 <p>
@@ -119,11 +117,6 @@
     </tbody>
 </table>
 
-<div class="ExportSection">
-    @Html.ActionLink("Export to Csv", "ExportToCSV")
-    @Html.ActionLink("Export to Excel", "ExportToExcel")
-
-</div>
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
