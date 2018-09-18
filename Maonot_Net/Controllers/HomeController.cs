@@ -151,10 +151,7 @@ namespace Maonot_Net.Controllers
             return View();
         }
 
-        public IActionResult ImportExport()
-        {
-            return View();
-        }
+
 
 
 

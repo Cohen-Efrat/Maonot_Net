@@ -310,7 +310,6 @@ namespace Maonot_Net.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("StundetId,LastName,FirstName,Bday,gender,City,Adress,PostalCode,PhoneNumber,FieldOfStudy,SteadyYear,TypeOfService,HealthCondition,Seniority,ApertmantType,ParentID1,ParentfullName1,ParentAge1,ParentID2,ParentfullName2,ParentAge2," +
             "Familym1_name,Familym1_Age,Familym2_name,Familym2_Age,Familym3_name,Familym3_Age,Familym4_name,Familym4_Age,Familym5_name,Familym5_Age,Familym6_name,Familym6_Age,Familym7_name,Familym7_Age,Familym8_name,Familym8_Age," +
             "Total,Approved")] Registration registration)
-                    //public async Task<IActionResult> Edit(int id, Registration registration)
         {
             string Aut = HttpContext.Session.GetString("Aut");
             ViewBag.Aut = Aut;

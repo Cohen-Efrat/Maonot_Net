@@ -133,7 +133,7 @@ namespace Maonot_Net.Controllers
 
             string Aut = HttpContext.Session.GetString("Aut");
             ViewBag.Aut = Aut;
-            //var u = await _context.Users.SingleOrDefaultAsync(m => m.StundetId.Equals("Id"));
+            
             try
             { 
 
