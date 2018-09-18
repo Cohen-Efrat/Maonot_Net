@@ -127,7 +127,7 @@ namespace Maonot_Net.Controllers
 // validate the warining form and send a messege to the user how gut the warinig
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("WarningNumber,StudentId,Date,BlaBla")] Warning warning)
+        public async Task<IActionResult> Create([Bind("WarningNumber,StudentId,Date")] Warning warning)
         {
             string Id = HttpContext.Session.GetString("User");
 
