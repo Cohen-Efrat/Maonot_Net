@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Maonot_Net.Models.FaultForm>
+﻿@model PaginatedList<Maonot_Net.Models.FaultForm>
 
 @{
     ViewData["Title"] = "Index";
@@ -19,28 +19,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ID)
+               מספר דירה
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StundetId)
+                מספר חדר
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Apartment)
+               שם מלא 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RoomNum)
+                מספר טלפון
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FullName)
+                תיאור התקלה
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fix)
+               תוקן/לא תוקן
             </th>
             <th></th>
         </tr>
@@ -49,12 +43,6 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StundetId)
-                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Apartment)
                 </td>
