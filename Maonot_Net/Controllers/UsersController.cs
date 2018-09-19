@@ -275,7 +275,12 @@ namespace Maonot_Net.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                if (Aut.Equals("1"))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                return RedirectToAction("Wellcome", "Home");
+
             }
             return View(user);
         }

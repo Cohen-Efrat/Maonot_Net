@@ -43,6 +43,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Room)
                 </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">מחיקה</a>
+                </td>
             </tr>
         }
     </tbody>

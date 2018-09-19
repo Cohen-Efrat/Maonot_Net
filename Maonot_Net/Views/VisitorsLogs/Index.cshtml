@@ -24,15 +24,16 @@
 
 @if (a.Equals("2") || a.Equals("4"))
 {
-<p>
-    <a asp-action="CheckVistorLog" class="btn btn-primary">מעבר על היומן</a>
-    תאריך בדיקה אחרון: @ViewBag.LastDate
-</p>
+    <p>
+        <a asp-action="CheckVistorLog" class="btn btn-primary">מעבר על היומן</a>
+        תאריך בדיקה אחרון: @ViewBag.LastDate
+    </p>
 }
-
-<p>
-    <a asp-action="Create" class="btn btn-primary">כניסת אורח/ת</a>
-</p>
+@if (a.Equals("6"))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">כניסת אורח/ת</a>
+    </p>}
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
@@ -105,8 +106,13 @@
                     @Html.DisplayFor(modelItem => item.Signature)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">דיווח יציאה</a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">פרטים</a>
+                    @if (a.Equals("6"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">דיווח יציאה</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">פרטים</a>
+                    }
+
+
                     @if (a.Equals("2"))
                     {
                         <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">מחיקה</a>

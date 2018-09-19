@@ -384,7 +384,7 @@ namespace Maonot_Net.Controllers
                 {
                     if (!(v.EnteryDate.Date == v.ExitDate.Value.Date))
                     {
-                        var w = await _context.Warnings.SingleOrDefaultAsync(m => m.StudentId == v.StudentId);
+                        var w = await _context.Warnings.LastOrDefaultAsync(m => m.StudentId == v.StudentId);
                         Warning warning = new Warning();
                         warning.StudentId = v.StudentId;
                         warning.Date = v.EnteryDate;

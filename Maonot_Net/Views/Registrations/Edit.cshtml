@@ -266,7 +266,7 @@
     </div>
 </div>
 
-<p > @Html.ActionLink("צפייה בקבצים ", "SeeFiles", "FileUpload", new { student = @ViewBag.studentId })</p>
+<p > @Html.ActionLink("צפייה בקבצים ", "SeeFiles", "FileUpload", new { student = @ViewBag.studentId },new { target = "_blank" })</p>
 @{
     if (!a.Equals("2"))
     {
