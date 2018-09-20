@@ -336,13 +336,14 @@ namespace Maonot_Net.Controllers
             ViewBag.StudentId = StudentId;
             var functions = new functions();
             //user by StudentId
+            var visitorsLog = await _context.VisitorsLogs.SingleOrDefaultAsync(m => m.Id == id);
+
             var user = await _context.Users.SingleOrDefaultAsync(m => m.StundetId == StudentId);
             if (user != null)
             {
                     if (functions.CheckPassword(password, user.Password))
                     {
 
-                        var visitorsLog = await _context.VisitorsLogs.SingleOrDefaultAsync(m => m.Id == id);
                         visitorsLog.Signature = true;
                         _context.Update(visitorsLog);
                         await _context.SaveChangesAsync();
@@ -352,13 +353,15 @@ namespace Maonot_Net.Controllers
                     else
                     {
                         ViewBag.Message = "Thank you!";
-                        TempData["msg"] = "<script>alert('סיסמה לא נכונה');</script>";
+                        TempData["msg"] = "<script>alert('הסיסמה שגויה');</script>";
 
-                       // return RedirectToAction(nameof(Index));
+                        return RedirectToAction(nameof(Signature),new {id= visitorsLog.Id});
                     }
                 
             }
-           return  RedirectToAction("Wellcom", "Home");
+            TempData["msg"] = "<script>alert('הת.ז שהוזנה לא תואמת את הת.ז של המשתמש');</script>";
+
+            return RedirectToAction(nameof(Signature), new { id = visitorsLog.Id });
 
 
 
